@@ -123,8 +123,14 @@ class Canvas extends React.Component{
         this.isIn = [];
         this.isOut = [];
         
-        for (var item in polygons){
-            var poly = this.generatePolygon(polygons[item]);
+        for (var el of polygons){
+            var points = el['points'];
+            if (el['subcategory']===''){
+                var item = el['id']
+            }else{
+                var item = el['subcategory']
+            }
+            var poly = this.generatePolygon(points);
             var item_obj = {};
 
             if (is_point_in_poly(poly, [x, y]) === -1 || is_point_in_poly(poly, [x, y]) === 0) {
