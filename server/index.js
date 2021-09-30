@@ -39,7 +39,7 @@ mongoUtil.connectToServer( function( err, db ) {
             for (const facsimile of result){
                 var found = false;
                 var key = 0;
-                while (found === false && key < Object.keys(facsimile).length){
+                while (found === false && key < Object.keys(facsimile).length){s
                     
                     var category = facsimile[key];
                     console.log(category);
