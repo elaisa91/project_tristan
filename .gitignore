@@ -1,8 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 /server/node_modules
 # dependencies
-/app_test/node_modules
-/app_test/build
+/app_prova/node_modules
 /.pnp
 .pnp.js
 
