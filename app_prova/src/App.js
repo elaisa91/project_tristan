@@ -165,8 +165,6 @@ class Canvas extends React.Component{
                 }
             }
             this.isIn = [new_is_in];
-            console.log(this.isIn);
-            console.log(this.isOut);
         }
     }  
 
