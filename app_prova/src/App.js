@@ -141,30 +141,32 @@ class Canvas extends React.Component{
                 this.isOut.push (item_obj);
             }
         }
-
+        console.log(this.isIn);
+        
         if (this.isIn.length > 1){
-            var new_is_in = this.isIn.slice();
             var smallest_index = 0;
             var smallest = this.isIn[smallest_index];
             var item_smallest = Object.keys(smallest)[0];
             var points_smallest = smallest[item_smallest];
+            var new_is_in = smallest;
             for (var i=1; i<this.isIn.length; i++){
                 var item_obj = this.isIn[i];
                 var item = Object.keys(item_obj)[0];
                 var points = item_obj[item];
                 if (area(points) < area(points_smallest) || area(points) === area(points_smallest)){
-                    new_is_in.splice(smallest_index, 1);
+                    new_is_in = item_obj;
                     this.isOut.push(smallest);
                     smallest_index = i;
                     smallest = this.isIn[smallest_index];
                     item_smallest = Object.keys(smallest)[0];
                     points_smallest = smallest[item_smallest];
                 } else{
-                    new_is_in.splice(i,1);
                     this.isOut.push(item_obj);
                 }
             }
-            this.isIn = new_is_in;
+            this.isIn = [new_is_in];
+            console.log(this.isIn);
+            console.log(this.isOut);
         }
     }  
 

@@ -39,10 +39,9 @@ mongoUtil.connectToServer( function( err, db ) {
             for (const facsimile of result){
                 var found = false;
                 var key = 0;
-                while (found === false && key < Object.keys(facsimile).length){
+                while (found === false && key < Object.keys(facsimile).slice(3).length){
                     
-                    var category = facsimile[key];
-                    console.log(category);
+                    var category = facsimile[Object.keys(facsimile).slice(3)[key]];
                     for (const item of category){
                         if (item['subcategory'] === req.params.selectedOption){
                             found = true;
@@ -53,12 +52,14 @@ mongoUtil.connectToServer( function( err, db ) {
                 }
                 if(found === true){
                     var polygons = []
-                    for (const key in Object.keys(facsimile).slice(3)){
+                    for (const key of Object.keys(facsimile).slice(3)){
                         var category = facsimile[key];
-                        polygons=polygons.concat(polygons,category);
+                        for (const item of category){ 
+                            polygons.push(item);
+                        }
+                    }
                     var image = {src: facsimile["url"], id: facsimile["name"], polygons: polygons}
                     result_images.push(image);
-                    }
                 }
             }
             console.log(result_images);
