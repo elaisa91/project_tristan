@@ -124,24 +124,33 @@ class Canvas extends React.Component{
         this.isOut = [];
         
         for (var el of polygons){
-            var points = el['points'];
-            if (el['subcategory']===''){
-                var item = el['id']
-            }else{
-                var item = el['subcategory']
-            }
-            var poly = this.generatePolygon(points);
             var item_obj = {};
+            var item = "";
+            var points = el['points'];
+            var id = el['id'];
+            var subcategory = el['subcategory'];
+            var transcription = el['transcription'];
+            //fare un metodo o funzione a parte per sta cosa 
+            if (subcategory !== '' && transcription !== ''){
+                item = subcategory + " " + transcription;
+            } else if (subcategory !== ''){
+                item = subcategory;   
+            } else if (transcription !== ''){
+                item = transcription;
+            } else if (id !== ''){
+                item = id;
+            }
+            
+            var poly = this.generatePolygon(points);
+            item_obj[item] = poly;
 
             if (is_point_in_poly(poly, [x, y]) === -1 || is_point_in_poly(poly, [x, y]) === 0) {
-                item_obj[item] = poly;
                 this.isIn.push (item_obj); 
             } else {
-                item_obj[item] = poly;
                 this.isOut.push (item_obj);
             }
         }
-        console.log(this.isIn);
+        
         
         if (this.isIn.length > 1){
             var smallest_index = 0;

@@ -62,7 +62,6 @@ mongoUtil.connectToServer( function( err, db ) {
                     result_images.push(image);
                 }
             }
-            console.log(result_images);
             res.send(result_images);  
 
             
