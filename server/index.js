@@ -1,4 +1,4 @@
-const mongoUtil = require('mongoUtil');
+const mongoUtil = require('./mongo_util');
 const express = require('express');
 const app = express();
 const port = 8080;

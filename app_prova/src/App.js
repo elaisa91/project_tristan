@@ -85,7 +85,7 @@ class Canvas extends React.Component{
             item = Object.keys(item_obj)[0];
             points = item_obj[item];
                 
-            this.drawPoly(points, "red", "4"); 
+            this.drawPoly(points, "rgb(255,51,51)", "2"); 
             
             this.isNothingSelected = false;
             this.lastItemSelected = this.props.onItemSelected(item, this.lastItemSelected);
@@ -434,7 +434,7 @@ class App extends React.Component {
                     onItemSelected = {(item, last_item) => this.handleItemSelected(item, last_item)}
                     onItemDeselected = {(last_item) => this.handleItemDeselected(last_item)}
                />
-            
+                
                <Selection
                     selected_item = {this.state.selected_item}
                />
