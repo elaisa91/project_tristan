@@ -2,7 +2,7 @@
   font-family: "Junicode";
   src: local("Junicode"),
    url("./fonts/Junicode.ttf") format("truetype");
-  }
+}
 
 body {
   margin: 0;

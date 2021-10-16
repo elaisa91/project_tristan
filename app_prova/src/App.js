@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactTooltip from 'react-tooltip';
 var area = require('area-polygon');
 var is_point_in_poly = require("robust-point-in-polygon");
 
