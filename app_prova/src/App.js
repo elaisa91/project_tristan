@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactTooltip from 'react-tooltip';
 var area = require('area-polygon');
 var is_point_in_poly = require("robust-point-in-polygon");
 
@@ -252,8 +251,6 @@ class Canvas extends React.Component{
     render (){
         return(
             <canvas class = "canvas" ref={this.myRef} >
-                <p datatip= {this.props.selected_item}></p>
-                <ReactTooltip/>
             </canvas>
         );
     }
