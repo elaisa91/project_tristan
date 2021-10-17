@@ -41,6 +41,31 @@ class Canvas extends React.Component{
         return poly;  
     }
 
+    drawTooltip(item, x, y, h, stroke, line_width, color, text_color){
+        if (item === null){
+            return;
+        }
+        const current = this.myRef.current;
+        const ctx = current.getContext("2d");
+        const tool_x = x-30;
+        const tool_y = y+10; 
+
+        ctx.font = "16px Junicode";
+        var w = ctx.measureText(item).width+10;
+
+        ctx.strokeStyle = stroke;
+        ctx.lineWidth = line_width;
+        ctx.strokeRect(tool_x, tool_y, w, h);
+
+        ctx.fillStyle = color;
+        ctx.fillRect(tool_x, tool_y, w, h);
+
+        ctx.fillStyle = text_color;
+        ctx.fillText(item, tool_x+5, y+25);
+
+
+    }
+
     drawPoly(points, stroke, line_width){
 
         const current = this.myRef.current;
@@ -69,7 +94,7 @@ class Canvas extends React.Component{
         var nwidth = Math.ceil(this.image.width / this.propWidth);
 
         ctx.clearRect(0,0, current.width, current.height);
-        ctx.drawImage(this.image, 0,0, nwidth, nheight);
+        ctx.drawImage(this.image, 0, 0, nwidth, nheight);
 
         if (is_out_array.length > 0){
             for (var i=0; i<is_out_array.length; i++){
@@ -87,6 +112,7 @@ class Canvas extends React.Component{
             points = item_obj[item];
                 
             this.drawPoly(points, "rgb(255,51,51)", "2"); 
+            
             
             this.isNothingSelected = false;
             this.lastItemSelected = this.props.onItemSelected(item, this.lastItemSelected);
@@ -192,6 +218,7 @@ class Canvas extends React.Component{
             var y = e.offsetY;
             this.isPointInPoly(this.props.selected_image, x, y);
             this.drawCanvas(this.isIn, this.isOut);
+            this.drawTooltip(this.lastItemSelected, x, y, 20, 'rgb(128,128,128)', "2", "rgba(0,0,0,0.6)", 'rgb(255,255,255)');
         }
 
         this.myRef.current.onmouseout = () => {
@@ -225,6 +252,8 @@ class Canvas extends React.Component{
     render (){
         return(
             <canvas class = "canvas" ref={this.myRef} >
+                <p datatip= {this.props.selected_item}></p>
+                <ReactTooltip/>
             </canvas>
         );
     }
@@ -435,10 +464,10 @@ class App extends React.Component {
                     onItemSelected = {(item, last_item) => this.handleItemSelected(item, last_item)}
                     onItemDeselected = {(last_item) => this.handleItemDeselected(last_item)}
                />
-                
-               <Selection
+        
+               {/*<Selection
                     selected_item = {this.state.selected_item}
-               />
+               />*/}
             </div>
         );
     }
