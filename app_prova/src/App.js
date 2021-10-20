@@ -40,7 +40,7 @@ class Canvas extends React.Component{
         return poly;  
     }
 
-    drawTooltip(item, x, y, h, stroke, line_width, color, text_color){
+    drawTooltip(item, x, y, stroke, line_width, color, text_color, text_size){
         if (item === null){
             return;
         }
@@ -48,21 +48,51 @@ class Canvas extends React.Component{
         const ctx = current.getContext("2d");
         const tool_x = x-30;
         const tool_y = y+10; 
+        
+        var text_x = tool_x;
+        var text_y = tool_y;
+        var w_text = 0;
+        var h_text = 0;
+        var w_tool = 0;
+        var h_tool = 0;
 
-        ctx.font = "16px Junicode";
-        var w = ctx.measureText(item).width+10;
+        /* fare in una funzione a parte (forse) */
+        if (item.indexOf("\n") > -1){
+            var item_array = item.split(" \n ");
+            for (const line of item_array){
+                var w_line = ctx.measureText(line).width;
+                if (w_line > w_text){
+                    w_text = w_line;
+                }
+                h_text += text_size;
+            } 
+        } else{
+            w_text = ctx.measureText(item).width;
+            h_text = text_size;
+        }
+        w_tool = w_text+10;
+        h_tool = h_text+10;
+        
+        text_x += (w_tool-w_text)/2.0;
+        text_y += (h_tool-h_text)/2.0+5;
 
+        ctx.font = text_size+"px Junicode";
         ctx.strokeStyle = stroke;
         ctx.lineWidth = line_width;
-        ctx.strokeRect(tool_x, tool_y, w, h);
-
+        ctx.strokeRect(tool_x, tool_y, w_tool, h_tool);
         ctx.fillStyle = color;
-        ctx.fillRect(tool_x, tool_y, w, h);
+        ctx.fillRect(tool_x, tool_y, w_tool, h_tool);
 
-        ctx.fillStyle = text_color;
-        ctx.fillText(item, tool_x+5, y+25);
-
-
+        if (typeof item_array !== 'undefined'){
+            for (const line of item_array){
+                ctx.fillStyle = text_color;
+                ctx.fillText(line, text_x, text_y);
+                text_y += text_size;
+            }
+        } else{
+            ctx.fillStyle = text_color;
+            ctx.fillText(item, text_x, text_y);
+        }
     }
 
     drawPoly(points, stroke, line_width){
@@ -158,11 +188,11 @@ class Canvas extends React.Component{
             var transcription = el['transcription'];
             //fare un metodo o funzione a parte per sta cosa 
             if (subcategory !== '' && transcription !== ''){
-                item = subcategory + " " + transcription;
+                item = subcategory + " \n " + transcription;
+            }else if (transcription !== ''){
+                    item = transcription;
             } else if (subcategory !== ''){
                 item = subcategory;   
-            } else if (transcription !== ''){
-                item = transcription;
             } else if (id !== ''){
                 item = id;
             }
@@ -217,7 +247,7 @@ class Canvas extends React.Component{
             var y = e.offsetY;
             this.isPointInPoly(this.props.selected_image, x, y);
             this.drawCanvas(this.isIn, this.isOut);
-            this.drawTooltip(this.lastItemSelected, x, y, 20, 'rgb(128,128,128)', "2", "rgba(0,0,0,0.6)", 'rgb(255,255,255)');
+            this.drawTooltip(this.lastItemSelected, x, y,'rgb(128,128,128)', "2", "rgba(0,0,0,0.6)", 'rgb(255,255,255)', 16);
         }
 
         this.myRef.current.onmouseout = () => {

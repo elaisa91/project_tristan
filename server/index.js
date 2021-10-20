@@ -17,7 +17,7 @@ mongoUtil.connectToServer( function( err, db ) {
             if (err) throw err;
             var persons = [];
             for (const facsimile of result){
-                var individuals = facsimile["individual"];
+                var individuals = facsimile["Individual"];
                 
                 for (const person of individuals){
                    
