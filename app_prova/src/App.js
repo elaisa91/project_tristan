@@ -141,7 +141,7 @@ class Canvas extends React.Component{
             item = Object.keys(item_obj)[0];
             points = item_obj[item];
                 
-            this.drawPoly(points, "rgb(255,51,51)", "2"); 
+            this.drawPoly(points, "rgba(153,76,0,0.7)", "2"); 
             
             
             this.isNothingSelected = false;
