@@ -74,7 +74,7 @@ class Canvas extends React.Component{
         h_tool = h_text+10;
         
         text_x += (w_tool-w_text)/2.0;
-        text_y += (h_tool-h_text)/2.0+5;
+        text_y += (h_tool-h_text)/2.0;
 
         ctx.font = text_size+"px Junicode";
         ctx.strokeStyle = stroke;
@@ -82,6 +82,7 @@ class Canvas extends React.Component{
         ctx.strokeRect(tool_x, tool_y, w_tool, h_tool);
         ctx.fillStyle = color;
         ctx.fillRect(tool_x, tool_y, w_tool, h_tool);
+        ctx.textBaseline='top';
 
         if (typeof item_array !== 'undefined'){
             for (const line of item_array){
@@ -180,13 +181,13 @@ class Canvas extends React.Component{
         this.isOut = [];
         
         for (var el of polygons){
+            //fare un metodo o funzione a parte per sta cosa 
             var item_obj = {};
             var item = "";
             var points = el['points'];
             var id = el['id'];
             var subcategory = el['subcategory'];
             var transcription = el['transcription'];
-            //fare un metodo o funzione a parte per sta cosa 
             if (subcategory !== '' && transcription !== ''){
                 item = subcategory + " \n " + transcription;
             }else if (transcription !== ''){
