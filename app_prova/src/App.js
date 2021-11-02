@@ -24,20 +24,14 @@ class Canvas extends React.Component{
         this.image.id = "";
     }
 
-    generatePolygon (string) {
-        if (string === ""){
+    generatePolygon (points) {
+        if (points.length === 0){
             return;
         }
-        var points = string.split(" ");
-        var poly  =  [];
-
-        for (var coordinates of points){
-            var xcoor = parseInt(coordinates.split(",")[0]) / this.propWidth;
-            var ycoor = parseInt(coordinates.split(",")[1]) / this.propHeight;
-                
-            poly.push ([xcoor, ycoor]);
-        }
-        return poly;  
+        var prop_points = points.map( ([xcoor, ycoor]) => 
+                               [xcoor/this.propWidth, ycoor/this.propHeight]
+        );  
+        return prop_points;  
     }
 
     drawTooltip(item, x, y, stroke, line_width, color, text_color, text_size){
@@ -109,7 +103,21 @@ class Canvas extends React.Component{
             
             path.lineTo(xcoor,ycoor);
         }
-
+        // disegna solo primo e ultimo punto
+        /*for (var i=0; i<points.length; i++){
+            var xcoor = points[i][0];
+            var ycoor = points[i][1];
+            if (i===0){
+                ctx.fillStyle = "blue";
+                ctx.lineWidth = 4;
+                ctx.fillRect(xcoor, ycoor, 4, 4);
+            } else if (i===points.length-1){
+                ctx.fillStyle = "red";
+                ctx.lineWidth = 4;
+                ctx.fillRect(xcoor, ycoor, 4, 4);
+            }
+            
+        }*/
         ctx.strokeStyle = stroke;
         ctx.lineWidth = line_width;
         ctx.stroke(path);

@@ -39,6 +39,21 @@ def generate_transcription(trans_ide, root):
                 if (child.tail):
                     transcription+= child.tail.replace("|", "\n")
     return (transcription)
+
+
+def generate_polygon(string):
+    points = string.split(" ")
+    poly  =  []
+    for i in range(0,len(points)):
+        coordinates = points[i]
+        xcoor = int(coordinates.split(",")[0])
+        ycoor = int(coordinates.split(",")[1])
+        if (i==0):
+            xcoor_first = xcoor
+            ycoor_first = ycoor
+        poly.append([xcoor, ycoor])
+    poly.append([xcoor_first,ycoor_first])
+    return poly;  
   
     
 
@@ -52,9 +67,9 @@ for child in root[1][0]:
             ide = string.capwords(zone.attrib["{http://www.w3.org/XML/1998/namespace}id"].replace("_", " "))
         
         if "points" in zone.attrib:
-            points = zone.attrib["points"]
+            points = generate_polygon(zone.attrib["points"])
         elif all(coord in zone.attrib for coord in ["lrx", "lry", "ulx", "uly"]):
-            points = zone.attrib["ulx"]+ "," + zone.attrib["uly"]+ " " + zone.attrib["lrx"]+ "," + zone.attrib["uly"]+ " " + zone.attrib["lrx"]+ "," + zone.attrib["lry"]+ " " + zone.attrib["ulx"]+ "," + zone.attrib["lry"]+ " " + zone.attrib["ulx"]+ "," + zone.attrib["uly"]
+            points = generate_polygon(zone.attrib["ulx"]+ "," + zone.attrib["uly"]+ " " + zone.attrib["lrx"]+ "," + zone.attrib["uly"]+ " " + zone.attrib["lrx"]+ "," + zone.attrib["lry"]+ " " + zone.attrib["ulx"]+ "," + zone.attrib["lry"])
             
         if "type" in zone.attrib:
             category = string.capwords(zone.attrib["type"].replace("_", " "))
