@@ -1,4 +1,4 @@
-const mongoUtil = require('mongoUtil');
+const mongoUtil = require('./mongo_util');
 const express = require('express');
 const app = express();
 const port = 8080;
@@ -11,15 +11,18 @@ mongoUtil.connectToServer( function( err, db ) {
 
    
     app.get('/imgTags', (req, res) => { 
+        
        
-        dbo.collection("facsimile_img").find({}).toArray(function(err, result) {
+        dbo.collection("facsimile_img_1").find({}).toArray(function(err, result) {
             if (err) throw err;
             var persons = [];
             for (const facsimile of result){
-                var individuals = facsimile["personCategories"]["individuals"];
-                for (const person of Object.keys(individuals)){
-                    if (!persons.includes(person)){
-                        persons.push(person);
+                var individuals = facsimile["Individual"];
+                
+                for (const person of individuals){
+                   
+                    if (!persons.includes(person['subcategory'])){
+                        persons.push(person['subcategory']);
                     }
                 }
             }
@@ -30,17 +33,37 @@ mongoUtil.connectToServer( function( err, db ) {
 
     app.get('/imgResults/:selectedOption', (req, res) => {
     
-        dbo.collection("facsimile_img").find().toArray(function(err, result) {
+        dbo.collection("facsimile_img_1").find().toArray(function(err, result) {
             if (err) throw err;
             var result_images = [];
             for (const facsimile of result){
-                var individuals = facsimile["personCategories"]["individuals"];
-                if (Object.keys(individuals).includes(req.params.selectedOption)){
-                    var image = {src: facsimile["url"], id: facsimile["name"], polygons: individuals};
+                var found = false;
+                var key = 0;
+                while (found === false && key < Object.keys(facsimile).slice(3).length){
+                    
+                    var category = facsimile[Object.keys(facsimile).slice(3)[key]];
+                    for (const item of category){
+                        if (item['subcategory'] === req.params.selectedOption){
+                            found = true;
+                            break;
+                        }
+                    }
+                    key++;
+                }
+                if(found === true){
+                    var polygons = []
+                    for (const key of Object.keys(facsimile).slice(3)){
+                        var category = facsimile[key];
+                        for (const item of category){ 
+                            polygons.push(item);
+                        }
+                    }
+                    var image = {src: facsimile["url"], id: facsimile["name"], polygons: polygons}
                     result_images.push(image);
                 }
             }
-            res.send(result_images);   
+            res.send(result_images);  
+
             
         });
     });
@@ -50,5 +73,3 @@ mongoUtil.connectToServer( function( err, db ) {
 app.listen(port, () => {
         console.log(`App listening at http://localhost:${port}`)
 });
-
-  

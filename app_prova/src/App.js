@@ -24,20 +24,70 @@ class Canvas extends React.Component{
         this.image.id = "";
     }
 
-    generatePolygon (string) {
-        if (string === ""){
+    generatePolygon (points) {
+        if (points.length === 0){
             return;
         }
-        var points = string.split(" ");
-        var poly  =  [];
+        var prop_points = points.map( ([xcoor, ycoor]) => 
+                               [xcoor/this.propWidth, ycoor/this.propHeight]
+        );  
+        return prop_points;  
+    }
 
-        for (var coordinates of points){
-            var xcoor = parseInt(coordinates.split(",")[0]) / this.propWidth;
-            var ycoor = parseInt(coordinates.split(",")[1]) / this.propHeight;
-                
-            poly.push ([xcoor, ycoor]);
+    drawTooltip(item, x, y, stroke, line_width, color, text_color, text_size){
+        if (item === null){
+            return;
         }
-        return poly;  
+        const current = this.myRef.current;
+        const ctx = current.getContext("2d");
+        const tool_x = x-30;
+        const tool_y = y+10; 
+        
+        var text_x = tool_x;
+        var text_y = tool_y;
+        var w_text = 0;
+        var h_text = 0;
+        var w_tool = 0;
+        var h_tool = 0;
+
+        /* fare in una funzione a parte (forse) */
+        if (item.indexOf("\n") > -1){
+            var item_array = item.split(" \n ");
+            for (const line of item_array){
+                var w_line = ctx.measureText(line).width;
+                if (w_line > w_text){
+                    w_text = w_line;
+                }
+                h_text += text_size;
+            } 
+        } else{
+            w_text = ctx.measureText(item).width;
+            h_text = text_size;
+        }
+        w_tool = w_text+10;
+        h_tool = h_text+10;
+        
+        text_x += (w_tool-w_text)/2.0;
+        text_y += (h_tool-h_text)/2.0;
+
+        ctx.font = text_size+"px Junicode";
+        ctx.strokeStyle = stroke;
+        ctx.lineWidth = line_width;
+        ctx.strokeRect(tool_x, tool_y, w_tool, h_tool);
+        ctx.fillStyle = color;
+        ctx.fillRect(tool_x, tool_y, w_tool, h_tool);
+        ctx.textBaseline='top';
+
+        if (typeof item_array !== 'undefined'){
+            for (const line of item_array){
+                ctx.fillStyle = text_color;
+                ctx.fillText(line, text_x, text_y);
+                text_y += text_size;
+            }
+        } else{
+            ctx.fillStyle = text_color;
+            ctx.fillText(item, text_x, text_y);
+        }
     }
 
     drawPoly(points, stroke, line_width){
@@ -53,7 +103,21 @@ class Canvas extends React.Component{
             
             path.lineTo(xcoor,ycoor);
         }
-
+        // disegna solo primo e ultimo punto
+        /*for (var i=0; i<points.length; i++){
+            var xcoor = points[i][0];
+            var ycoor = points[i][1];
+            if (i===0){
+                ctx.fillStyle = "blue";
+                ctx.lineWidth = 4;
+                ctx.fillRect(xcoor, ycoor, 4, 4);
+            } else if (i===points.length-1){
+                ctx.fillStyle = "red";
+                ctx.lineWidth = 4;
+                ctx.fillRect(xcoor, ycoor, 4, 4);
+            }
+            
+        }*/
         ctx.strokeStyle = stroke;
         ctx.lineWidth = line_width;
         ctx.stroke(path);
@@ -68,7 +132,7 @@ class Canvas extends React.Component{
         var nwidth = Math.ceil(this.image.width / this.propWidth);
 
         ctx.clearRect(0,0, current.width, current.height);
-        ctx.drawImage(this.image, 0,0, nwidth, nheight);
+        ctx.drawImage(this.image, 0, 0, nwidth, nheight);
 
         if (is_out_array.length > 0){
             for (var i=0; i<is_out_array.length; i++){
@@ -85,7 +149,8 @@ class Canvas extends React.Component{
             item = Object.keys(item_obj)[0];
             points = item_obj[item];
                 
-            this.drawPoly(points, "red", "4"); 
+            this.drawPoly(points, "rgba(153,76,0,0.7)", "2"); 
+            
             
             this.isNothingSelected = false;
             this.lastItemSelected = this.props.onItemSelected(item, this.lastItemSelected);
@@ -123,42 +188,57 @@ class Canvas extends React.Component{
         this.isIn = [];
         this.isOut = [];
         
-        for (var item in polygons){
-            var poly = this.generatePolygon(polygons[item]);
+        for (var el of polygons){
+            //fare un metodo o funzione a parte per sta cosa 
             var item_obj = {};
+            var item = "";
+            var points = el['points'];
+            var id = el['id'];
+            var subcategory = el['subcategory'];
+            var transcription = el['transcription'];
+            if (subcategory !== '' && transcription !== ''){
+                item = subcategory + " \n " + transcription;
+            }else if (transcription !== ''){
+                    item = transcription;
+            } else if (subcategory !== ''){
+                item = subcategory;   
+            } else if (id !== ''){
+                item = id;
+            }
+            
+            var poly = this.generatePolygon(points);
+            item_obj[item] = poly;
 
             if (is_point_in_poly(poly, [x, y]) === -1 || is_point_in_poly(poly, [x, y]) === 0) {
-                item_obj[item] = poly;
                 this.isIn.push (item_obj); 
             } else {
-                item_obj[item] = poly;
                 this.isOut.push (item_obj);
             }
         }
-
+        
+        
         if (this.isIn.length > 1){
-            var new_is_in = this.isIn.slice();
             var smallest_index = 0;
             var smallest = this.isIn[smallest_index];
             var item_smallest = Object.keys(smallest)[0];
             var points_smallest = smallest[item_smallest];
+            var new_is_in = smallest;
             for (var i=1; i<this.isIn.length; i++){
                 var item_obj = this.isIn[i];
                 var item = Object.keys(item_obj)[0];
                 var points = item_obj[item];
                 if (area(points) < area(points_smallest) || area(points) === area(points_smallest)){
-                    new_is_in.splice(smallest_index, 1);
+                    new_is_in = item_obj;
                     this.isOut.push(smallest);
                     smallest_index = i;
                     smallest = this.isIn[smallest_index];
                     item_smallest = Object.keys(smallest)[0];
                     points_smallest = smallest[item_smallest];
                 } else{
-                    new_is_in.splice(i,1);
                     this.isOut.push(item_obj);
                 }
             }
-            this.isIn = new_is_in;
+            this.isIn = [new_is_in];
         }
     }  
 
@@ -176,6 +256,7 @@ class Canvas extends React.Component{
             var y = e.offsetY;
             this.isPointInPoly(this.props.selected_image, x, y);
             this.drawCanvas(this.isIn, this.isOut);
+            this.drawTooltip(this.lastItemSelected, x, y,'rgb(128,128,128)', "2", "rgba(0,0,0,0.6)", 'rgb(255,255,255)', 16);
         }
 
         this.myRef.current.onmouseout = () => {
@@ -419,10 +500,10 @@ class App extends React.Component {
                     onItemSelected = {(item, last_item) => this.handleItemSelected(item, last_item)}
                     onItemDeselected = {(last_item) => this.handleItemDeselected(last_item)}
                />
-            
-               <Selection
+        
+               {/*<Selection
                     selected_item = {this.state.selected_item}
-               />
+               />*/}
             </div>
         );
     }
