@@ -2,13 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './fonts/Junicode.ttf';
 import './index.css';
-import './App.css';
-import App from './App';
+import SearchPage from './components/SearchPage/SearchPage.js';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <SearchPage />
   </React.StrictMode>,
   document.getElementById('root')
 );

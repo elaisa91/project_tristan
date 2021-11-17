@@ -1,0 +1,12 @@
+.fac-img{
+    float:left;
+    padding: 10px;
+}
+.fac-img img {
+    display: block;
+    max-width:170px;
+    max-height:270px;
+    width: auto;
+    height: auto;
+    animation: opacityOn 1s normal forwards;
+  }
