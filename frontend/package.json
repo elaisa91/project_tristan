@@ -9,8 +9,8 @@
     "area-polygon": "^1.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-redux": "^7.2.6",
     "react-scripts": "^1.1.5",
-    "react-tooltip": "^4.2.21",
     "robust-point-in-polygon": "^1.0.3",
     "web-vitals": "^1.1.2"
   },
