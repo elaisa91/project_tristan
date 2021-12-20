@@ -64,7 +64,8 @@ def generate_category(cat_ide, root):
 
 def generate_subcategory(subcat_ide, root):
     subcategory = {}
-    subcategory["name"] = string.capwords(subcat_ide.replace("_", " "))
+    if (subcat_ide != ""):
+        subcategory["name"] = string.capwords(subcat_ide.replace("_", " "))
     for interp in root[0].iter("{http://www.tei-c.org/ns/1.0}interp"):
         if (interp.attrib["{http://www.w3.org/XML/1998/namespace}id"] == subcat_ide):
             if "sameAs" in interp.attrib:
@@ -118,6 +119,9 @@ def generate_document(surface):
         category = ""
         subcategory = ""
         transcription = ""
+        cat_ide = ""
+        subcat_ide = ""
+        trans_ide = ""
 
         # crea id
         if "{http://www.w3.org/XML/1998/namespace}id" in zone.attrib:
@@ -143,9 +147,9 @@ def generate_document(surface):
             if ("sameAs" in zone.attrib):
                 trans_ide = zone.attrib["sameAs"][1:]
                 transcription = generate_transcription (trans_ide, root)
-
+        
         subcategory = generate_subcategory(subcat_ide, root) 
-
+        
         if (not category in document):
             document[category] = []
         
@@ -158,7 +162,7 @@ def insert_documents(mycol):
     for surface in root[1]:
         document = generate_document(surface)
         mycol.insert_one(document)
-    return "Documents inserted"
+    print ("Documents inserted")
 
 insert_documents(mycol)
 
