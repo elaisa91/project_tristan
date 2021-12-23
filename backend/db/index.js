@@ -15,7 +15,7 @@ export function getDb() {
 }
 
 export function makeQuery (callback, dbo, query) {
-    dbo.collection("facsimile_img_1").find(query).toArray(function(err, res) {
+    dbo.collection("facsimile_img_2").find(query).toArray(function(err, res) {
         return callback (err, res);
     });
 }

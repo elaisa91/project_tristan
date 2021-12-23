@@ -12,8 +12,8 @@ class Choice extends React.Component {
         return (
             
             <select 
-                name = 'persons'
-                id="persons"
+                name = {this.props.name}
+                id= {this.props.id}
                 value = {this.props.selected_option}
                 onChange = {this.props.onChange}
             >

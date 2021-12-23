@@ -10,8 +10,10 @@ class SearchPage extends React.Component {
         this.state = {
             error: null,
             isLoaded: false,
-            options: [],
-            selected_option: "",
+            cat_options: [],
+            subcat_options: [],
+            selected_category: "",
+            selected_subcategory: "",
             result_images : [],
             selected_image: {},
             selected_item: ""
@@ -19,14 +21,14 @@ class SearchPage extends React.Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:8080/v1/individuals")
+        fetch("http://localhost:8080/v1/categories")
             .then(res => res.json())
             .then(
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        options: result,
-                        selected_option: result[0]
+                        cat_options: result,
+                        selected_category: result[0]
                     });
                 },
                 (error) => {
@@ -63,9 +65,31 @@ class SearchPage extends React.Component {
         });   
     }
     
-    handleChange(e){
+    handleCategoryChange(e){
         this.setState ({
-            selected_option: e.target.value,
+            selected_category: e.target.value,
+            selected_image: {}
+        });
+
+        fetch("http://localhost:8080/v1/subcategories/"+ e.target.value)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({  
+                        subcat_options: result
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        error
+                    });
+                }
+            )
+    }
+
+    handleSubCategoryChange(e){
+        this.setState ({
+            selected_subcategory: e.target.value,
             selected_image: {}
         });
 
@@ -85,18 +109,31 @@ class SearchPage extends React.Component {
             )
     }
 
+
     render() {
         return (
             <div class="search-page">
-                <div class="ind-choice">
-                    Seleziona un individuo: 
-                    <Choice 
-                        options = {this.state.options}
-                        selected_option = {this.state.selected_option}
-                        onChange = {(e) => this.handleChange(e)}
+                <div class="cat-choice">
+                    Seleziona una categoria: 
+                    <Choice
+                        name = 'categories' 
+                        id = 'categories'
+                        options = {this.state.cat_options}
+                        selected_option = {this.state.selected_category}
+                        onChange = {(e) => this.handleCategoryChange(e)}
                     />
                 </div>
 
+                <div class="subcat-choice">
+                    Seleziona una sottocategoria: 
+                    <Choice 
+                        name = 'subcategories' 
+                        id = 'subcategories'
+                        options = {this.state.subcat_options}
+                        selected_option = {this.state.selected_subcategory}
+                        onChange = {(e) => this.handleSubCategoryChange(e)}
+                    />
+                </div>
 
                 <Slider
                     selected_option = {this.state.selected_option}
