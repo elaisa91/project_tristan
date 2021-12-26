@@ -10,7 +10,6 @@ class Choice extends React.Component {
                                                 value = {option}
                                             />);
         return (
-            
             <select 
                 name = {this.props.name}
                 id= {this.props.id}

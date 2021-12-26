@@ -68,7 +68,8 @@ class SearchPage extends React.Component {
     handleCategoryChange(e){
         this.setState ({
             selected_category: e.target.value,
-            selected_image: {}
+            selected_image: {},
+            subcat_options: []
         });
 
         fetch("http://localhost:8080/v1/subcategories/"+ e.target.value)
