@@ -10,7 +10,7 @@ function subcategoriesGet(req, res){
         var subcategories = [];
         for (const facsimile of result){
             for (const zone of facsimile[req.params.selectedCategory]){
-                if (zone["subcategory"]!=={} && !subcategories.includes(zone["subcategory"]["name"])){
+                if (zone["subcategory"]!=={}){
                     var subcategory = zone["subcategory"]["name"];
                     if (!subcategories.includes(subcategory)){
                         subcategories.push(subcategory);

@@ -2,6 +2,8 @@ import {getDb, makeQuery} from '../db/index.js';
 
 function categoriesGet(req, res){
     var dbo = getDb();
+    var query = {};
+    var projection = {};
     makeQuery(function(err, result) {
         if (err) throw err;
         var categories = [];
@@ -13,7 +15,7 @@ function categoriesGet(req, res){
             }
         }
         res.send(JSON.stringify(categories)); 
-    }, dbo, {});
+    }, dbo, query, projection);
 }
 
 export default categoriesGet;
