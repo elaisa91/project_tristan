@@ -10,10 +10,9 @@ class SearchPage extends React.Component {
         this.state = {
             error: null,
             isLoaded: false,
-            cat_options: [],
-            subcat_options: [],
-            selected_category: "",
-            selected_subcategory: "",
+            cat_options: ["Seleziona una categoria"],
+            subcat_options: ["Seleziona una sottocategoria"],
+            selected_option : "",
             result_images : [],
             selected_image: {},
             selected_item: ""
@@ -27,8 +26,8 @@ class SearchPage extends React.Component {
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        cat_options: result,
-                        selected_category: result[0]
+                        cat_options: this.state.cat_options.concat(result),
+                        //selected_option: this.state.cat_options[0]
                     });
                 },
                 (error) => {
@@ -67,9 +66,9 @@ class SearchPage extends React.Component {
     
     handleCategoryChange(e){
         this.setState ({
-            selected_category: e.target.value,
+            selected_option: e.target.value,
             selected_image: {},
-            subcat_options: []
+            subcat_options: ["Seleziona una sottocategoria"]
         });
 
         fetch("http://localhost:8080/v1/subcategories/"+ e.target.value)
@@ -77,7 +76,7 @@ class SearchPage extends React.Component {
             .then(
                 (result) => {
                     this.setState({  
-                        subcat_options: result
+                        subcat_options: this.state.subcat_options.concat(result)
                     });
                 },
                 (error) => {
@@ -90,7 +89,7 @@ class SearchPage extends React.Component {
 
     handleSubCategoryChange(e){
         this.setState ({
-            selected_subcategory: e.target.value,
+            selected_option: e.target.value,
             selected_image: {}
         });
 

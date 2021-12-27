@@ -9,19 +9,29 @@ class Choice extends React.Component {
     }
     render() {
         const options = this.props.options;
-        options.includes(null)||options.length===0 ? this.showing = false : this.showing=true;
-        const list = options.map((option) => <Option 
+        options.includes(null)||options.length===1 ? this.showing = false : this.showing=true;
+        const first_option = <Option 
+                                selected = {true}
+                                disabled = {true}
+                                value = {options[0]}
+                            />
+
+        const list = options.slice(1).map((option) => <Option 
+                                                selected = {false}
+                                                disabled = {false}
                                                 value = {option}
                                             />);
+       
         return (
             this.showing === true 
             ?
             <select 
                 name = {this.props.name}
                 id= {this.props.id}
-                value = {this.props.selected_option}
+                //value = {this.props.selected_option}
                 onChange = {this.props.onChange}
             >
+                {first_option}
                 {list}
                 
             </select>
