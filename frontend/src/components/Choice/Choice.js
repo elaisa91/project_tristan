@@ -28,7 +28,6 @@ class Choice extends React.Component {
             <select 
                 name = {this.props.name}
                 id= {this.props.id}
-                //value = {this.props.selected_option}
                 onChange = {this.props.onChange}
             >
                 {first_option}

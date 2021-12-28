@@ -27,7 +27,6 @@ class SearchPage extends React.Component {
                     this.setState({
                         isLoaded: true,
                         cat_options: this.state.cat_options.concat(result),
-                        //selected_option: this.state.cat_options[0]
                     });
                 },
                 (error) => {
@@ -85,6 +84,21 @@ class SearchPage extends React.Component {
                     });
                 }
             )
+            /* mettere queste chiamate in funzioni a parte*/
+            fetch("http://localhost:8080/v1/imgResults/"+ e.target.value)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({  
+                        result_images: result
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        error
+                    });
+                }
+            )
     }
 
     handleSubCategoryChange(e){
@@ -114,23 +128,19 @@ class SearchPage extends React.Component {
         return (
             <div class="search-page">
                 <div class="cat-choice">
-                    Seleziona una categoria: 
                     <Choice
                         name = 'categories' 
                         id = 'categories'
                         options = {this.state.cat_options}
-                        selected_option = {this.state.selected_category}
                         onChange = {(e) => this.handleCategoryChange(e)}
                     />
                 </div>
 
                 <div class="subcat-choice">
-                    Seleziona una sottocategoria: 
                     <Choice 
                         name = 'subcategories' 
                         id = 'subcategories'
                         options = {this.state.subcat_options}
-                        selected_option = {this.state.selected_subcategory}
                         onChange = {(e) => this.handleSubCategoryChange(e)}
                     />
                 </div>
