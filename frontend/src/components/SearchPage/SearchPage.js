@@ -60,7 +60,7 @@ class SearchPage extends React.Component {
     handleClick(i){
         this.setState({
             selected_image: this.state.result_images[i]
-        });   
+        }); 
     }
     
     handleCategoryChange(e){
@@ -153,6 +153,8 @@ class SearchPage extends React.Component {
             
                <Canvas
                     selected_image = {this.state.selected_image}
+                    height = {600}
+                    width = {500}
                     onItemSelected = {(item, last_item) => this.handleItemSelected(item, last_item)}
                     onItemDeselected = {(last_item) => this.handleItemDeselected(last_item)}
                />

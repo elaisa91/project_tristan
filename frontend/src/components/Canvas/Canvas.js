@@ -188,7 +188,7 @@ class Canvas extends React.Component{
         var polygons = sel_img.polygons;
         this.isIn = [];
         this.isOut = [];
-        
+
         for (var el of polygons){
             //fare un metodo o funzione a parte per sta cosa 
             var item_obj = {};
@@ -197,12 +197,12 @@ class Canvas extends React.Component{
             var id = el['id'];
             var subcategory = el['subcategory'];
             var transcription = el['transcription'];
-            if (subcategory !== '' && transcription !== ''){
-                item = subcategory + " \n " + transcription;
-            }else if (transcription !== ''){
-                    item = transcription;
-            } else if (subcategory !== ''){
-                item = subcategory;   
+            if (Object.keys(subcategory).length !== 0 && transcription !== ''){
+                item = subcategory['name'] + ": \n " + transcription['text'];
+            } else if (transcription !== ''){
+                item = transcription['text'];
+            } else if (Object.keys(subcategory).length !== 0){
+                item = subcategory['name'];   
             } else if (id !== ''){
                 item = id;
             }
@@ -217,7 +217,7 @@ class Canvas extends React.Component{
             }
         }
         
-        
+        // fare in una funzione a parte
         if (this.isIn.length > 1){
             var smallest_index = 0;
             var smallest = this.isIn[smallest_index];
@@ -244,8 +244,8 @@ class Canvas extends React.Component{
     }  
 
     componentDidMount () {
-        this.myRef.current.height = 600;
-        this.myRef.current.width = 500;
+        this.myRef.current.height = this.props.height;
+        this.myRef.current.width = this.props.width;
         this.image = new Image();
 
         this.myRef.current.onmousemove = (e) => { 
