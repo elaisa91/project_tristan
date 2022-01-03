@@ -135,7 +135,7 @@ class Canvas extends React.Component{
         ctx.clearRect(0,0, current.width, current.height);
         ctx.drawImage(this.image, 0, 0, nwidth, nheight);
 
-        if (is_out_array.length > 0){
+        /*if (is_out_array.length > 0){
             for (var i=0; i<is_out_array.length; i++){
                 var item_obj = is_out_array[i];
                 var item = Object.keys(item_obj)[0];
@@ -143,18 +143,29 @@ class Canvas extends React.Component{
                 
                 //this.drawPoly(points, "black", "2");
             }
-        }
+        }*/
 
         if (is_in_array.length === 1){
-            item_obj = is_in_array[0];
-            item = Object.keys(item_obj)[0];
-            points = item_obj[item];
+            var item_obj = is_in_array[0];
+            var item = Object.keys(item_obj)[0];
+            var points = item_obj[item];
                 
             this.drawPoly(points, "rgba(153,76,0,0.7)", "2"); 
             
             
             this.isNothingSelected = false;
             this.lastItemSelected = this.props.onItemSelected(item, this.lastItemSelected);
+
+            if (is_out_array.length > 0){
+                for (var i=0; i<is_out_array.length; i++){
+                    item_obj = is_out_array[i];
+                    item = Object.keys(item_obj)[0];
+                    points = item_obj[item];
+                    if (item === this.lastItemSelected){
+                        this.drawPoly(points, "rgba(153,76,0,0.7)", "2");
+                    }
+                }
+            }
         }
         
         /*if (is_in_array.length === 1){
@@ -217,7 +228,7 @@ class Canvas extends React.Component{
             }
         }
         
-        // fare in una funzione a parte
+        // fare in una funzione a parte (forse usare sort)
         if (this.isIn.length > 1){
             var smallest_index = 0;
             var smallest = this.isIn[smallest_index];
@@ -240,6 +251,14 @@ class Canvas extends React.Component{
                 }
             }
             this.isIn = [new_is_in];
+        }
+        
+        if (this.isOut.length > 1){
+            this.isOut.sort((a, b) => {
+                if (area(a[Object.keys(a)[0]]) > area(b[Object.keys(b)[0]])) { return -1;}
+                if (area(a[Object.keys(a)[0]]) < area(b[Object.keys(b)[0]])) {return 1;}
+                return 0;
+            });
         }
     }  
 
