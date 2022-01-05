@@ -6,6 +6,11 @@
       "src": "university_logo.png",
       "type": "image/png",
       "sizes": "446x445"
+    },
+    {
+      "src": "university_logo_footer.png",
+      "type": "image/png",
+      "sizes": "1335x472"
     }
   ],
   "start_url": ".",

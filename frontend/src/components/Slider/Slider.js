@@ -38,7 +38,7 @@ class Slider extends React.Component {
         
         return (
             
-            <div class = 'slider'>
+            <div className = 'slider'>
                 <p>{this.selectedOptionString}</p>
                
                 {img_list}

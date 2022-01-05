@@ -2,9 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import './fonts/Junicode.ttf';
 import './index.css';
 import SearchPage from './components/SearchPage/SearchPage.js';
+import Navigator from './components/Navigator/Navigator.js';
+import Footer from './components/Footer/Footer.js';
 
 const initialState = {
    
@@ -27,7 +30,13 @@ export const store = createStore(reducer);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <SearchPage />
+      <Router>
+        <Navigator/>
+        <Routes> 
+          <Route path="/facsimile" element = {<SearchPage/>} />
+        </Routes>
+      </Router> 
+      <Footer/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

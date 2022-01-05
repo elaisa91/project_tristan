@@ -84,21 +84,21 @@ class SearchPage extends React.Component {
                     });
                 }
             )
-            /* mettere queste chiamate in funzioni a parte*/
-            fetch("http://localhost:8080/v1/imgResults/"+ e.target.value)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({  
-                        result_images: result
-                    });
-                },
-                (error) => {
-                    this.setState({
-                        error
-                    });
-                }
-            )
+        /* mettere queste chiamate in funzioni a parte e usare axes*/
+        fetch("http://localhost:8080/v1/imgResults/"+ e.target.value)
+        .then(res => res.json())
+        .then(
+            (result) => {
+                this.setState({  
+                    result_images: result
+                });
+            },
+            (error) => {
+                this.setState({
+                    error
+                });
+            }
+        )
     }
 
     handleSubCategoryChange(e){
@@ -126,8 +126,8 @@ class SearchPage extends React.Component {
 
     render() {
         return (
-            <div class="search-page">
-                <div class="cat-choice">
+            <div className="search-page">
+                <div className="cat-choice">
                     <Choice
                         name = 'categories' 
                         id = 'categories'
@@ -136,7 +136,7 @@ class SearchPage extends React.Component {
                     />
                 </div>
 
-                <div class="subcat-choice">
+                <div className="subcat-choice">
                     <Choice 
                         name = 'subcategories' 
                         id = 'subcategories'

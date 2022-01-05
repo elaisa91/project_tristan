@@ -309,7 +309,7 @@ class Canvas extends React.Component{
 
     render (){
         return(
-            <canvas class = "canvas" ref={this.myRef} >
+            <canvas className = "canvas" ref={this.myRef} >
             </canvas>
         );
     }
