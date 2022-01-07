@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import './fonts/Junicode.ttf';
 import './index.css';
 import SearchPage from './components/SearchPage/SearchPage.js';
+import Home from './components/Home/Home.js';
 import Navigator from './components/Navigator/Navigator.js';
 import Footer from './components/Footer/Footer.js';
 
@@ -33,6 +34,7 @@ ReactDOM.render(
       <Router>
         <Navigator/>
         <Routes> 
+          <Route path="/" element = {<Home/>} />
           <Route path="/facsimile" element = {<SearchPage/>} />
         </Routes>
       </Router> 
