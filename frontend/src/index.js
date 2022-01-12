@@ -9,6 +9,7 @@ import SearchPage from './components/SearchPage/SearchPage.js';
 import Home from './components/Home/Home.js';
 import Navigator from './components/Navigator/Navigator.js';
 import Footer from './components/Footer/Footer.js';
+import ContentOne from './components/Footer/Footer.js';
 
 const initialState = {
    

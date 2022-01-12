@@ -6,9 +6,6 @@ class Slider extends React.Component {
     constructor(props) {
         super(props);
         this.selectedOptionString = null;
-        this.state = {
-            selected_item: ""
-        };
     }
 
     componentDidUpdate (){
