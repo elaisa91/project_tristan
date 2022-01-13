@@ -1,4 +1,5 @@
 import React from 'react';
+import { Navigate } from "react-router-dom";
 import './SearchPage.css';
 import Choice from '../Choice/Choice.js';
 import Slider from '../Slider/Slider.js';
@@ -60,7 +61,7 @@ class SearchPage extends React.Component {
     handleClick(i){
         this.setState({
             selected_image: this.state.result_images[i]
-        }); 
+        });
     }
     
     handleCategoryChange(e){
@@ -123,7 +124,6 @@ class SearchPage extends React.Component {
             )
     }
 
-
     render() {
         return (
             <div className="search-page">
@@ -150,14 +150,15 @@ class SearchPage extends React.Component {
                     result_images = {this.state.result_images}
                     onClick = {(i) => this.handleClick(i)}
                 />
-            
-               <Canvas
+                
+                <Canvas
                     selected_image = {this.state.selected_image}
                     height = {600}
                     width = {500}
                     onItemSelected = {(item, last_item) => this.handleItemSelected(item, last_item)}
                     onItemDeselected = {(last_item) => this.handleItemDeselected(last_item)}
-               />
+                />
+                
             </div>
         );
     }

@@ -9,7 +9,7 @@ class Choice extends React.Component {
     }
     render() {
         const options = this.props.options;
-        options.includes(null)||options.length===1 ? this.showing = false : this.showing=true;
+        options.includes(null)||options.length===1 ? this.showing = false : this.showing = true;
         const first_option = <Option 
                                 selected = {true}
                                 disabled = {true}
