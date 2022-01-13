@@ -1,12 +1,11 @@
 import React from 'react';
-import './Home.css';
+import './HomePage.css';
 import Header from '../Header/Header.js';
 import SubMenu from '../SubMenu/SubMenu.js';
-import Text from '../Text/Text.js';
-import ContentOne from '../Contents/ContentOne';
-import ContentTwo from '../Contents/ContentTwo';
+import TextOne from '../Texts/TextOne';
+import TextTwo from '../Texts/TextTwo';
 
-class Home extends React.Component{
+class HomePage extends React.Component{
     constructor (props) { 
         super(props); 
         this.state = {
@@ -19,12 +18,12 @@ class Home extends React.Component{
         switch (this.state.sub_menu_items[i].desc){
             case "Il Tristano":
                 this.setState(
-                    {content: <ContentOne/>}
+                    {content: <TextOne/>}
                 );
                 break;
             case "Gottfried von Strassburg":
                 this.setState(
-                    {content: <ContentTwo/>}
+                    {content: <TextTwo/>}
                 );
                 break;
             default: 
@@ -41,13 +40,11 @@ class Home extends React.Component{
                     sub_menu_items = {this.state.sub_menu_items}
                     onClick = {(i) => this.handleClick(i)}
                 />
-                <Text
-                    content = {this.state.content}
-                />
                 
+                {this.state.content}
             </div>
         );
     }
 }
 
-export default Home;
+export default HomePage;

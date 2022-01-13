@@ -5,11 +5,11 @@ import { createStore } from 'redux';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import './fonts/Junicode.ttf';
 import './index.css';
-import SearchPage from './components/SearchPage/SearchPage.js';
-import Home from './components/Home/Home.js';
+import HomePage from './components/HomePage/HomePage.js';
+import ProjectPage from './components/ProjectPage/ProjectPage.js';
+import FacsimilePage from './components/FacsimilePage/FacsimilePage.js';
 import Navigator from './components/Navigator/Navigator.js';
 import Footer from './components/Footer/Footer.js';
-import ContentOne from './components/Footer/Footer.js';
 
 const initialState = {
    
@@ -35,8 +35,9 @@ ReactDOM.render(
       <Router>
         <Navigator/>
         <Routes> 
-          <Route path="/" element = {<Home/>} />
-          <Route path="/facsimile" element = {<SearchPage/>} />
+          <Route path="/" element = {<HomePage/>} />
+          <Route path="/project" element = {<ProjectPage/>} />
+          <Route path="/facsimile" element = {<FacsimilePage/>} />
         </Routes>
       </Router> 
       <Footer/>
