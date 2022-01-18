@@ -8,26 +8,27 @@ import './index.css';
 import HomePage from './components/HomePage/HomePage.js';
 import ProjectPage from './components/ProjectPage/ProjectPage.js';
 import FacsimilePage from './components/FacsimilePage/FacsimilePage.js';
+import CanvasPage from './components/CanvasPage/CanvasPage.js';
 import Navigator from './components/Navigator/Navigator.js';
 import Footer from './components/Footer/Footer.js';
 
 const initialState = {
-   
+  image: null
 }
 
 function reducer (state = initialState, action) { 
   switch(action.type) {
-    case "":
+    case "SELECT_IMAGE":
       return {
         ...state,
-        users: action.payload,
+        image: action.payload
       };
     default:
       return state;
   }
 }
 
-export const store = createStore(reducer);
+const store = createStore(reducer);
 
 ReactDOM.render(
   <React.StrictMode>
@@ -38,6 +39,7 @@ ReactDOM.render(
           <Route path="/" element = {<HomePage/>} />
           <Route path="/project" element = {<ProjectPage/>} />
           <Route path="/facsimile" element = {<FacsimilePage/>} />
+          <Route path="/facsimile/:canvas" element = {<CanvasPage/>} />
         </Routes>
       </Router> 
       <Footer/>

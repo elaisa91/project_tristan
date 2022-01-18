@@ -1,9 +1,9 @@
 import React from 'react';
 import { Navigate } from "react-router-dom";
+import { connect } from 'react-redux';
 import './SearchPage.css';
 import Choice from '../Choice/Choice.js';
 import Slider from '../Slider/Slider.js';
-import Canvas from '../Canvas/Canvas.js';
 
 class SearchPage extends React.Component {
     constructor (props) { 
@@ -14,9 +14,7 @@ class SearchPage extends React.Component {
             cat_options: ["Seleziona una categoria"],
             subcat_options: ["Seleziona una sottocategoria"],
             selected_option : "",
-            result_images : [],
-            selected_image: {},
-            selected_item: ""
+            result_images : []
         };
     }
 
@@ -40,28 +38,15 @@ class SearchPage extends React.Component {
 
     }
 
-    handleItemDeselected(last_item){
-        last_item = null;
-        this.setState({
-            selected_item: ""
-        }); 
-        return last_item;
-    }
-
-    handleItemSelected(item, last_item){
-        if(last_item !== item) {
-           last_item = item;
-            this.setState({
-                selected_item: item
-            }); 
-        }
-        return last_item;
-    }
-
     handleClick(i){
-        this.setState({
-            selected_image: this.state.result_images[i]
+        this.props.dispatch({
+            type: "SELECT_IMAGE",
+            payload: this.state.result_images[i]
         });
+        /*this.setState({
+            selected_image: this.state.result_images[i]
+        });*/
+        <Navigate to = {"/facsimile/:" + this.state.result_images[i].id} />
     }
     
     handleCategoryChange(e){
@@ -151,17 +136,13 @@ class SearchPage extends React.Component {
                     onClick = {(i) => this.handleClick(i)}
                 />
                 
-                <Canvas
-                    selected_image = {this.state.selected_image}
-                    height = {600}
-                    width = {500}
-                    onItemSelected = {(item, last_item) => this.handleItemSelected(item, last_item)}
-                    onItemDeselected = {(last_item) => this.handleItemDeselected(last_item)}
-                />
                 
             </div>
         );
     }
 }
 
-export default SearchPage;
+const mapStateToProps = state => ({ 
+});
+
+export default connect(mapStateToProps)(SearchPage);
