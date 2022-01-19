@@ -9,7 +9,6 @@ import HomePage from './components/HomePage/HomePage.js';
 import ProjectPage from './components/ProjectPage/ProjectPage.js';
 import FacsimilePage from './components/FacsimilePage/FacsimilePage.js';
 import CanvasPage from './components/CanvasPage/CanvasPage.js';
-import Navigator from './components/Navigator/Navigator.js';
 import Footer from './components/Footer/Footer.js';
 
 const initialState = {
@@ -34,7 +33,6 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
-        <Navigator/>
         <Routes> 
           <Route path="/" element = {<HomePage/>} />
           <Route path="/project" element = {<ProjectPage/>} />

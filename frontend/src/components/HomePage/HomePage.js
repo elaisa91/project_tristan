@@ -1,6 +1,7 @@
 import React from 'react';
 import './HomePage.css';
 import Header from '../Header/Header.js';
+import Navigator from '../Navigator/Navigator.js';
 import SubMenu from '../SubMenu/SubMenu.js';
 import TextOne from '../Texts/TextOne';
 import TextTwo from '../Texts/TextTwo';
@@ -34,8 +35,9 @@ class HomePage extends React.Component{
     }
     render(){
         return(
-            <div className='home'>
+            <div className='home-page'>
                 <Header/>
+                <Navigator/>
                 <SubMenu
                     sub_menu_items = {this.state.sub_menu_items}
                     onClick = {(i) => this.handleClick(i)}

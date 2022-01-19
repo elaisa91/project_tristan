@@ -1,5 +1,6 @@
 import React from 'react';
 import './FacsimilePage.css';
+import Navigator from '../Navigator/Navigator.js';
 import SubMenu from '../SubMenu/SubMenu.js';
 import TextEight from '../Texts/TextEight';
 import SearchPage from '../SearchPage/SearchPage';
@@ -33,7 +34,8 @@ class FacsimilePage extends React.Component{
     }
     render(){
         return(
-            <div className='facsimile'>
+            <div className='facsimile-page'>
+                <Navigator/>
                 <SubMenu
                     sub_menu_items = {this.state.sub_menu_items}
                     onClick = {(i) => this.handleClick(i)}
