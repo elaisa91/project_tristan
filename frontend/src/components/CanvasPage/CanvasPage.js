@@ -3,7 +3,6 @@ import { Navigate, useNavigate } from "react-router-dom"
 import { connect } from 'react-redux';
 import './CanvasPage.css';
 import Canvas from '../Canvas/Canvas.js';
-import Button from '../Button/Button.js';
 
 
 function CanvasPage(props) {
