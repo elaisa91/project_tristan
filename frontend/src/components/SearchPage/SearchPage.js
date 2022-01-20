@@ -46,7 +46,7 @@ class SearchPage extends React.Component {
         /*this.setState({
             selected_image: this.state.result_images[i]
         });*/
-        <Navigate to = {"/facsimile/:" + this.state.result_images[i].id} />
+        
     }
     
     handleCategoryChange(e){
