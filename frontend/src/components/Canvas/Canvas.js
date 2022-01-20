@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState }from 'react';
 import { connect } from 'react-redux';
-
 import './Canvas.css';
-
 var area = require('area-polygon');
 var is_point_in_poly = require("robust-point-in-polygon");
 
@@ -14,11 +12,10 @@ function Canvas(props) {
     let isNothingSelected = null;
     let isIn = null;
     let isOut = null;
+    let selectedImage = props.image || {};
 
     const [mouseMove, setMouseMove] = useState(false);
     const [image, setImage] = useState(new Image());
-
-    let selectedImage = props.image || {};
 
     function clear (){
         const current = myRef.current;
@@ -268,10 +265,8 @@ function Canvas(props) {
 
     useEffect(() => {
         if(mouseMove === false) {
-            // console.log("ASDASDAS");
             myRef.current.height = props.height;
             myRef.current.width = props.width;
-            // setImage(new Image());
     
             myRef.current.onmousemove = (e) => { 
                 if (Object.keys(selectedImage).length === 0) { 
@@ -295,7 +290,6 @@ function Canvas(props) {
             }
             setMouseMove(true);
         }
-        // console.log(selectedImage);
         if (Object.keys(selectedImage).length > 0) { 
             if (selectedImage.src !== image.src) {
                 image.src = selectedImage.src;

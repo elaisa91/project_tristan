@@ -1,5 +1,4 @@
 import React from 'react';
-import { Navigate } from "react-router-dom";
 import { connect } from 'react-redux';
 import './SearchPage.css';
 import Choice from '../Choice/Choice.js';
@@ -42,11 +41,7 @@ class SearchPage extends React.Component {
         this.props.dispatch({
             type: "SELECT_IMAGE",
             payload: this.state.result_images[i]
-        });
-        /*this.setState({
-            selected_image: this.state.result_images[i]
-        });*/
-        
+        });  
     }
     
     handleCategoryChange(e){
