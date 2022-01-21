@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from "react-router-dom"
-import { connect } from 'react-redux';
 import './CanvasPage.css';
 import Canvas from '../Canvas/Canvas.js';
 import TextOne from '../Texts/TextOne';
@@ -9,12 +8,12 @@ import TextOne from '../Texts/TextOne';
 function CanvasPage(props) {
     const [selected_item, setSelectedItem] = useState("");
     const [description, setDescription] = useState(false);
-    const selectedImage = props.image || {};
     let navigate = useNavigate();
+    let myRef = useRef(null);
 
 
-    function handleClick(e){
-        switch (e.target.className){
+    function handleClick(e, icon){
+        switch (icon){
             case "fa fa-file-o":
             case "fa fa-arrow-circle-left":
             case "fa fa-arrow-circle-right":
@@ -45,10 +44,11 @@ function CanvasPage(props) {
 
     return (
         <div className="canvas-page">
-            <button className='button' onClick = {(e) => handleClick(e)}>
+            <button className='button' ref = {myRef} onClick = {(e) => handleClick(e, "fa fa-arrow-circle-left")}>
                 <i className="fa fa-arrow-circle-left"></i>
             </button>
-            {description === false?
+            {description === false 
+            ?
                 <Canvas
                     height = {600}
                     width = {500}
@@ -58,25 +58,22 @@ function CanvasPage(props) {
             :
                 <TextOne/>
             }
-            <button className='button' onClick = {(e) => handleClick(e)}>
+            <button className='button' onClick = {(e) => handleClick(e, "fa fa-arrow-circle-right")}>
                 <i className="fa fa-arrow-circle-right"></i>
             </button>
-            <button className='button' onClick = {(e) => handleClick(e)}>
+            <button className='button' onClick = {(e) => handleClick(e, "fa fa-file-o")}>
                 <i className="fa fa-file-o"></i>
             </button>
-            <button className='button' onClick = {(e) => handleClick(e)}>
+            <button className='button' onClick = {(e) => handleClick(e, "fa fa-bars")}>
                 <i className="fa fa-bars"></i>
             </button>
-            <button className='button' onClick = {(e) => handleClick(e)}>
+            <button className='button' onClick = {(e) => handleClick(e, "fa fa-close")}>
                 <i className="fa fa-close"></i>
             </button>
         </div>
     );
 }
 
-const mapStateToProps = state => ({     
-    image: state.image
-});
 
-export default connect(mapStateToProps)(CanvasPage);
+export default CanvasPage;
 

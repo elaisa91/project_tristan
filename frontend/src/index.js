@@ -10,7 +10,6 @@ import ProjectPage from './components/ProjectPage/ProjectPage.js';
 import FacsimilePage from './components/FacsimilePage/FacsimilePage.js';
 import CanvasPage from './components/CanvasPage/CanvasPage.js';
 import Footer from './components/Footer/Footer.js';
-import TextOne from './components/Texts/TextOne';
 
 const initialState = {
   image: null
