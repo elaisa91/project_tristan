@@ -1,81 +1,77 @@
-import React from 'react';
-import { Navigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom"
 import { connect } from 'react-redux';
 import './CanvasPage.css';
 import Canvas from '../Canvas/Canvas.js';
+import TextOne from '../Texts/TextOne';
 
 
-class CanvasPage extends React.Component {
-    constructor (props) { 
-        super(props); 
-        this.state = {
-            selected_item: ""
-        }
-    }
+function CanvasPage(props) {
+    const [selected_item, setSelectedItem] = useState("");
+    const [description, setDescription] = useState(false);
+    const selectedImage = props.image || {};
+    let navigate = useNavigate();
 
-    handleClick(icon){
-        switch (icon){
+
+    function handleClick(e){
+        switch (e.target.className){
             case "fa fa-file-o":
-                <Navigate to = {"/facsimile/:"+this.props.image.id} />
-                console.log("file");
+            case "fa fa-arrow-circle-left":
+            case "fa fa-arrow-circle-right":
+                setDescription(false);
                 break;
             case "fa fa-bars":
-                console.log("bars");
-                <Navigate to = "/project" />
+                setDescription(true);
                 break;
             default :
-                console.log("close");
-                <Navigate to = "/facsimile" />
+                navigate('/facsimile');
             
         }
     }
 
-    handleItemDeselected(last_item){
+    function handleItemDeselected(last_item){
         last_item = null;
-        this.setState({
-            selected_item: ""
-        }); 
+        setSelectedItem("");
         return last_item;
     }
 
-    handleItemSelected(item, last_item){
+    function handleItemSelected(item, last_item){
         if(last_item !== item) {
            last_item = item;
-            this.setState({
-                selected_item: item
-            }); 
+           setSelectedItem(item);
         }
         return last_item;
     }
 
-    render() {
-        return (
-            <div className="canvas-page">
-                <button className = "button" onClick = {() => this.handleClick("fa fa-arrow-circle-left")}>
-                    <i className = "fa fa-arrow-circle-left"></i>
-                </button>
+    return (
+        <div className="canvas-page">
+            <button className='button' onClick = {(e) => handleClick(e)}>
+                <i className="fa fa-arrow-circle-left"></i>
+            </button>
+            {description === false?
                 <Canvas
-                    selected_image = {this.props.image}
                     height = {600}
                     width = {500}
-                    onItemSelected = {(item, last_item) => this.handleItemSelected(item, last_item)}
-                    onItemDeselected = {(last_item) => this.handleItemDeselected(last_item)}
-                /> 
-                <button className = "button" onClick = {() => this.handleClick("fa fa-arrow-circle-right")}>
-                    <i className = "fa fa-arrow-circle-right"></i>
-                </button> 
-                <button className = "button" onClick = {() => this.handleClick("fa fa-file-o")}>
-                    <i className = "fa fa-file-o"></i>
-                </button> 
-                <button className = "button" onClick = {() => this.handleClick("fa fa-bars")}>
-                    <i className = "fa fa-bars"></i>
-                </button> 
-                <button className = "button" onClick = {() => this.handleClick("fa fa-close")}>
-                    <i className = "fa fa-close"></i>
-                </button>
-            </div>
-        );
-    }
+                    onItemSelected = {(item, last_item) => handleItemSelected(item, last_item)}
+                    onItemDeselected = {(last_item) => handleItemDeselected(last_item)}
+                />
+            :
+                <TextOne/>
+            }
+            <button className='button' onClick = {(e) => handleClick(e)}>
+                <i className="fa fa-arrow-circle-right"></i>
+            </button>
+            <button className='button' onClick = {(e) => handleClick(e)}>
+                <i className="fa fa-file-o"></i>
+            </button>
+            <button className='button' onClick = {(e) => handleClick(e)}>
+                <i className="fa fa-bars"></i>
+            </button>
+            <button className='button' onClick = {(e) => handleClick(e)}>
+                <i className="fa fa-close"></i>
+            </button>
+        </div>
+    );
 }
 
 const mapStateToProps = state => ({     
