@@ -14,12 +14,12 @@ function CanvasPage(props) {
 
     function handleClick(e, icon){
         switch (icon){
-            case "fa fa-file-o":
-            case "fa fa-arrow-circle-left":
-            case "fa fa-arrow-circle-right":
+            case "get_current_page":
+            case "get_previous_page":
+            case "get_next_page":
                 setDescription(false);
                 break;
-            case "fa fa-bars":
+            case "get_description":
                 setDescription(true);
                 break;
             default :
@@ -44,7 +44,7 @@ function CanvasPage(props) {
 
     return (
         <div className="canvas-page">
-            <button className='button' ref = {myRef} onClick = {(e) => handleClick(e, "fa fa-arrow-circle-left")}>
+            <button className='button' ref = {myRef} onClick = {(e) => handleClick(e, "get_previous_page")}>
                 <i className="fa fa-arrow-circle-left"></i>
             </button>
             {description === false 
@@ -58,16 +58,16 @@ function CanvasPage(props) {
             :
                 <TextOne/>
             }
-            <button className='button' onClick = {(e) => handleClick(e, "fa fa-arrow-circle-right")}>
+            <button className='button' onClick = {(e) => handleClick(e, "get_next_page")}>
                 <i className="fa fa-arrow-circle-right"></i>
             </button>
-            <button className='button' onClick = {(e) => handleClick(e, "fa fa-file-o")}>
+            <button className='button' onClick = {(e) => handleClick(e, "get_current_page")}>
                 <i className="fa fa-file-o"></i>
             </button>
-            <button className='button' onClick = {(e) => handleClick(e, "fa fa-bars")}>
+            <button className='button' onClick = {(e) => handleClick(e, "get_description")}>
                 <i className="fa fa-bars"></i>
             </button>
-            <button className='button' onClick = {(e) => handleClick(e, "fa fa-close")}>
+            <button className='button' onClick = {(e) => handleClick(e, "close_page")}>
                 <i className="fa fa-close"></i>
             </button>
         </div>
