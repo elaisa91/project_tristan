@@ -31,6 +31,7 @@ const store = createStore(reducer);
 
 ReactDOM.render(
   <React.StrictMode>
+  <div className='container'>
     <Provider store={store}>
       <Router>
         <Routes> 
@@ -42,6 +43,7 @@ ReactDOM.render(
       </Router> 
       <Footer/>
     </Provider>
+  </div>
   </React.StrictMode>,
   document.getElementById('root')
 );

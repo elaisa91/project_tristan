@@ -10,7 +10,9 @@ class Header extends React.Component{
                     <p>Gottfried von Strassburg</p>
                     <p>EDIZIONE DIGITALE</p>
                 </div>
-                <img src={process.env.PUBLIC_URL + '/university_logo.png'} alt="Università di Verona" />
+                <div className='img'>
+                    <img src={process.env.PUBLIC_URL + '/university_logo.png'} alt="Università di Verona" />
+                </div>
             </div>
         );
     }

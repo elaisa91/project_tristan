@@ -40,8 +40,9 @@ class FacsimilePage extends React.Component{
                     sub_menu_items = {this.state.sub_menu_items}
                     onClick = {(i) => this.handleClick(i)}
                 />
-
-               {this.state.content}
+                <div className='content'>
+                    {this.state.content}
+                </div>
             </div>
         );
     }
