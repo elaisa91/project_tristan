@@ -4,6 +4,7 @@ import pymongo
 import xml.etree.ElementTree as ET
 import html
 import string
+import re
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["facsimile_db"]
@@ -53,23 +54,23 @@ def generate_transcription(trans_ide, root):
                     if (child.tail):
                         text+= child.tail.replace("|", "\n")
                 if (option.tag == "{http://www.tei-c.org/ns/1.0}orig"):
-                    transcription['Orig'] = text
+                    transcription['text']['Orig'] = text
                 if (option.tag == "{http://www.tei-c.org/ns/1.0}reg"):
-                    transcription['Reg'] = text
-        if "style" in ab.attrib:
-            transcription["style"] = string.capwords(ab.attrib["style"].replace("_", " "))
-        if "type" in ab.attrib:
-            transcription["type"] = string.capwords(ab.attrib["type"].replace("_", " "))
-        if "{http://www.w3.org/XML/1998/namespace}lang" in ab.attrib:
-            transcription["lang"] = string.capwords(ab.attrib["{http://www.w3.org/XML/1998/namespace}lang"].replace("_", " "))
-        #if ab.findall("{http://www.tei-c.org/ns/1.0}said"):
-        for said in ab.findall("{http://www.tei-c.org/ns/1.0}said"):
-            said_obj = {}
-            if "who" in said.attrib:
-                said_obj["who"] = said.attrib["who"][1:]
-            if "toWhom" in said.attrib:
-                said_obj["toWhom"] = said.attrib["toWhom"][1:]
-            transcription["said"].append(said_obj)
+                    transcription['text']['Reg'] = text
+            if "style" in ab.attrib:
+                transcription["style"] = string.capwords(ab.attrib["style"].replace("_", " "))
+            if "type" in ab.attrib:
+                transcription["type"] = string.capwords(ab.attrib["type"].replace("_", " "))
+            if "{http://www.w3.org/XML/1998/namespace}lang" in ab.attrib:
+                transcription["lang"] = string.capwords(ab.attrib["{http://www.w3.org/XML/1998/namespace}lang"].replace("_", " "))
+            if ab.findall("{http://www.tei-c.org/ns/1.0}said"):
+                for said in ab.findall("{http://www.tei-c.org/ns/1.0}said"):
+                    said_obj = {}
+                    if "who" in said.attrib:
+                        said_obj["who"] = said.attrib["who"][1:]
+                    if "toWhom" in said.attrib:
+                        said_obj["toWhom"] = said.attrib["toWhom"][1:]
+                    transcription["said"].append(said_obj)
     return (transcription)
 
 def generate_category(cat_ide, root):
@@ -92,7 +93,7 @@ def generate_subcategory(subcat_ide, root):
             if "sameAs" in interp.attrib:
                 subcategory["desc"] = interp.attrib["sameAs"]
             else:
-                subcategory["desc"] = interp.text
+                subcategory["desc"] = re.sub('\n\s*', " ", interp.text)
     """for person in root[0].iter("{http://www.tei-c.org/ns/1.0}person"):
         if (person.attrib["{http://www.w3.org/XML/1998/namespace}id"] == subcat_ide):
             subcategory["desc"] = {}
@@ -137,7 +138,7 @@ def generate_document(surface):
     for zone in surface.findall("{http://www.tei-c.org/ns/1.0}zone"):
         ide = ""
         points = ""
-        category = {}
+        category = ""
         subcategory = {}
         transcription = {}
         cat_ide = ""
