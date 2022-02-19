@@ -31,6 +31,22 @@ def generate_hand(ref, root):
                    hand = interp.text 
     return (hand)
 
+def generate_notes(id, root):
+    notes = []
+    for note in root[2].iter("{http://www.tei-c.org/ns/1.0}note"):
+        if (note.attrib["facs"][1:] == id):
+            nt = []
+            if note.text:
+                nt.append([re.sub('\n\s*', " ", note.text), 'normal'])
+            for child in note:
+                if (child.tag == "{http://www.tei-c.org/ns/1.0}hi"):
+                        rend = child.attrib["rend"]
+                        nt.append([re.sub('\n\s*', " ", child.text), rend])
+                if (child.tail):
+                    nt.append([re.sub('\n\s*', " ", child.tail), 'normal'])
+            notes.append(nt)
+    return notes
+
 def generate_transcription(trans_ide, root):
     transcription = {}
     transcription["text"] = {}
@@ -124,20 +140,24 @@ def generate_document(surface):
     document = {}
     name = ""
     url = ""
+    doc_notes = []
 
-    # crea nome documento e url
+    # crea nome documento, url e note 
     if "{http://www.w3.org/XML/1998/namespace}id" in surface.attrib:
         name = surface.attrib["{http://www.w3.org/XML/1998/namespace}id"]
+        doc_notes = generate_notes(name, root)
     if "url" in surface.find("{http://www.tei-c.org/ns/1.0}graphic").attrib: 
         url = surface.find("{http://www.tei-c.org/ns/1.0}graphic").attrib["url"]
     
     document["name"] = name
     document["url"] = url
+    document["notes"] = doc_notes
 
     # per ogni 'zone'
     for zone in surface.findall("{http://www.tei-c.org/ns/1.0}zone"):
         ide = ""
         points = ""
+        notes = []
         category = ""
         subcategory = {}
         transcription = {}
@@ -148,6 +168,8 @@ def generate_document(surface):
         # crea id
         if "{http://www.w3.org/XML/1998/namespace}id" in zone.attrib:
             ide = string.capwords(zone.attrib["{http://www.w3.org/XML/1998/namespace}id"].replace("_", " "))
+            # crea nota 
+            notes = generate_notes(zone.attrib["{http://www.w3.org/XML/1998/namespace}id"], root)
 
         # crea poligono
         if "points" in zone.attrib:
@@ -179,7 +201,7 @@ def generate_document(surface):
             document[category] = []
         
         # inserisci 'zone' per ogni category
-        document[category].append({"id": ide, "points": points, "subcategory": subcategory, "transcription": transcription})
+        document[category].append({"id": ide, "points": points, "subcategory": subcategory, "transcription": transcription, "notes": notes})
     return document
 
 
