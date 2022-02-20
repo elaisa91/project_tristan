@@ -209,11 +209,12 @@ function Canvas(props) {
             var id = el['id'];
             var subcategory = el['subcategory'];
             var transcription = el['transcription'];
-            if (Object.keys(subcategory).length !== 0 && transcription !== ''){
-                item = subcategory['name'] + ": \n " + transcription['text'];
-            } else if (transcription !== ''){
-                item = transcription['text'];
-            } else if (Object.keys(subcategory).length !== 0){
+            var notes = el['notes'];
+            if (subcategory['name'] !== "" && Object.keys(transcription['text']).length !== 0){
+                item = subcategory['name'] + ": \n " + transcription['text']['orig'];
+            } else if (Object.keys(transcription['text']).length !== 0){
+                item = transcription['text']['orig'];
+            } else if (subcategory['name'] !== ""){
                 item = subcategory['name'];   
             } else if (id !== ''){
                 item = id;

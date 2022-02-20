@@ -70,9 +70,9 @@ def generate_transcription(trans_ide, root):
                     if (child.tail):
                         text+= child.tail.replace("|", "\n")
                 if (option.tag == "{http://www.tei-c.org/ns/1.0}orig"):
-                    transcription['text']['Orig'] = text
+                    transcription['text']['orig'] = text
                 if (option.tag == "{http://www.tei-c.org/ns/1.0}reg"):
-                    transcription['text']['Reg'] = text
+                    transcription['text']['reg'] = text
             if "style" in ab.attrib:
                 transcription["style"] = string.capwords(ab.attrib["style"].replace("_", " "))
             if "type" in ab.attrib:
