@@ -9,7 +9,6 @@ function CanvasPage(props) {
     const [selected_item, setSelectedItem] = useState("");
     const [description, setDescription] = useState(false);
     let navigate = useNavigate();
-    let myRef = useRef(null);
 
 
     function handleClick(e, icon){
@@ -44,7 +43,7 @@ function CanvasPage(props) {
 
     return (
         <div className="canvas-page">
-            <button className='button' ref = {myRef} onClick = {(e) => handleClick(e, "get_previous_page")}>
+            <button className='button' onClick = {(e) => handleClick(e, "get_previous_page")}>
                 <i className="fa fa-arrow-circle-left"></i>
             </button>
             {description === false 

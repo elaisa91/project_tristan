@@ -22,6 +22,12 @@ function reducer (state = initialState, action) {
         ...state,
         image: action.payload
       };
+
+    case "RELOAD_PAGE":
+      return {
+        ...state,
+        reload: action.payload
+      };
     default:
       return state;
   }

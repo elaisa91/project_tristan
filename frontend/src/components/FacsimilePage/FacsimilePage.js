@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './FacsimilePage.css';
 import Navigator from '../Navigator/Navigator.js';
 import SubMenu from '../SubMenu/SubMenu.js';
@@ -22,6 +23,12 @@ class FacsimilePage extends React.Component{
                 );
                 break;
             case "Illustrazioni":
+
+                this.props.dispatch({
+                    type: "RELOAD_PAGE",
+                    payload: true
+                });  
+
                 this.setState(
                     {content: <SearchPage/>}
                 );
@@ -48,4 +55,7 @@ class FacsimilePage extends React.Component{
     }
 }
 
-export default FacsimilePage;
+const mapStateToProps = state => ({ 
+});
+
+export default connect(mapStateToProps)(FacsimilePage);

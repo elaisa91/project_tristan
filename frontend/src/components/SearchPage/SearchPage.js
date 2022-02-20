@@ -9,7 +9,7 @@ class SearchPage extends React.Component {
         super(props); 
         this.state = {
             error: null,
-            isLoaded: false,
+            reload: false,
             cat_options: ["Seleziona una categoria"],
             subcat_options: ["Seleziona una sottocategoria"],
             selected_option : "",
@@ -18,23 +18,51 @@ class SearchPage extends React.Component {
     }
 
     componentDidMount() {
+        /* mettere queste chiamate in funzioni a parte e usare axes*/
         fetch("http://localhost:8080/v1/categories")
             .then(res => res.json())
             .then(
                 (result) => {
                     this.setState({
-                        isLoaded: true,
                         cat_options: this.state.cat_options.concat(result),
                     });
                 },
                 (error) => {
                     this.setState({
-                        isLoaded: true,
                         error
                     });
                 }
           )
+        /* mettere queste chiamate in funzioni a parte e usare axes*/
+        fetch("http://localhost:8080/v1/imgResults/null")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({  
+                        result_images: result
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        error
+                    });
+                }
+            )
 
+    }
+
+    componentDidUpdate (){
+        if(this.state.reload){
+            console.log ("ok");
+            this.setState({
+                error: null,
+                reload: false,
+                cat_options: ["Seleziona una categoria"],
+                subcat_options: ["Seleziona una sottocategoria"],
+                selected_option : "",
+                result_images : []
+            });
+        }
     }
 
     handleClick(i){
@@ -50,7 +78,7 @@ class SearchPage extends React.Component {
             selected_image: {},
             subcat_options: ["Seleziona una sottocategoria"]
         });
-
+         /* mettere queste chiamate in funzioni a parte e usare axes*/
         fetch("http://localhost:8080/v1/subcategories/"+ e.target.value)
             .then(res => res.json())
             .then(
@@ -87,7 +115,7 @@ class SearchPage extends React.Component {
             selected_option: e.target.value,
             selected_image: {}
         });
-
+         /* mettere queste chiamate in funzioni a parte e usare axes*/
         fetch("http://localhost:8080/v1/imgResults/"+ e.target.value)
             .then(res => res.json())
             .then(
@@ -138,6 +166,7 @@ class SearchPage extends React.Component {
 }
 
 const mapStateToProps = state => ({ 
+    reload: state.reload
 });
 
 export default connect(mapStateToProps)(SearchPage);
