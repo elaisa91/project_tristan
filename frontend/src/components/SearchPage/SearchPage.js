@@ -9,37 +9,35 @@ class SearchPage extends React.Component {
         super(props); 
         this.state = {
             error: null,
-            reload: false,
-            cat_options: ["Seleziona una categoria"],
-            subcat_options: ["Seleziona una sottocategoria"],
-            selected_option : "",
-            result_images : []
         };
     }
-
-    componentDidMount() {
-        /* mettere queste chiamate in funzioni a parte e usare axes*/
+        
+    componentDidMount(){
+        /* mettere queste chiamate in funzioni a parte e usare axios*/
         fetch("http://localhost:8080/v1/categories")
             .then(res => res.json())
             .then(
                 (result) => {
-                    this.setState({
-                        cat_options: this.state.cat_options.concat(result),
-                    });
+                    this.props.dispatch({
+                        type: "CAT_OPTIONS",
+                        payload: result
+                    });  
+                    console.log(this.props.cat_options)
                 },
                 (error) => {
                     this.setState({
                         error
                     });
                 }
-          )
-        /* mettere queste chiamate in funzioni a parte e usare axes*/
+            )
+        /* mettere queste chiamate in funzioni a parte e usare axios*/
         fetch("http://localhost:8080/v1/imgResults/null")
             .then(res => res.json())
             .then(
                 (result) => {
-                    this.setState({  
-                        result_images: result
+                    this.props.dispatch({
+                        type: "RESULT_IMAGES",
+                        payload: result
                     });
                 },
                 (error) => {
@@ -48,44 +46,38 @@ class SearchPage extends React.Component {
                     });
                 }
             )
-
-    }
-
-    componentDidUpdate (){
-        if(this.state.reload){
-            console.log ("ok");
-            this.setState({
-                error: null,
-                reload: false,
-                cat_options: ["Seleziona una categoria"],
-                subcat_options: ["Seleziona una sottocategoria"],
-                selected_option : "",
-                result_images : []
-            });
-        }
     }
 
     handleClick(i){
         this.props.dispatch({
-            type: "SELECT_IMAGE",
-            payload: this.state.result_images[i]
+            type: "SELECTED_IMAGE",
+            payload: this.props.result_images[i]
         });  
     }
     
     handleCategoryChange(e){
-        this.setState ({
-            selected_option: e.target.value,
-            selected_image: {},
-            subcat_options: ["Seleziona una sottocategoria"]
+        this.props.dispatch({
+            type: "SELECTED_OPTION",
+            payload: e.target.value
+        }); 
+        this.props.dispatch({
+            type: "SELECTED_IMAGE",
+            payload: {}
         });
-         /* mettere queste chiamate in funzioni a parte e usare axes*/
+        this.props.dispatch({
+            type: "SUBCAT_OPTIONS",
+            payload: []
+        })
+        
+         /* mettere queste chiamate in funzioni a parte e usare axios*/ 
         fetch("http://localhost:8080/v1/subcategories/"+ e.target.value)
             .then(res => res.json())
             .then(
                 (result) => {
-                    this.setState({  
-                        subcat_options: this.state.subcat_options.concat(result)
-                    });
+                    this.props.dispatch({
+                        type: "SUBCAT_OPTIONS",
+                        payload: result
+                    }); 
                 },
                 (error) => {
                     this.setState({
@@ -93,13 +85,14 @@ class SearchPage extends React.Component {
                     });
                 }
             )
-        /* mettere queste chiamate in funzioni a parte e usare axes*/
+        /* mettere queste chiamate in funzioni a parte e usare axios*/
         fetch("http://localhost:8080/v1/imgResults/"+ e.target.value)
         .then(res => res.json())
         .then(
             (result) => {
-                this.setState({  
-                    result_images: result
+                this.props.dispatch({
+                    type: "RESULT_IMAGES",
+                    payload: result
                 });
             },
             (error) => {
@@ -111,18 +104,23 @@ class SearchPage extends React.Component {
     }
 
     handleSubCategoryChange(e){
-        this.setState ({
-            selected_option: e.target.value,
-            selected_image: {}
+        this.props.dispatch({
+            type: "SELECTED_OPTION",
+            payload: e.target.value
+        }); 
+        this.props.dispatch({
+            type: "SELECTED_IMAGE",
+            payload: {}
         });
-         /* mettere queste chiamate in funzioni a parte e usare axes*/
+         /* mettere queste chiamate in funzioni a parte e usare axios*/
         fetch("http://localhost:8080/v1/imgResults/"+ e.target.value)
             .then(res => res.json())
             .then(
                 (result) => {
-                    this.setState({  
-                        result_images: result
-                    });
+                    this.props.dispatch({
+                        type: "RESULT_IMAGES",
+                        payload: result
+                    }); 
                 },
                 (error) => {
                     this.setState({
@@ -130,6 +128,7 @@ class SearchPage extends React.Component {
                     });
                 }
             )
+        
     }
 
     render() {
@@ -139,7 +138,8 @@ class SearchPage extends React.Component {
                     <Choice
                         name = 'categories' 
                         id = 'categories'
-                        options = {this.state.cat_options}
+                        placeholder = "Seleziona una categoria"
+                        options = {this.props.cat_options}
                         onChange = {(e) => this.handleCategoryChange(e)}
                     />
                 </div>
@@ -148,14 +148,13 @@ class SearchPage extends React.Component {
                     <Choice 
                         name = 'subcategories' 
                         id = 'subcategories'
-                        options = {this.state.subcat_options}
+                        options = {this.props.subcat_options}
+                        placeholder = "Seleziona una sottocategoria"
                         onChange = {(e) => this.handleSubCategoryChange(e)}
                     />
                 </div>
 
                 <Slider
-                    selected_option = {this.state.selected_option}
-                    result_images = {this.state.result_images}
                     onClick = {(i) => this.handleClick(i)}
                 />
                 
@@ -166,7 +165,10 @@ class SearchPage extends React.Component {
 }
 
 const mapStateToProps = state => ({ 
-    reload: state.reload
+    cat_options: state.cat_options,
+    subcat_options: state.subcat_options,
+    selected_option: state.selected_option,
+    result_images: state.result_images
 });
 
 export default connect(mapStateToProps)(SearchPage);

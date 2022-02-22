@@ -12,21 +12,43 @@ import CanvasPage from './components/CanvasPage/CanvasPage.js';
 import Footer from './components/Footer/Footer.js';
 
 const initialState = {
-  image: null
+  image: {},
+  cat_options: [],
+  subcat_options: [],
+  selected_option: "",
+  result_images: []
 }
 
 function reducer (state = initialState, action) { 
   switch(action.type) {
-    case "SELECT_IMAGE":
+    case "SELECTED_IMAGE":
       return {
         ...state,
         image: action.payload
       };
 
-    case "RELOAD_PAGE":
+    case "CAT_OPTIONS":
       return {
         ...state,
-        reload: action.payload
+        cat_options: action.payload
+      };
+
+    case "SUBCAT_OPTIONS":
+      return {
+        ...state,
+        subcat_options: action.payload
+      };
+
+    case "SELECTED_OPTION":
+      return {
+        ...state,
+        selected_option: action.payload
+      };
+
+    case "RESULT_IMAGES":
+      return {
+        ...state,
+        result_images: action.payload
       };
     default:
       return state;

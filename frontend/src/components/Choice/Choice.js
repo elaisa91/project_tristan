@@ -9,14 +9,14 @@ class Choice extends React.Component {
     }
     render() {
         const options = this.props.options;
-        options.includes(null)||options.length===1 ? this.showing = false : this.showing = true;
-        const first_option = <Option 
+        options.length>0 ? this.showing = true : this.showing = false;
+        const placeholder_option = <Option 
                                 selected = {true}
                                 disabled = {true}
-                                value = {options[0]}
+                                value = {this.props.placeholder}
                             />
 
-        const list = options.slice(1).map((option) => <Option 
+        const list = options.map((option) => <Option 
                                                 selected = {false}
                                                 disabled = {false}
                                                 value = {option}
@@ -29,8 +29,9 @@ class Choice extends React.Component {
                 name = {this.props.name}
                 id= {this.props.id}
                 onChange = {this.props.onChange}
+
             >
-                {first_option}
+                {placeholder_option}
                 {list}
                 
             </select>

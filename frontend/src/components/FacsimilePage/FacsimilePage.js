@@ -23,12 +23,26 @@ class FacsimilePage extends React.Component{
                 );
                 break;
             case "Illustrazioni":
-
                 this.props.dispatch({
-                    type: "RELOAD_PAGE",
-                    payload: true
+                    type: "CAT_OPTIONS",
+                    payload: this.props.cat_options
                 });  
-
+                this.props.dispatch({
+                    type: "SUBCAT_OPTIONS",
+                    payload: []
+                });  
+                this.props.dispatch({
+                    type: "SELECTED_OPTION",
+                    payload: ""
+                });  
+                this.props.dispatch({
+                    type: "RESULT_IMAGES",
+                    payload: []
+                });  
+                this.props.dispatch({
+                    type: "SELECTED_IMAGE",
+                    payload: {}
+                });  
                 this.setState(
                     {content: <SearchPage/>}
                 );
@@ -56,6 +70,10 @@ class FacsimilePage extends React.Component{
 }
 
 const mapStateToProps = state => ({ 
+    cat_options: state.cat_options,
+    subcat_options: state.subcat_options,
+    selected_option: state.selected_option,
+    result_images: state.result_images
 });
 
 export default connect(mapStateToProps)(FacsimilePage);
