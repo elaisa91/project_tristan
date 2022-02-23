@@ -21,8 +21,8 @@ class TextBox extends React.Component{
 
         for (var said in this.props.transcription_said){
             said_list.push(<div className='said'>
-                                <p>WHO: {said['who']}</p>
-                                <p>TOWHOM: {said['towhom']}</p>
+                                <p>Who: {said['who']}</p>
+                                <p>To Whom: {said['towhom']}</p>
                             </div>
             );
         }
