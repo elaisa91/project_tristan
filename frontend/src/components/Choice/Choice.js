@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './Choice.css';
 import Option from '../Option/Option.js';
 
@@ -16,11 +17,27 @@ class Choice extends React.Component {
                                 value = {this.props.placeholder}
                             />
 
-        const list = options.map((option) => <Option 
-                                                selected = {false}
-                                                disabled = {false}
-                                                value = {option}
-                                            />);
+        var list = [];
+        options.forEach((option) => { 
+            if (option===this.props.selected_option){
+                list.push(  
+                            <Option 
+                                selected = {true}
+                                disabled = {false}
+                                value = {option}
+                            />)
+            }
+            else{
+                list.push(  
+                    <Option 
+                        selected = {false}
+                        disabled = {false}
+                        value = {option}
+                    />)
+            }
+        });
+        
+      
        
         return (
             this.showing === true 
@@ -41,4 +58,9 @@ class Choice extends React.Component {
     }
 }
 
-export default Choice;
+const mapStateToProps = state => ({ 
+    selected_catoption: state.selected_catoption,
+    selected_subcatoption: state.selected_subcatoption
+});
+
+export default connect(mapStateToProps)(Choice);

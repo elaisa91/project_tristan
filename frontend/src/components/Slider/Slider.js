@@ -21,7 +21,14 @@ class Slider extends React.Component {
     }
 
     render() {
-        const selectedOptionString = this.props.selected_option + " è presente nelle seguenti carte: "
+        var selectedOptionString = "";
+        if (this.props.selected_subcatoption === ""){
+            selectedOptionString = this.props.selected_catoption + " è presente nelle seguenti carte: "
+        }
+        else {
+            selectedOptionString = this.props.selected_subcatoption + " è presente nelle seguenti carte: "
+        }
+        
         const result_images = this.props.result_images;
         const img_list = [];
         for (var i = 0; i<result_images.length; i++){
@@ -29,22 +36,21 @@ class Slider extends React.Component {
         }
         
         return (
-            this.props.selected_option !== ""
-            ?
+           
             <div className = 'slider'>
-                <p>{this.selectedOptionString}</p>
+                
+                <p>{this.props.selected_catoption !== "" ?selectedOptionString: null}</p>
                
                 {img_list}
               
             </div>
-            :
-            null
         );
     }
 }
 
 const mapStateToProps = state => ({ 
-    selected_option: state.selected_option,
+    selected_catoption: state.selected_catoption,
+    selected_subcatoption: state.selected_subcatoption,
     result_images: state.result_images
 });
 

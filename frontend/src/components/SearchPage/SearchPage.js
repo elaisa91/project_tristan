@@ -13,6 +13,25 @@ class SearchPage extends React.Component {
     }
         
     componentDidMount(){
+        if(this.props.selected_catoption === ""){
+            /* mettere queste chiamate in funzioni a parte e usare axios*/
+            fetch("http://localhost:8080/v1/imgResults/null")
+            
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        this.props.dispatch({
+                            type: "RESULT_IMAGES",
+                            payload: result
+                        });
+                    },
+                    (error) => {
+                        this.setState({
+                            error
+                        });
+                    }
+                )
+        }
         /* mettere queste chiamate in funzioni a parte e usare axios*/
         fetch("http://localhost:8080/v1/categories")
             .then(res => res.json())
@@ -22,7 +41,6 @@ class SearchPage extends React.Component {
                         type: "CAT_OPTIONS",
                         payload: result
                     });  
-                    console.log(this.props.cat_options)
                 },
                 (error) => {
                     this.setState({
@@ -30,22 +48,8 @@ class SearchPage extends React.Component {
                     });
                 }
             )
-        /* mettere queste chiamate in funzioni a parte e usare axios*/
-        fetch("http://localhost:8080/v1/imgResults/null")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.props.dispatch({
-                        type: "RESULT_IMAGES",
-                        payload: result
-                    });
-                },
-                (error) => {
-                    this.setState({
-                        error
-                    });
-                }
-            )
+
+        
     }
 
     handleClick(i){
@@ -57,8 +61,12 @@ class SearchPage extends React.Component {
     
     handleCategoryChange(e){
         this.props.dispatch({
-            type: "SELECTED_OPTION",
+            type: "SELECTED_CATOPTION",
             payload: e.target.value
+        }); 
+        this.props.dispatch({
+            type: "SELECTED_SUBCATOPTION",
+            payload: ""
         }); 
         this.props.dispatch({
             type: "SELECTED_IMAGE",
@@ -105,7 +113,7 @@ class SearchPage extends React.Component {
 
     handleSubCategoryChange(e){
         this.props.dispatch({
-            type: "SELECTED_OPTION",
+            type: "SELECTED_SUBCATOPTION",
             payload: e.target.value
         }); 
         this.props.dispatch({
@@ -133,13 +141,15 @@ class SearchPage extends React.Component {
 
     render() {
         return (
+
             <div className="search-page">
                 <div className="cat-choice">
                     <Choice
                         name = 'categories' 
                         id = 'categories'
-                        placeholder = "Seleziona una categoria"
                         options = {this.props.cat_options}
+                        placeholder = "Seleziona una categoria"
+                        selected_option = {this.props.selected_catoption}
                         onChange = {(e) => this.handleCategoryChange(e)}
                     />
                 </div>
@@ -150,6 +160,7 @@ class SearchPage extends React.Component {
                         id = 'subcategories'
                         options = {this.props.subcat_options}
                         placeholder = "Seleziona una sottocategoria"
+                        selected_option = {this.props.selected_subcatoption}
                         onChange = {(e) => this.handleSubCategoryChange(e)}
                     />
                 </div>
@@ -167,8 +178,10 @@ class SearchPage extends React.Component {
 const mapStateToProps = state => ({ 
     cat_options: state.cat_options,
     subcat_options: state.subcat_options,
-    selected_option: state.selected_option,
-    result_images: state.result_images
+    selected_catoption: state.selected_catoption,
+    selected_subcatoption: state.selected_subcatoption,
+    result_images: state.result_images,
+    to_reset: state.to_reset
 });
 
 export default connect(mapStateToProps)(SearchPage);

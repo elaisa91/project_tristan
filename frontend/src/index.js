@@ -15,7 +15,8 @@ const initialState = {
   image: {},
   cat_options: [],
   subcat_options: [],
-  selected_option: "",
+  selected_catoption: "",
+  selected_subcatoption: "",
   result_images: []
 }
 
@@ -39,16 +40,26 @@ function reducer (state = initialState, action) {
         subcat_options: action.payload
       };
 
-    case "SELECTED_OPTION":
+    case "SELECTED_CATOPTION":
       return {
         ...state,
-        selected_option: action.payload
+        selected_catoption: action.payload
       };
+    case "SELECTED_SUBCATOPTION":
+      return {
+        ...state,
+        selected_subcatoption: action.payload
+      }
 
     case "RESULT_IMAGES":
       return {
         ...state,
         result_images: action.payload
+      };
+    case "CONTENT":
+      return {
+        ...state,
+       content: action.payload
       };
     default:
       return state;
