@@ -8,7 +8,7 @@ function Canvas(props) {
     let myRef = useRef(null);
     let propHeight = null;
     let propWidth = null;
-    let lastItemSelected = null;
+    let lastItemSelectedObj = null;
     let isNothingSelected = null;
     let isIn = null;
     let isOut = null;
@@ -16,6 +16,72 @@ function Canvas(props) {
 
     const [mouseMove, setMouseMove] = useState(false);
     const [image, setImage] = useState(new Image());
+
+    function unsetMetadata(){
+        props.dispatch({
+            type: "TRANSCRIPTION_TEXT",
+            payload: []
+        });
+        props.dispatch({
+            type: "TRANSCRIPTION_SAID",
+            payload: []
+        });
+        props.dispatch({
+            type: "TRANSCRIPTION_STYLE",
+            payload: ""
+        });
+        props.dispatch({
+            type: "TRANSCRIPTION_TYPE",
+            payload: ""
+        });
+        props.dispatch({
+            type: "TRANSCRIPTION_LANG",
+            payload: ""
+        });
+        props.dispatch({
+            type: "SUBCATEGORY_DESC",
+            payload: ""
+        });
+        props.dispatch({
+            type: "NOTES",
+            payload: []
+        });
+
+    }
+
+    function setMetadata(item){
+        if (item === null){
+            return;
+        }
+        props.dispatch({
+            type: "TRANSCRIPTION_TEXT",
+            payload: item['transcription']['text']
+        });
+        props.dispatch({
+            type: "TRANSCRIPTION_SAID",
+            payload: item['transcription']['said']
+        });
+        props.dispatch({
+            type: "TRANSCRIPTION_STYLE",
+            payload: item['transcription']['style']
+        });
+        props.dispatch({
+            type: "TRANSCRIPTION_TYPE",
+            payload: item['transcription']['type']
+        });
+        props.dispatch({
+            type: "TRANSCRIPTION_LANG",
+            payload: item['transcription']['lang']
+        });
+        props.dispatch({
+            type: "SUBCATEGORY_DESC",
+            payload: item['subcategory']['desc']
+        });
+        props.dispatch({
+            type: "NOTES",
+            payload: item['notes']
+        });
+    }
 
     function clear (){
         const current = myRef.current;
@@ -51,6 +117,7 @@ function Canvas(props) {
         var h_text = 0;
         var w_tool = 0;
         var h_tool = 0;
+        var item = Object.keys(item)[0];
 
         /* fare in una funzione a parte (forse) */
         if (item.indexOf("\n") > -1){
@@ -155,14 +222,14 @@ function Canvas(props) {
             
             
             isNothingSelected = false;
-            lastItemSelected = props.onItemSelected(item, lastItemSelected);
+            lastItemSelectedObj = props.onItemSelected(item_obj, lastItemSelectedObj);
 
             if (is_out_array.length > 0){
                 for (var i=0; i<is_out_array.length; i++){
                     item_obj = is_out_array[i];
                     item = Object.keys(item_obj)[0];
                     points = item_obj[item];
-                    if (item === lastItemSelected){
+                    if (item === Object.keys(lastItemSelectedObj)[0]){
                         drawPoly(points, "rgba(153,76,0,0.7)", "2");
                     }
                 }
@@ -192,7 +259,7 @@ function Canvas(props) {
 
 
         if (isNothingSelected){
-            lastItemSelected = props.onItemDeselected(lastItemSelected);
+            lastItemSelectedObj = props.onItemDeselected(lastItemSelectedObj);
         }
     }
     
@@ -222,6 +289,10 @@ function Canvas(props) {
             
             var poly = generatePolygon(points);
             item_obj[item] = poly;
+            item_obj["id"] = id;
+            item_obj["subcategory"] = subcategory;
+            item_obj["transcription"] = transcription;
+            item_obj["notes"] = notes;
 
             if (is_point_in_poly(poly, [x, y]) === -1 || is_point_in_poly(poly, [x, y]) === 0) {
                 isIn.push (item_obj); 
@@ -278,7 +349,10 @@ function Canvas(props) {
                 var y = e.offsetY;
                 isPointInPoly(selectedImage, x, y);
                 drawCanvas(isIn, isOut);
-                drawTooltip(lastItemSelected, x, y,'rgb(128,128,128)', "2", "rgba(0,0,0,0.6)", 'rgb(255,255,255)', 16);
+                drawTooltip(lastItemSelectedObj, x, y,'rgb(128,128,128)', "2", "rgba(0,0,0,0.6)", 'rgb(255,255,255)', 16);
+                myRef.current.onclick = (e) => {
+                    setMetadata(lastItemSelectedObj);
+                }
             }
     
             myRef.current.onmouseout = () => {
@@ -288,6 +362,7 @@ function Canvas(props) {
                 isNothingSelected = true;
                 isPointInPoly(selectedImage, -1, -1,);
                 drawCanvas(isIn, isOut);
+                unsetMetadata();
             }
             setMouseMove(true);
         }
@@ -315,7 +390,14 @@ function Canvas(props) {
 }
 
 const mapStateToProps = state => ({     
-    image: state.image
+    image: state.image,
+    transcription_text : state.transcription_text,
+    transcription_said : state.transcription_said,
+    trascription_style : state.transcription_style,
+    transcription_type : state.transcription_type,
+    transcription_lang : state.transcription_lang,
+    subcategory_desc : state.subcategory_desc,
+    notes : state.notes 
 });
 
 export default connect(mapStateToProps)(Canvas);

@@ -2,7 +2,8 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from "react-router-dom"
 import './CanvasPage.css';
 import Canvas from '../Canvas/Canvas.js';
-import TextOne from '../Texts/TextOne';
+import TextOne from '../Texts/TextOne.js';
+import TextBox from '../TextBox/TextBox.js'
 
 
 function CanvasPage(props) {
@@ -27,18 +28,18 @@ function CanvasPage(props) {
         }
     }
 
-    function handleItemDeselected(last_item){
-        last_item = null;
+    function handleItemDeselected(last_item_obj){
+        last_item_obj = null;
         setSelectedItem("");
-        return last_item;
+        return last_item_obj;
     }
 
-    function handleItemSelected(item, last_item){
-        if(last_item !== item) {
-           last_item = item;
-           setSelectedItem(item);
+    function handleItemSelected(item_obj, last_item_obj){
+        if((last_item_obj === null) || (Object.keys(last_item_obj)[0] !== Object.keys(item_obj)[0])) {
+           last_item_obj = item_obj;
+           setSelectedItem(Object.keys(item_obj)[0]);
         }
-        return last_item;
+        return last_item_obj;
     }
 
     return (
@@ -57,6 +58,7 @@ function CanvasPage(props) {
             :
                 <TextOne/>
             }
+            <TextBox/>
             <button className='button' onClick = {(e) => handleClick(e, "get_next_page")}>
                 <i className="fa fa-arrow-circle-right"></i>
             </button>

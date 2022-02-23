@@ -17,7 +17,14 @@ const initialState = {
   subcat_options: [],
   selected_catoption: "",
   selected_subcatoption: "",
-  result_images: []
+  result_images: [],
+  transcription_text : [],
+  transcription_said : [],
+  trascription_style : "",
+  transcription_type : "",
+  transcription_lang : "",
+  subcategory_desc : "",
+  notes : []
 }
 
 function reducer (state = initialState, action) { 
@@ -61,6 +68,41 @@ function reducer (state = initialState, action) {
         ...state,
        content: action.payload
       };
+    case "TRANSCRIPTION_TEXT":
+      return {
+        ...state,
+        transcription_text: action.payload
+      };
+    case "TRANSCRIPTION_STYLE":
+      return {
+        ...state,
+        transcription_style: action.payload
+      };
+    case "TRANSCRIPTION_SAID":
+      return {
+        ...state,
+        transcription_said: action.payload
+      };
+    case "TRANSCRIPTION_TYPE":
+      return {
+        ...state,
+        transcription_type: action.payload
+      };
+    case "TRANSCRIPTION_LANG":
+      return {
+        ...state,
+        transcription_lang: action.payload
+      }
+    case "SUBCATEGORY_DESC":
+      return {
+        ...state,
+        subcategory_desc: action.payload
+      };
+    case "NOTES":
+      return {
+        ...state,
+        notes: action.payload
+      }
     default:
       return state;
   }
