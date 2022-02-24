@@ -180,6 +180,7 @@ const mapStateToProps = state => ({
     subcat_options: state.subcat_options,
     selected_catoption: state.selected_catoption,
     selected_subcatoption: state.selected_subcatoption,
+    selected_image: state.image,
     result_images: state.result_images,
     to_reset: state.to_reset
 });

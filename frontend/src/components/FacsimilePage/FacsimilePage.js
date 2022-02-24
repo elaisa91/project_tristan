@@ -35,10 +35,10 @@ class FacsimilePage extends React.Component{
                     type: "SELECTED_SUBCATOPTION",
                     payload: ""
                 });  
-                this.props.dispatch({
+                /*this.props.dispatch({
                     type: "RESULT_IMAGES",
                     payload: []
-                }); 
+                }); */
                 this.props.dispatch({
                     type: "SELECTED_IMAGE",
                     payload: {}
@@ -77,6 +77,7 @@ const mapStateToProps = state => ({
     subcat_options: state.subcat_options,
     selected_catoption: state.selected_catoption,
     selected_subcatoption: state.selected_subcatoption,
+    selected_image: state.image,
     result_images: state.result_images,
     content: state.content
 })
