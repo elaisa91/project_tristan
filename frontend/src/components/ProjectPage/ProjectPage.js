@@ -32,7 +32,7 @@ class ProjectPage extends React.Component{
                     {content: <TextFour/>}
                 );
                 break;
-            case "Codifica":
+            /*case "Codifica":
                 this.setState(
                     {content: <TextFive/>}
                 );
@@ -42,6 +42,7 @@ class ProjectPage extends React.Component{
                     {content: <TextSix/>}
                 );
                 break;
+            */
             case "Licenze":
                 this.setState(
                     {content: <TextSeven/>}

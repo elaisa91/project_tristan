@@ -136,7 +136,7 @@ def generate_polygon(string):
     return poly;  
   
 
-def generate_document(surface):
+def generate_document(surface, n):
     document = {}
     name = ""
     url = ""
@@ -151,6 +151,7 @@ def generate_document(surface):
     
     document["name"] = name
     document["url"] = url
+    document['num'] = str(n)
     document["notes"] = doc_notes
 
     # per ogni 'zone'
@@ -206,8 +207,10 @@ def generate_document(surface):
 
 
 def insert_documents(mycol): 
+    num = -1
     for surface in root[1]:
-        document = generate_document(surface)
+        num=num+1
+        document = generate_document(surface, num)
         mycol.insert_one(document)
     print ("Documents inserted")
 

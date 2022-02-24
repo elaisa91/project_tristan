@@ -15,7 +15,7 @@ class Navigator extends React.Component{
                             <Link to="/project">Progetto</Link>
                         </li>
                         <li>
-                            <Link to="/facsimile">Facsimile</Link>
+                            <Link to="/facsimile">Interroga il database</Link>
                         </li>
                     </ul>
                 </nav>
