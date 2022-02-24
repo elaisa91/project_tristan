@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import './SearchPage.css';
 import Choice from '../Choice/Choice.js';
 import Slider from '../Slider/Slider.js';
+import { refreshResult } from '../../helper';
 
 class SearchPage extends React.Component {
     constructor (props) { 
@@ -12,10 +13,10 @@ class SearchPage extends React.Component {
         };
     }
         
-    componentDidMount(){
+    async componentDidMount(){
         if(this.props.selected_catoption === ""){
             /* mettere queste chiamate in funzioni a parte e usare axios*/
-            fetch("http://localhost:8080/v1/imgResults/null")
+            /*fetch("http://localhost:8080/v1/imgResults/null")
             
                 .then(res => res.json())
                 .then(
@@ -30,7 +31,12 @@ class SearchPage extends React.Component {
                             error
                         });
                     }
-                )
+                )*/
+                this.props.dispatch({
+                    type: "RESULT_IMAGES",
+                    payload: await refreshResult()
+                });
+
         }
         /* mettere queste chiamate in funzioni a parte e usare axios*/
         fetch("http://localhost:8080/v1/categories")
@@ -141,7 +147,7 @@ class SearchPage extends React.Component {
 
     render() {
         return (
-
+            this.props.visible &&
             <div className="search-page">
                 <div className="cat-choice">
                     <Choice

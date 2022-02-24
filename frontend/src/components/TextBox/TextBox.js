@@ -43,7 +43,7 @@ class TextBox extends React.Component{
         }
 
         return (
-            <div className='text-box'>
+            <div>
                 {text_list.length>0?
                     <div className='trans-text'>
                         Transcription: {text_list} 

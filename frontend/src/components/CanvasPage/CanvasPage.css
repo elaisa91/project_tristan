@@ -1,3 +1,27 @@
 .canvas-data{
-    display:flex;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.textbox-with-buttons {
+    font-family: Junicode;
+    min-height: 650px;
+    width: 400px;
+    padding-left: 10px;
+}
+
+.controls-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.direction-button {
+    height: 30px;
+}
+
+.canvas-with-buttons {
+    display: flex;
+    align-items: center;
 }

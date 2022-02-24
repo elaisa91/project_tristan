@@ -77,35 +77,41 @@ function CanvasPage(props) {
 
     return (
         <div className="canvas-page">
-            <button className='button' onClick = {(e) => handleClick(e, "get_previous_page")}>
-                <i className="fa fa-arrow-circle-left"></i>
-            </button>
             {description === false 
             ?
                 <div className='canvas-data'>
+                    <div className='canvas-with-buttons'>
+                    <button className='direction-button' onClick = {(e) => handleClick(e, "get_previous_page")}>
+                        <i className="fa fa-arrow-circle-left"></i>
+                    </button>
                     <Canvas
                         height = {600}
                         width = {500}
                         onItemSelected = {(item, last_item) => handleItemSelected(item, last_item)}
                         onItemDeselected = {(last_item) => handleItemDeselected(last_item)}
                     />
-                    <TextBox/>
+                    <button className='direction-button' onClick = {(e) => handleClick(e, "get_next_page")}>
+                        <i className="fa fa-arrow-circle-right"></i>
+                    </button>
+                    </div>
+                    <div className='textbox-with-buttons'>
+                        <div className='controls-buttons'>
+                            <button className='button' onClick = {(e) => handleClick(e, "get_current_page")}>
+                                <i className="fa fa-file-o"></i>
+                            </button>
+                            <button className='button' onClick = {(e) => handleClick(e, "get_description")}>
+                                <i className="fa fa-bars"></i>
+                            </button>
+                            <button className='button' onClick = {(e) => handleClick(e, "close_page")}>
+                                <i className="fa fa-close"></i>
+                            </button>
+                        </div>
+                        <TextBox/>
+                    </div>  
                 </div>
             :
                 <TextOne/>
             }
-            <button className='button' onClick = {(e) => handleClick(e, "get_next_page")}>
-                <i className="fa fa-arrow-circle-right"></i>
-            </button>
-            <button className='button' onClick = {(e) => handleClick(e, "get_current_page")}>
-                <i className="fa fa-file-o"></i>
-            </button>
-            <button className='button' onClick = {(e) => handleClick(e, "get_description")}>
-                <i className="fa fa-bars"></i>
-            </button>
-            <button className='button' onClick = {(e) => handleClick(e, "close_page")}>
-                <i className="fa fa-close"></i>
-            </button>
         </div>
     );
 }

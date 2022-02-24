@@ -5,24 +5,42 @@ import Navigator from '../Navigator/Navigator.js';
 import SubMenu from '../SubMenu/SubMenu.js';
 import TextEight from '../Texts/TextEight';
 import SearchPage from '../SearchPage/SearchPage';
+import { refreshResult } from '../../helper';
 
 class FacsimilePage extends React.Component{
     constructor (props) { 
         super(props); 
         this.state = {
             sub_menu_items: [{desc: "Descrizione del facsimile", image: process.env.PUBLIC_URL + '/university_logo.png'},
-                            {desc: "Illustrazioni", image: process.env.PUBLIC_URL + '/university_logo.png'}],
+                            {desc: "Illustrazioni", image: process.env.PUBLIC_URL + '/university_logo.png'}]
         };
     }
-    handleClick(i){
+    async handleClick(i){
         switch (this.state.sub_menu_items[i].desc){
             case "Descrizione del facsimile":
-                this.props.dispatch({
+                /*this.props.dispatch({
                     type: "CONTENT",
                     payload: <TextEight/>
-                }); 
+                });*/ 
+                /* raggruppare tutti quelli con visible */
+                this.props.dispatch({
+                    type: 'DESCRIPTION_VISIBLE',
+                    payload: true
+                });
+                this.props.dispatch({
+                    type: 'SEARCH_PAGE_VISIBLE',
+                    payload: false
+                });
                 break;
             case "Illustrazioni": 
+                this.props.dispatch({
+                    type: 'DESCRIPTION_VISIBLE',
+                    payload: false
+                });
+                this.props.dispatch({
+                    type: 'SEARCH_PAGE_VISIBLE',
+                    payload: true
+                });
                 this.props.dispatch({
                     type: "SUBCAT_OPTIONS",
                     payload: []
@@ -35,6 +53,10 @@ class FacsimilePage extends React.Component{
                     type: "SELECTED_SUBCATOPTION",
                     payload: ""
                 });  
+                this.props.dispatch({
+                    type: "RESULT_IMAGES",
+                    payload: await refreshResult()
+                });
                 /*this.props.dispatch({
                     type: "RESULT_IMAGES",
                     payload: []
@@ -44,10 +66,10 @@ class FacsimilePage extends React.Component{
                     payload: {}
                 });
                 
-                this.props.dispatch({
+                /*this.props.dispatch({
                     type: "CONTENT",
                     payload: <SearchPage/>
-                }); 
+                }); */
                 break;
             default: 
                 this.props.dispatch({
@@ -65,7 +87,8 @@ class FacsimilePage extends React.Component{
                     onClick = {(i) => this.handleClick(i)}
                 />
                 <div className='content'>
-                    {this.props.content}
+                    <SearchPage visible = {this.props.search_page_visible} />
+                    <TextEight visible = {this.props.description_visible}/>
                 </div>
             </div>
         );
@@ -79,7 +102,8 @@ const mapStateToProps = state => ({
     selected_subcatoption: state.selected_subcatoption,
     selected_image: state.image,
     result_images: state.result_images,
-    content: state.content
+    search_page_visible: state.search_page_visible,
+    description_visible: state.description_visible
 })
 
 export default connect(mapStateToProps)(FacsimilePage);

@@ -18,6 +18,8 @@ const initialState = {
   selected_catoption: "",
   selected_subcatoption: "",
   result_images: [],
+  search_page_visible: false,
+  description_visible: false,
   transcription_text : [],
   transcription_said : [],
   transcription_style : "",
@@ -67,6 +69,16 @@ function reducer (state = initialState, action) {
       return {
         ...state,
        content: action.payload
+      };
+    case "SEARCH_PAGE_VISIBLE":
+      return {
+        ...state,
+        search_page_visible: action.payload
+      };
+    case "DESCRIPTION_VISIBLE":
+      return {
+        ...state,
+        description_visible: action.payload
       };
     case "TRANSCRIPTION_TEXT":
       return {
