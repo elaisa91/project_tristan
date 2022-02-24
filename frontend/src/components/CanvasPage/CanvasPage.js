@@ -49,16 +49,18 @@ function CanvasPage(props) {
             </button>
             {description === false 
             ?
-                <Canvas
-                    height = {600}
-                    width = {500}
-                    onItemSelected = {(item, last_item) => handleItemSelected(item, last_item)}
-                    onItemDeselected = {(last_item) => handleItemDeselected(last_item)}
-                />
+                <div className='canvas-data'>
+                    <Canvas
+                        height = {600}
+                        width = {500}
+                        onItemSelected = {(item, last_item) => handleItemSelected(item, last_item)}
+                        onItemDeselected = {(last_item) => handleItemDeselected(last_item)}
+                    />
+                    <TextBox/>
+                </div>
             :
                 <TextOne/>
             }
-            <TextBox/>
             <button className='button' onClick = {(e) => handleClick(e, "get_next_page")}>
                 <i className="fa fa-arrow-circle-right"></i>
             </button>

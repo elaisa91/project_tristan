@@ -20,7 +20,7 @@ const initialState = {
   result_images: [],
   transcription_text : [],
   transcription_said : [],
-  trascription_style : "",
+  transcription_style : "",
   transcription_type : "",
   transcription_lang : "",
   subcategory_desc : "",
