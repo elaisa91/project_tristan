@@ -1,12 +1,18 @@
-import {MongoClient} from 'mongodb';
-const url = "mongodb://localhost:27017";
+import mongodb from 'mongodb';
+const { MongoClient } = mongodb;
+const url = "mongodb://root:example@localhost:27017";
 
 var dbo;
  
 export default function connectToServer (callback) {
-    MongoClient.connect( url,  { useNewUrlParser: true }, function( err, db ) {
-        dbo  = db.db('facsimile_db');
-        return callback( err );
+    MongoClient.connect(url, { useNewUrlParser: true }, function( err, db ) {
+        if(err) {
+            console.log("errore");
+            console.log(err);
+        } else {
+            dbo  = db.db('facsimile_db');
+            return callback( err );
+        }
     });
 }
 

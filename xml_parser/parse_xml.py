@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 import html
 import string
 
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+myclient = pymongo.MongoClient("mongodb://localhost:27017/", username="root", password="example")
 mydb = myclient["facsimile_db"]
 mycol = mydb["facsimile_img_2"]
 
