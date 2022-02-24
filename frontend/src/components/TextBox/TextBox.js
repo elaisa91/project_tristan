@@ -27,8 +27,19 @@ class TextBox extends React.Component{
             );
         }
 
-        for (var note in this.props.notes){
-            notes_list.push(<p>{note}</p>);
+        for (var note of this.props.notes){
+            console.log(note)
+            var note_s = [];
+            if (note.length>0){
+                for (var el of note){
+                    if(el[1] === 'normal'){
+                        note_s.push(el[0]);
+                    }else if (el[1] === 'italics') {
+                        note_s.push(<i>{el[0]}</i>);
+                    }
+                }
+            }
+            notes_list.push(<p>{note_s}</p>);
         }
 
         return (
@@ -79,7 +90,7 @@ class TextBox extends React.Component{
                 </div>
                 {notes_list.length>0?
                     <div className='notes'>
-                        Notes: {this.props.notes}
+                        Notes: {notes_list}
                     </div>
                 :
                     <div className='notes'></div>
