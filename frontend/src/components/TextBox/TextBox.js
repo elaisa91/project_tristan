@@ -92,7 +92,7 @@ class TextBox extends React.Component{
 const mapStateToProps = state => ({ 
     transcription_text : state.transcription_text,
     transcription_said : state.transcription_said,
-    trascription_style : state.transcription_style,
+    transcription_style : state.transcription_style,
     transcription_type : state.transcription_type,
     transcription_lang : state.transcription_lang,
     subcategory_desc : state.subcategory_desc,

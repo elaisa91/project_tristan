@@ -37,13 +37,13 @@ def generate_notes(id, root):
         if (note.attrib["facs"][1:] == id):
             nt = []
             if note.text:
-                nt.append([re.sub('\n\s*', " ", note.text), 'normal'])
+                nt.append([re.sub('\n\s*', " ", note.text).replace('/','-'), 'normal'])
             for child in note:
                 if (child.tag == "{http://www.tei-c.org/ns/1.0}hi"):
                         rend = child.attrib["rend"]
-                        nt.append([re.sub('\n\s*', " ", child.text), rend])
+                        nt.append([re.sub('\n\s*', " ", child.text).replace('/','-'), rend])
                 if (child.tail):
-                    nt.append([re.sub('\n\s*', " ", child.tail), 'normal'])
+                    nt.append([re.sub('\n\s*', " ", child.tail).replace('/','-'), 'normal'])
             notes.append(nt)
     return notes
 
@@ -60,42 +60,42 @@ def generate_transcription(trans_ide, root):
             for option in choice:
                 text = "" 
                 if option.text:
-                    text+= option.text.replace("|", "\n")
+                    text+= option.text.replace("|", "\n").replace('/','-')
                 for child in option:
                     if (child.tag == "{http://www.tei-c.org/ns/1.0}g"):
                         ref = child.attrib["ref"][1:]
                         text+= generate_char(ref, root)
                     if (child.text):
-                        text+= child.text.replace("|", "\n")
+                        text+= child.text.replace("|", "\n").replace('/','-')
                     if (child.tail):
-                        text+= child.tail.replace("|", "\n")
+                        text+= child.tail.replace("|", "\n").replace('/','-')
                 if (option.tag == "{http://www.tei-c.org/ns/1.0}orig"):
                     transcription['text']['orig'] = text
                 if (option.tag == "{http://www.tei-c.org/ns/1.0}reg"):
                     transcription['text']['reg'] = text
             if "style" in ab.attrib:
-                transcription["style"] = string.capwords(ab.attrib["style"].replace("_", " "))
+                transcription["style"] = string.capwords(ab.attrib["style"].replace("_", " ")).replace('/','-')
             if "type" in ab.attrib:
-                transcription["type"] = string.capwords(ab.attrib["type"].replace("_", " "))
+                transcription["type"] = string.capwords(ab.attrib["type"].replace("_", " ")).replace('/','-')
             if "{http://www.w3.org/XML/1998/namespace}lang" in ab.attrib:
-                transcription["lang"] = string.capwords(ab.attrib["{http://www.w3.org/XML/1998/namespace}lang"].replace("_", " "))
+                transcription["lang"] = string.capwords(ab.attrib["{http://www.w3.org/XML/1998/namespace}lang"].replace("_", " ")).replace('/','-')
             if ab.findall("{http://www.tei-c.org/ns/1.0}said"):
                 for said in ab.findall("{http://www.tei-c.org/ns/1.0}said"):
                     said_obj = {}
                     if "who" in said.attrib:
-                        said_obj["who"] = said.attrib["who"][1:]
+                        said_obj["who"] = said.attrib["who"][1:].replace("_", " ").replace('/','-')
                     if "toWhom" in said.attrib:
-                        said_obj["toWhom"] = said.attrib["toWhom"][1:]
+                        said_obj["toWhom"] = said.attrib["toWhom"][1:].replace("_", " ").replace('/','-')
                     transcription["said"].append(said_obj)
     return (transcription)
 
 def generate_category(cat_ide, root):
-    category = string.capwords(cat_ide.replace("_", " "))
+    category = string.capwords(cat_ide.replace("_", " ")).replace('/','-')
     for interpGrp in root[0].iter("{http://www.tei-c.org/ns/1.0}interpGrp"):
         if (interpGrp.attrib["{http://www.w3.org/XML/1998/namespace}id"] == cat_ide):
             for child in interpGrp:
                 if (child.tag == "{http://www.tei-c.org/ns/1.0}desc"):
-                    category = string.capwords(child.text)
+                    category = string.capwords(child.text).replace('/','-')
     return (category)
 
 def generate_subcategory(subcat_ide, root):
@@ -103,13 +103,13 @@ def generate_subcategory(subcat_ide, root):
     subcategory["desc"] = ""
     subcategory["name"] = ""
     if (subcat_ide != ""):
-        subcategory["name"] = string.capwords(subcat_ide.replace("_", " "))
+        subcategory["name"] = string.capwords(subcat_ide.replace("_", " ")).replace('/','-')
     for interp in root[0].iter("{http://www.tei-c.org/ns/1.0}interp"):
         if (interp.attrib["{http://www.w3.org/XML/1998/namespace}id"] == subcat_ide):
             if "sameAs" in interp.attrib:
-                subcategory["desc"] = interp.attrib["sameAs"]
+                subcategory["desc"] = interp.attrib["sameAs"].replace('/','-')
             else:
-                subcategory["desc"] = re.sub('\n\s*', " ", interp.text)
+                subcategory["desc"] = re.sub('\n\s*', " ", interp.text).replace('/','-')
     """for person in root[0].iter("{http://www.tei-c.org/ns/1.0}person"):
         if (person.attrib["{http://www.w3.org/XML/1998/namespace}id"] == subcat_ide):
             subcategory["desc"] = {}
@@ -182,7 +182,7 @@ def generate_document(surface):
             if (zone.attrib["type"] == "scene"):
                 category = "Episode"
             else:
-                category = string.capwords(zone.attrib["type"].replace("_", " "))
+                category = string.capwords(zone.attrib["type"].replace("_", " ").replace('/','-'))
             if ("sameAs" in zone.attrib):
                 subcat_ide = zone.attrib["sameAs"][1:]
         elif ("ana" in zone.attrib) and ("corresp" in zone.attrib):

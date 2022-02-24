@@ -39,7 +39,11 @@ class Slider extends React.Component {
            
             <div className = 'slider'>
                 
-                <p>{this.props.selected_catoption !== "" ?selectedOptionString: null}</p>
+                <p>{this.props.selected_catoption !== "" ?
+                        selectedOptionString
+                    : 
+                    null
+                }</p>
                
                 {img_list}
               
