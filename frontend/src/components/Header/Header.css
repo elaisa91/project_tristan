@@ -1,6 +1,18 @@
-.header img{
+.header {
+    display: flex;
+    flex: row;
+    justify-content: space-evenly;
+    background: rgb(3, 6, 53);
+}
+
+.header .info {
+    padding-top: 2em;
+    color: white;
+    font-size: large;
+    font-weight: bold;
+}
+
+.header img {
+    padding-top: 2em;
     max-width:120px;
-    max-height:220px;
-    width: auto;
-    height: auto; 
 }

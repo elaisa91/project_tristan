@@ -12,16 +12,97 @@ import CanvasPage from './components/CanvasPage/CanvasPage.js';
 import Footer from './components/Footer/Footer.js';
 
 const initialState = {
-  image: null
+  image: {},
+  cat_options: [],
+  subcat_options: [],
+  selected_catoption: "",
+  selected_subcatoption: "",
+  result_images: [],
+  transcription_text : [],
+  transcription_said : [],
+  transcription_style : "",
+  transcription_type : "",
+  transcription_lang : "",
+  subcategory_desc : "",
+  notes : []
 }
 
 function reducer (state = initialState, action) { 
   switch(action.type) {
-    case "SELECT_IMAGE":
+    case "SELECTED_IMAGE":
       return {
         ...state,
         image: action.payload
       };
+
+    case "CAT_OPTIONS":
+      return {
+        ...state,
+        cat_options: action.payload
+      };
+
+    case "SUBCAT_OPTIONS":
+      return {
+        ...state,
+        subcat_options: action.payload
+      };
+
+    case "SELECTED_CATOPTION":
+      return {
+        ...state,
+        selected_catoption: action.payload
+      };
+    case "SELECTED_SUBCATOPTION":
+      return {
+        ...state,
+        selected_subcatoption: action.payload
+      }
+
+    case "RESULT_IMAGES":
+      return {
+        ...state,
+        result_images: action.payload
+      };
+    case "CONTENT":
+      return {
+        ...state,
+       content: action.payload
+      };
+    case "TRANSCRIPTION_TEXT":
+      return {
+        ...state,
+        transcription_text: action.payload
+      };
+    case "TRANSCRIPTION_STYLE":
+      return {
+        ...state,
+        transcription_style: action.payload
+      };
+    case "TRANSCRIPTION_SAID":
+      return {
+        ...state,
+        transcription_said: action.payload
+      };
+    case "TRANSCRIPTION_TYPE":
+      return {
+        ...state,
+        transcription_type: action.payload
+      };
+    case "TRANSCRIPTION_LANG":
+      return {
+        ...state,
+        transcription_lang: action.payload
+      }
+    case "SUBCATEGORY_DESC":
+      return {
+        ...state,
+        subcategory_desc: action.payload
+      };
+    case "NOTES":
+      return {
+        ...state,
+        notes: action.payload
+      }
     default:
       return state;
   }
@@ -31,6 +112,7 @@ const store = createStore(reducer);
 
 ReactDOM.render(
   <React.StrictMode>
+  <div className='container'>
     <Provider store={store}>
       <Router>
         <Routes> 
@@ -42,6 +124,7 @@ ReactDOM.render(
       </Router> 
       <Footer/>
     </Provider>
+  </div>
   </React.StrictMode>,
   document.getElementById('root')
 );

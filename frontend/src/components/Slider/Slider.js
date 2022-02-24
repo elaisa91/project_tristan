@@ -1,17 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './Slider.css';
 import FacImage from '../FacImage/FacImage.js';
 
 class Slider extends React.Component {
     constructor(props) {
         super(props);
-        this.selectedOptionString = null;
-    }
-
-    componentDidUpdate (){
-        if(this.props.selected_option !== ""){
-            this.selectedOptionString = this.props.selected_option + " è presente nelle seguenti carte: "
-        }
+        
     }
 
     renderFacImage(i){
@@ -26,7 +21,14 @@ class Slider extends React.Component {
     }
 
     render() {
-       
+        var selectedOptionString = "";
+        if (this.props.selected_subcatoption === ""){
+            selectedOptionString = this.props.selected_catoption + " è presente nelle seguenti carte: "
+        }
+        else {
+            selectedOptionString = this.props.selected_subcatoption + " è presente nelle seguenti carte: "
+        }
+        
         const result_images = this.props.result_images;
         const img_list = [];
         for (var i = 0; i<result_images.length; i++){
@@ -34,9 +36,14 @@ class Slider extends React.Component {
         }
         
         return (
-            
+           
             <div className = 'slider'>
-                <p>{this.selectedOptionString}</p>
+                
+                <p>{this.props.selected_catoption !== "" ?
+                        selectedOptionString
+                    : 
+                    null
+                }</p>
                
                 {img_list}
               
@@ -45,4 +52,10 @@ class Slider extends React.Component {
     }
 }
 
-export default Slider;
+const mapStateToProps = state => ({ 
+    selected_catoption: state.selected_catoption,
+    selected_subcatoption: state.selected_subcatoption,
+    result_images: state.result_images
+});
+
+export default connect(mapStateToProps)(Slider);

@@ -9,16 +9,21 @@ function imagesGet(req, res){
         var result_images = [];
         var found = false;
         for (const facsimile of result){
-            for (const key in facsimile){
-                if(key !== '_id' && key !== 'name' && key !== 'url'){
-                    if (key === req.params.selectedOption){
-                        found = true;
-                        break;
-                    }
-                    for (const zone of facsimile[key]){
-                        if (zone["subcategory"]!=={} && zone["subcategory"]["name"] === req.params.selectedOption){
+            
+            if (req.params.selectedOption === "null"){
+                found = true;
+            } else {
+                for (const key in facsimile){
+                    if(key !== '_id' && key !== 'name' && key !== 'url' && key!= 'notes'){
+                        if (key === req.params.selectedOption){
                             found = true;
                             break;
+                        }
+                        for (const zone of facsimile[key]){
+                            if (zone["subcategory"]!=={} && zone["subcategory"]["name"] === req.params.selectedOption){
+                                found = true;
+                                break;
+                            }
                         }
                     }
                 }
@@ -27,7 +32,7 @@ function imagesGet(req, res){
             if (found === true){
                 var image = {src: facsimile["url"], id: facsimile["name"], polygons: []};
                 for (const key in facsimile){
-                    if(key!=='_id' && key!=='name' && key!=='url'){
+                    if(key!=='_id' && key!=='name' && key!=='url' && key!= 'notes'){
                         image["polygons"] = image["polygons"].concat(facsimile[key]);
                     }
                 }

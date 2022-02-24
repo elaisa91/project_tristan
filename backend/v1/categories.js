@@ -9,7 +9,7 @@ function categoriesGet(req, res){
         var categories = [];
         for (const facsimile of result){
             for (const key in facsimile){
-                if(key!=='_id' && key!=='name' && key!=='url' && !categories.includes(key)){
+                if(key !== '_id' && key !== 'name' && key !== 'url' && key !== 'notes' && key !== 'Register' && !categories.includes(key)){
                     categories.push(key);
                 }
             }
