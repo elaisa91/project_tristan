@@ -1,3 +1,5 @@
 .text-box{
     font-family: Junicode;
+    min-height: 650px;
+    min-width: 500px;
 }
