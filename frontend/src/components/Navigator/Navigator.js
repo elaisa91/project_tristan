@@ -12,10 +12,10 @@ class Navigator extends React.Component{
                             <Link to="/">Home</Link>
                         </li>
                         <li>
-                            <Link to="/project">Progetto</Link>
+                            <Link to="/project">Project</Link>
                         </li>
                         <li>
-                            <Link to="/facsimile">Interroga il database</Link>
+                            <Link to="/facsimile">Query the database</Link>
                         </li>
                     </ul>
                 </nav>

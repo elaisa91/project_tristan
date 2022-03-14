@@ -11,38 +11,25 @@ class ProjectPage extends React.Component{
     constructor (props) { 
         super(props); 
         this.state = {
-            sub_menu_items: [{desc: "Gruppo di lavoro", image: process.env.PUBLIC_URL + '/university_logo.png'},
-                            {desc: "Metodo", image: process.env.PUBLIC_URL + '/university_logo.png'},
-                            {desc: "Codifica", image: process.env.PUBLIC_URL + '/university_logo.png'},
-                            {desc: "Criteri di ricerca", image: process.env.PUBLIC_URL + '/university_logo.png'},
-                            {desc: "Licenze", image: process.env.PUBLIC_URL + '/university_logo.png'}],
+            sub_menu_items: [{desc: "Work team", image: process.env.PUBLIC_URL + '/university_logo.png'},
+                            {desc: "Methods", image: process.env.PUBLIC_URL + '/university_logo.png'},
+                            {desc: "Licence", image: process.env.PUBLIC_URL + '/university_logo.png'}],
             content : ""
         };
     }
     handleClick(i){
         switch (this.state.sub_menu_items[i].desc){
-            case "Gruppo di lavoro":
+            case "Work team":
                 this.setState(
                     {content: <TextThree/>}
                 );
                 break;
-            case "Metodo":
+            case "Methods":
                 this.setState(
                     {content: <TextFour/>}
                 );
                 break;
-            /*case "Codifica":
-                this.setState(
-                    {content: <TextFive/>}
-                );
-                break;
-            case "Criteri di ricerca":
-                this.setState(
-                    {content: <TextSix/>}
-                );
-                break;
-            */
-            case "Licenze":
+            case "Licence":
                 this.setState(
                     {content: <TextSeven/>}
                 );

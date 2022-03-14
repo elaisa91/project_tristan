@@ -13,7 +13,7 @@ class Footer extends React.Component{
                         <p>Università degli Studi di Verona, Via dell'Artigliere, 8 37129 Verona.</p>
                     </div>
                     <div className='copyright'>
-                        <p>© 2022, Università di Verona. All rights reserved.</p>
+                        <p>© 2022. Università di Verona. All rights reserved.</p>
                     </div>
                 </footer>
             </div>

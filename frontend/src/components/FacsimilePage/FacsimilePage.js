@@ -10,13 +10,13 @@ class FacsimilePage extends React.Component{
     constructor (props) { 
         super(props); 
         this.state = {
-            sub_menu_items: [{desc: "Descrizione del facsimile", image: process.env.PUBLIC_URL + '/university_logo.png'},
-                            {desc: "Illustrazioni", image: process.env.PUBLIC_URL + '/university_logo.png'}]
+            sub_menu_items: [{desc: "Search criteria", image: process.env.PUBLIC_URL + '/university_logo.png'},
+                            {desc: "Search in the database", image: process.env.PUBLIC_URL + '/university_logo.png'}]
         };
     }
     async handleClick(i){
         switch (this.state.sub_menu_items[i].desc){
-            case "Descrizione del facsimile":
+            case "Search criteria":
                 /* raggruppare tutti quelli con visible */
                 this.props.dispatch({
                     type: 'DESCRIPTION_VISIBLE',
@@ -27,7 +27,7 @@ class FacsimilePage extends React.Component{
                     payload: false
                 });
                 break;
-            case "Illustrazioni": 
+            case "Search in the database": 
                 this.props.dispatch({
                     type: 'DESCRIPTION_VISIBLE',
                     payload: false
