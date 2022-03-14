@@ -1,3 +1,15 @@
 .facsimile-page {
-    min-height: 650px;
+    display: flex;
+    flex: 1;
+}
+
+.facsimile-page > .content {
+    flex: 1;
+    padding: 1em;
+}
+
+.facsimile-page > .aside {
+    flex: 0 0 20vw;
+    background: grey;
+    padding: 1em;
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import './ProjectPage.css';
-import Navigator from '../Navigator/Navigator.js';
 import SubMenu from '../SubMenu/SubMenu.js';
 import TextThree from '../Texts/TextThree';
 import TextFour from '../Texts/TextFour';
@@ -57,13 +56,14 @@ class ProjectPage extends React.Component{
     render(){
         return(
             <div className='project-page'>
-                <Navigator/>
                 <SubMenu
                     sub_menu_items = {this.state.sub_menu_items}
                     onClick = {(i) => this.handleClick(i)}
                 />
                 <div className='content'>
                     {this.state.content}
+                </div>
+                <div className='aside'>
                 </div>
             </div>
         );

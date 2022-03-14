@@ -10,6 +10,8 @@ import ProjectPage from './components/ProjectPage/ProjectPage.js';
 import FacsimilePage from './components/FacsimilePage/FacsimilePage.js';
 import CanvasPage from './components/CanvasPage/CanvasPage.js';
 import Footer from './components/Footer/Footer.js';
+import Header from './components/Header/Header.js';
+import Navigator from './components/Navigator/Navigator.js';
 
 const initialState = {
   image: {},
@@ -124,9 +126,10 @@ const store = createStore(reducer);
 
 ReactDOM.render(
   <React.StrictMode>
-  <div className='container'>
     <Provider store={store}>
       <Router>
+        <Header/>
+        <Navigator/>
         <Routes> 
           <Route path="/" element = {<HomePage/>} />
           <Route path="/project" element = {<ProjectPage/>} />
@@ -136,7 +139,6 @@ ReactDOM.render(
       </Router> 
       <Footer/>
     </Provider>
-  </div>
   </React.StrictMode>,
   document.getElementById('root')
 );

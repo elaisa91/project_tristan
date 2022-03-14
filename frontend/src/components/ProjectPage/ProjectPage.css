@@ -1,3 +1,15 @@
 .project-page {
-    min-height: 650px;
+    display: flex;
+    flex: 1;
+  }
+
+.project-page > .content {
+    flex: 1;
+    padding: 1em;
+}
+
+.project-page > .aside {
+    flex: 0 0 20vw;
+    background: grey;
+    padding: 1em;
 }

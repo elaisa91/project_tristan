@@ -1,3 +1,17 @@
+.sub-menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+}
+
+.sub-menu-item a{
+    display: block;
+    padding: 1em;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+}
 .sub-menu-item img {
-    max-width:90px;
+    width: 5vw;  
 }

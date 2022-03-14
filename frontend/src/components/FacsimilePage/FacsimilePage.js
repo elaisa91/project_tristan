@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './FacsimilePage.css';
-import Navigator from '../Navigator/Navigator.js';
 import SubMenu from '../SubMenu/SubMenu.js';
 import TextEight from '../Texts/TextEight';
 import SearchPage from '../SearchPage/SearchPage';
@@ -18,10 +17,6 @@ class FacsimilePage extends React.Component{
     async handleClick(i){
         switch (this.state.sub_menu_items[i].desc){
             case "Descrizione del facsimile":
-                /*this.props.dispatch({
-                    type: "CONTENT",
-                    payload: <TextEight/>
-                });*/ 
                 /* raggruppare tutti quelli con visible */
                 this.props.dispatch({
                     type: 'DESCRIPTION_VISIBLE',
@@ -57,19 +52,11 @@ class FacsimilePage extends React.Component{
                     type: "RESULT_IMAGES",
                     payload: await refreshResult()
                 });
-                /*this.props.dispatch({
-                    type: "RESULT_IMAGES",
-                    payload: []
-                }); */
                 this.props.dispatch({
                     type: "SELECTED_IMAGE",
                     payload: {}
                 });
                 
-                /*this.props.dispatch({
-                    type: "CONTENT",
-                    payload: <SearchPage/>
-                }); */
                 break;
             default: 
                 this.props.dispatch({
@@ -81,7 +68,6 @@ class FacsimilePage extends React.Component{
     render(){
         return(
             <div className='facsimile-page'>
-                <Navigator/>
                 <SubMenu
                     sub_menu_items = {this.state.sub_menu_items}
                     onClick = {(i) => this.handleClick(i)}
@@ -89,6 +75,8 @@ class FacsimilePage extends React.Component{
                 <div className='content'>
                     <SearchPage visible = {this.props.search_page_visible} />
                     <TextEight visible = {this.props.description_visible}/>
+                </div>
+                <div className='aside'>
                 </div>
             </div>
         );

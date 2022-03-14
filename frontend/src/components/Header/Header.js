@@ -6,9 +6,9 @@ class Header extends React.Component{
         return(
             <div className='header'>
                 <div className='info'>
-                    <p>Tristano</p>
+                    <p>Tristan</p>
                     <p>Gottfried von Strassburg</p>
-                    <p>EDIZIONE DIGITALE</p>
+                    <p>DIGITAL EDITION</p>
                 </div>
                 <div className='img'>
                     <img src={process.env.PUBLIC_URL + '/university_logo.png'} alt="Università di Verona" />

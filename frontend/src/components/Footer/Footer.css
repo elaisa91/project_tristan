@@ -1,9 +1,10 @@
 .footer {
+    padding: 1em;
+    height: 20vh;
     display: flex;
-    flex: row;
-    justify-content: space-evenly;
+    justify-content: center;
+    align-items: center;
     background: rgb(3, 6, 53);
-    margin-top: auto;
 }
 
 .footer .info, .copyright {
@@ -11,6 +12,5 @@
 }
 
 .footer img {
-    padding-top: 1em;
-    max-width:190px;
+    width:12vw;
 }
