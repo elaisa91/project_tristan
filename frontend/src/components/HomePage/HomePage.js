@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './HomePage.css';
 import SubMenu from '../SubMenu/SubMenu.js';
 import TextOne from '../Texts/TextOne';
@@ -8,27 +9,32 @@ class HomePage extends React.Component{
     constructor (props) { 
         super(props); 
         this.state = {
-            sub_menu_items: [{desc: "Il Tristano", image: process.env.PUBLIC_URL + '/university_logo.png'},
-                            {desc: "Gottfried von Strassburg", image: process.env.PUBLIC_URL + '/university_logo.png'}],
-            content : ""
+            sub_menu_items: [{desc: "Short introduction", image: process.env.PUBLIC_URL + '/university_logo.png'},
+                            {desc: "Tristan (CGM51)", image: process.env.PUBLIC_URL + '/university_logo.png'}]
         };
     }
     handleClick(i){
         switch (this.state.sub_menu_items[i].desc){
-            case "Il Tristano":
-                this.setState(
-                    {content: <TextOne/>}
-                );
+            case "Short introduction":
+                this.props.dispatch({
+                    type: 'INTRODUCTION_VISIBLE',
+                    payload: true
+                });
+                this.props.dispatch({
+                    type: 'CGM51_VISIBLE',
+                    payload: false
+                });
                 break;
-            case "Gottfried von Strassburg":
-                this.setState(
-                    {content: <TextTwo/>}
-                );
+            case "Tristan (CGM51)":
+                this.props.dispatch({
+                    type: 'INTRODUCTION_VISIBLE',
+                    payload: false
+                });
+                this.props.dispatch({
+                    type: 'CGM51_VISIBLE',
+                    payload: true
+                });
                 break;
-            default: 
-                this.setState(
-                    {content: ""}
-                );
         }
     }
     render(){
@@ -39,7 +45,8 @@ class HomePage extends React.Component{
                     onClick = {(i) => this.handleClick(i)}
                 />
                 <div className='content'>
-                    {this.state.content}
+                    <TextOne visible = {this.props.introduction_visible} />
+                    <TextTwo visible = {this.props.cgm51_visible} />
                 </div>
                 <div className='aside'>
                 </div>
@@ -48,4 +55,9 @@ class HomePage extends React.Component{
     }
 }
 
-export default HomePage;
+const mapStateToProps = state => ({ 
+    introduction_visible: state.introduction_visible,
+    cgm51_visible: state.cgm51_visible
+})
+
+export default connect(mapStateToProps)(HomePage);

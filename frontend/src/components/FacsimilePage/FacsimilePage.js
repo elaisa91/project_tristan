@@ -19,7 +19,7 @@ class FacsimilePage extends React.Component{
             case "Search criteria":
                 /* raggruppare tutti quelli con visible */
                 this.props.dispatch({
-                    type: 'DESCRIPTION_VISIBLE',
+                    type: 'CRITERIA_VISIBLE',
                     payload: true
                 });
                 this.props.dispatch({
@@ -29,7 +29,7 @@ class FacsimilePage extends React.Component{
                 break;
             case "Search in the database": 
                 this.props.dispatch({
-                    type: 'DESCRIPTION_VISIBLE',
+                    type: 'CRITERIA_VISIBLE',
                     payload: false
                 });
                 this.props.dispatch({
@@ -56,13 +56,7 @@ class FacsimilePage extends React.Component{
                     type: "SELECTED_IMAGE",
                     payload: {}
                 });
-                
                 break;
-            default: 
-                this.props.dispatch({
-                    type: "CONTENT",
-                    payload: ""
-                }); 
         }
     }
     render(){
@@ -74,7 +68,7 @@ class FacsimilePage extends React.Component{
                 />
                 <div className='content'>
                     <SearchPage visible = {this.props.search_page_visible} />
-                    <TextEight visible = {this.props.description_visible}/>
+                    <TextEight visible = {this.props.criteria_visible}/>
                 </div>
                 <div className='aside'>
                 </div>
@@ -84,14 +78,13 @@ class FacsimilePage extends React.Component{
 }
 
 const mapStateToProps = state => ({ 
-    cat_options: state.cat_options,
     subcat_options: state.subcat_options,
     selected_catoption: state.selected_catoption,
     selected_subcatoption: state.selected_subcatoption,
     selected_image: state.image,
     result_images: state.result_images,
     search_page_visible: state.search_page_visible,
-    description_visible: state.description_visible
+    criteria_visible: state.criteria_visible
 })
 
 export default connect(mapStateToProps)(FacsimilePage);

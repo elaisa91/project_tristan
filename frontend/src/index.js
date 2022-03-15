@@ -21,7 +21,12 @@ const initialState = {
   selected_subcatoption: "",
   result_images: [],
   search_page_visible: false,
-  description_visible: false,
+  criteria_visible: true,
+  work_team_visible: true,
+  methods_visible: false,
+  licence_visible: false,
+  introduction_visible: true,
+  cgm51_visible: false,
   transcription_text : [],
   transcription_said : [],
   transcription_style : "",
@@ -77,11 +82,36 @@ function reducer (state = initialState, action) {
         ...state,
         search_page_visible: action.payload
       };
-    case "DESCRIPTION_VISIBLE":
+    case "CRITERIA_VISIBLE":
       return {
         ...state,
-        description_visible: action.payload
+        criteria_visible: action.payload
       };
+    case "WORK_TEAM_VISIBLE":
+      return {
+        ...state,
+        work_team_visible: action.payload
+      };
+    case "METHODS_VISIBLE":
+      return {
+        ...state,
+        methods_visible: action.payload
+      };
+    case "LICENCE_VISIBLE":
+      return {
+        ...state,
+        licence_visible: action.payload
+      }; 
+    case "INTRODUCTION_VISIBLE":
+      return {
+        ...state,
+        introduction_visible: action.payload
+      };
+    case "CGM51_VISIBLE":
+      return {
+        ...state,
+        cgm51_visible: action.payload
+      }; 
     case "TRANSCRIPTION_TEXT":
       return {
         ...state,

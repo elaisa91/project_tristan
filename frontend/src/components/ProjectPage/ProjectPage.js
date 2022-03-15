@@ -1,10 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './ProjectPage.css';
 import SubMenu from '../SubMenu/SubMenu.js';
 import TextThree from '../Texts/TextThree';
 import TextFour from '../Texts/TextFour';
-import TextFive from '../Texts/TextFive';
-import TextSix from '../Texts/TextSix';
 import TextSeven from '../Texts/TextSeven';
 
 class ProjectPage extends React.Component{
@@ -13,31 +12,53 @@ class ProjectPage extends React.Component{
         this.state = {
             sub_menu_items: [{desc: "Work team", image: process.env.PUBLIC_URL + '/university_logo.png'},
                             {desc: "Methods", image: process.env.PUBLIC_URL + '/university_logo.png'},
-                            {desc: "Licence", image: process.env.PUBLIC_URL + '/university_logo.png'}],
-            content : ""
+                            {desc: "Licence", image: process.env.PUBLIC_URL + '/university_logo.png'}]
         };
     }
     handleClick(i){
         switch (this.state.sub_menu_items[i].desc){
             case "Work team":
-                this.setState(
-                    {content: <TextThree/>}
-                );
+                this.props.dispatch({
+                    type: 'WORK_TEAM_VISIBLE',
+                    payload: true
+                });
+                this.props.dispatch({
+                    type: 'METHODS_VISIBLE',
+                    payload: false
+                });
+                this.props.dispatch({
+                    type: 'LICENCE_VISIBLE',
+                    payload: false
+                });
                 break;
             case "Methods":
-                this.setState(
-                    {content: <TextFour/>}
-                );
+                this.props.dispatch({
+                    type: 'WORK_TEAM_VISIBLE',
+                    payload: false
+                });
+                this.props.dispatch({
+                    type: 'METHODS_VISIBLE',
+                    payload: true
+                });
+                this.props.dispatch({
+                    type: 'LICENCE_VISIBLE',
+                    payload: false
+                });
                 break;
             case "Licence":
-                this.setState(
-                    {content: <TextSeven/>}
-                );
+                this.props.dispatch({
+                    type: 'WORK_TEAM_VISIBLE',
+                    payload: false
+                });
+                this.props.dispatch({
+                    type: 'METHODS_VISIBLE',
+                    payload: false
+                });
+                this.props.dispatch({
+                    type: 'LICENCE_VISIBLE',
+                    payload: true
+                });
                 break;
-            default: 
-                this.setState(
-                    {content: ""}
-                );
         }
     }
     render(){
@@ -48,7 +69,9 @@ class ProjectPage extends React.Component{
                     onClick = {(i) => this.handleClick(i)}
                 />
                 <div className='content'>
-                    {this.state.content}
+                    <TextThree visible = {this.props.work_team_visible}/>
+                    <TextFour visible = {this.props.methods_visible}/>
+                    <TextSeven visible = {this.props.licence_visible}/>
                 </div>
                 <div className='aside'>
                 </div>
@@ -57,4 +80,10 @@ class ProjectPage extends React.Component{
     }
 }
 
-export default ProjectPage;
+const mapStateToProps = state => ({ 
+    work_team_visible: state.work_team_visible,
+    methods_visible: state.methods_visible,
+    licence_visible: state.licence_visible
+})
+
+export default connect(mapStateToProps)(ProjectPage);
