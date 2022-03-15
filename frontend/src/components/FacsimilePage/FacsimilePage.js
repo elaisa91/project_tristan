@@ -62,16 +62,16 @@ class FacsimilePage extends React.Component{
     render(){
         return(
             <div className='facsimile-page'>
-                <SubMenu
-                    sub_menu_items = {this.state.sub_menu_items}
-                    onClick = {(i) => this.handleClick(i)}
-                />
+                {/*<div className='aside'>
+                </div>*/}
                 <div className='content'>
                     <SearchPage visible = {this.props.search_page_visible} />
                     <TextEight visible = {this.props.criteria_visible}/>
                 </div>
-                <div className='aside'>
-                </div>
+                <SubMenu
+                    sub_menu_items = {this.state.sub_menu_items}
+                    onClick = {(i) => this.handleClick(i)}
+                />
             </div>
         );
     }

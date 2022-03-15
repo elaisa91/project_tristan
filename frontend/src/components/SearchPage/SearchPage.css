@@ -1,4 +1,12 @@
 .search-page{
     display: flex;
-    flex-flow: row wrap;
+}
+
+.search-page > .aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex: 0 0 15vw;
+    padding: 1em;
 }

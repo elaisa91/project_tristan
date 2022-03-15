@@ -42,16 +42,19 @@ class Choice extends React.Component {
         return (
             this.showing === true 
             ?
-            <select 
-                name = {this.props.name}
-                id= {this.props.id}
-                onChange = {this.props.onChange}
+            <div>
+                <p>{this.props.description}</p>
+                <select 
+                    name = {this.props.name}
+                    id= {this.props.id}
+                    onChange = {this.props.onChange}
 
-            >
-                {placeholder_option}
-                {list}
-                
-            </select>
+                >
+                    {placeholder_option}
+                    {list}
+                    
+                </select>
+            </div>
             :
             null
         );

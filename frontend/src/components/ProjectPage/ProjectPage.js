@@ -64,17 +64,17 @@ class ProjectPage extends React.Component{
     render(){
         return(
             <div className='project-page'>
-                <SubMenu
-                    sub_menu_items = {this.state.sub_menu_items}
-                    onClick = {(i) => this.handleClick(i)}
-                />
+                {/*<div className='aside'>
+                </div>*/}
                 <div className='content'>
                     <TextThree visible = {this.props.work_team_visible}/>
                     <TextFour visible = {this.props.methods_visible}/>
                     <TextSeven visible = {this.props.licence_visible}/>
                 </div>
-                <div className='aside'>
-                </div>
+                <SubMenu
+                    sub_menu_items = {this.state.sub_menu_items}
+                    onClick = {(i) => this.handleClick(i)}
+                />
             </div>
         );
     }

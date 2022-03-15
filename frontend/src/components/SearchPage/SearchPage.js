@@ -149,26 +149,30 @@ class SearchPage extends React.Component {
         return (
             this.props.visible &&
             <div className="search-page">
-                <div className="cat-choice">
-                    <Choice
-                        name = 'categories' 
-                        id = 'categories'
-                        options = {this.props.cat_options}
-                        placeholder = "Seleziona una categoria"
-                        selected_option = {this.props.selected_catoption}
-                        onChange = {(e) => this.handleCategoryChange(e)}
-                    />
-                </div>
+                <div className='aside'>
+                    <div className="cat-choice">
+                        <Choice
+                            name = 'categories' 
+                            id = 'categories'
+                            options = {this.props.cat_options}
+                            placeholder = "Seleziona una categoria"
+                            description = "PER CATEGORIA"
+                            selected_option = {this.props.selected_catoption}
+                            onChange = {(e) => this.handleCategoryChange(e)}
+                        />
+                    </div>
 
-                <div className="subcat-choice">
-                    <Choice 
-                        name = 'subcategories' 
-                        id = 'subcategories'
-                        options = {this.props.subcat_options}
-                        placeholder = "Seleziona una sottocategoria"
-                        selected_option = {this.props.selected_subcatoption}
-                        onChange = {(e) => this.handleSubCategoryChange(e)}
-                    />
+                    <div className="subcat-choice">
+                        <Choice 
+                            name = 'subcategories' 
+                            id = 'subcategories'
+                            options = {this.props.subcat_options}
+                            placeholder = "Seleziona una sottocategoria"
+                            description = "PER SOTTOCATEGORIA"
+                            selected_option = {this.props.selected_subcatoption}
+                            onChange = {(e) => this.handleSubCategoryChange(e)}
+                        />
+                    </div>
                 </div>
 
                 <Slider

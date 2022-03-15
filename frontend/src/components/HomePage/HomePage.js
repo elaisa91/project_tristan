@@ -40,16 +40,16 @@ class HomePage extends React.Component{
     render(){
         return(
             <div className='home-page'>
-                <SubMenu
-                    sub_menu_items = {this.state.sub_menu_items}
-                    onClick = {(i) => this.handleClick(i)}
-                />
+                {/*<div className='aside'>
+                </div>*/}
                 <div className='content'>
                     <TextOne visible = {this.props.introduction_visible} />
                     <TextTwo visible = {this.props.cgm51_visible} />
                 </div>
-                <div className='aside'>
-                </div>
+                <SubMenu
+                    sub_menu_items = {this.state.sub_menu_items}
+                    onClick = {(i) => this.handleClick(i)}
+                />
             </div>
         );
     }
