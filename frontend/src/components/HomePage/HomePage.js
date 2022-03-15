@@ -40,8 +40,6 @@ class HomePage extends React.Component{
     render(){
         return(
             <div className='home-page'>
-                {/*<div className='aside'>
-                </div>*/}
                 <div className='content'>
                     <TextOne visible = {this.props.introduction_visible} />
                     <TextTwo visible = {this.props.cgm51_visible} />

@@ -64,8 +64,6 @@ class ProjectPage extends React.Component{
     render(){
         return(
             <div className='project-page'>
-                {/*<div className='aside'>
-                </div>*/}
                 <div className='content'>
                     <TextThree visible = {this.props.work_team_visible}/>
                     <TextFour visible = {this.props.methods_visible}/>

@@ -62,8 +62,6 @@ class FacsimilePage extends React.Component{
     render(){
         return(
             <div className='facsimile-page'>
-                {/*<div className='aside'>
-                </div>*/}
                 <div className='content'>
                     <SearchPage visible = {this.props.search_page_visible} />
                     <TextEight visible = {this.props.criteria_visible}/>

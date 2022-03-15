@@ -164,13 +164,18 @@ function Canvas(props) {
         const current = myRef.current;
         const ctx = current.getContext("2d");
 
+        var nheight = Math.ceil(image.height / propHeight);
+        var nwidth = Math.ceil(image.width / propWidth);
+        var dx = (current.width-nwidth)/2;
+        var dy = (current.height-nheight)/2;
+
         var path = new Path2D();
 
         for (var i=0; i<points.length; i++){
             var xcoor = points[i][0];
             var ycoor = points[i][1];
             
-            path.lineTo(xcoor,ycoor);
+            path.lineTo(xcoor+dx,ycoor+dy);
         }
         // disegna solo primo e ultimo punto
         /*for (var i=0; i<points.length; i++){
@@ -199,9 +204,11 @@ function Canvas(props) {
 
         var nheight = Math.ceil(image.height / propHeight);
         var nwidth = Math.ceil(image.width / propWidth);
+        var dx = (current.width-nwidth)/2;
+        var dy = (current.height-nheight)/2;
 
         ctx.clearRect(0,0, current.width, current.height);
-        ctx.drawImage(image, 0, 0, nwidth, nheight);
+        ctx.drawImage(image, dx, dy, nwidth, nheight);
 
         /*if (is_out_array.length > 0){
             for (var i=0; i<is_out_array.length; i++){

@@ -1,27 +1,35 @@
-.canvas-data{
+.canvas-page{
     display: flex;
     flex-direction: row;
-    justify-content: center;
-}
-
-.textbox-with-buttons {
-    font-family: Junicode;
-    min-height: 650px;
-    width: 400px;
-    padding-left: 10px;
 }
 
 .controls-buttons {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    height: 3vh;
+    order: 2;
 }
 
-.direction-button {
-    height: 30px;
+.canvas-data {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex: 1;
+    padding-top: 3em;
+}
+
+.textbox {
+    display: flex; 
+    flex: 0 0 25vw;
+    font-family: Junicode;
+    border: solid grey 1px;
+    align-items: space-evenly;
+    
 }
 
 .canvas-with-buttons {
     display: flex;
+    flex: 0 0 35vw;
+    justify-content: center;
     align-items: center;
 }
+

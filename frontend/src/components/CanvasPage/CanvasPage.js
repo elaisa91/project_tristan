@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { useNavigate } from "react-router-dom"
 import './CanvasPage.css';
 import Canvas from '../Canvas/Canvas.js';
-import TextOne from '../Texts/TextOne.js';
+import TextFive from '../Texts/TextFive.js';
 import TextBox from '../TextBox/TextBox.js'
 
 
@@ -77,6 +77,17 @@ function CanvasPage(props) {
 
     return (
         <div className="canvas-page">
+            <div className='controls-buttons'>
+                <button className='button' onClick = {(e) => handleClick(e, "get_current_page")}>
+                    <i className="fa fa-file-o"></i>
+                </button>
+                <button className='button' onClick = {(e) => handleClick(e, "get_description")}>
+                    <i className="fa fa-bars"></i>
+                </button>
+                <button className='button' onClick = {(e) => handleClick(e, "close_page")}>
+                    <i className="fa fa-close"></i>
+                </button>
+            </div>
             {description === false 
             ?
                 <div className='canvas-data'>
@@ -85,8 +96,8 @@ function CanvasPage(props) {
                         <i className="fa fa-arrow-circle-left"></i>
                     </button>
                     <Canvas
-                        height = {600}
-                        width = {500}
+                        height = {700}
+                        width = {600}
                         onItemSelected = {(item, last_item) => handleItemSelected(item, last_item)}
                         onItemDeselected = {(last_item) => handleItemDeselected(last_item)}
                     />
@@ -94,23 +105,12 @@ function CanvasPage(props) {
                         <i className="fa fa-arrow-circle-right"></i>
                     </button>
                     </div>
-                    <div className='textbox-with-buttons'>
-                        <div className='controls-buttons'>
-                            <button className='button' onClick = {(e) => handleClick(e, "get_current_page")}>
-                                <i className="fa fa-file-o"></i>
-                            </button>
-                            <button className='button' onClick = {(e) => handleClick(e, "get_description")}>
-                                <i className="fa fa-bars"></i>
-                            </button>
-                            <button className='button' onClick = {(e) => handleClick(e, "close_page")}>
-                                <i className="fa fa-close"></i>
-                            </button>
-                        </div>
+                    <div className='textbox'>
                         <TextBox/>
                     </div>  
                 </div>
             :
-                <TextOne/>
+                <TextFive/>
             }
         </div>
     );
