@@ -1,16 +1,28 @@
-.footer {
+.footer > footer{
     padding: 1em;
     height: 20vh;
     display: flex;
+    flex:1;
     justify-content: center;
     align-items: center;
     background: rgb(3, 6, 53);
 }
 
-.footer .info, .copyright {
+.footer .info, .copyright, .bibliothek p{
     color: white;
 }
 
 .footer img {
-    max-width:12vw;
+    flex:1;
+    max-width:10vw;
+}
+
+.ver-university{
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 30vw;
+}
+
+.bibliothek{
+    flex: 0 0 30vw;
 }
