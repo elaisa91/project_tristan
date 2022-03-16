@@ -102,9 +102,9 @@ function CanvasPage(props) {
                         <i className="fa fa-arrow-circle-right"></i>
                     </button>
                     </div>
-                    <div className='textbox'>
-                        <TextBox/>
-                    </div>  
+                   
+                    <TextBox/>
+                     
                 </div>
             :
                 <TextFive/>

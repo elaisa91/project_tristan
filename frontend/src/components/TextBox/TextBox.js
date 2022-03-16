@@ -42,57 +42,66 @@ class TextBox extends React.Component{
         }
 
         return (
-            <div>
-                <div className='subcat-desc'>
-                    {this.props.subcategory_desc !== "" &&  this.props.subcategory_desc !== this.props.selected_item?
-                        <p>Description: {this.props.subcategory_desc}</p>
-                    :
-                        <p></p>
-                    }
-                </div>
+            <div className='textbox'>
+                {this.props.subcategory_desc !== "" &&  this.props.subcategory_desc !== this.props.selected_item?
+                    <div className='subcat-desc'>
+                        <p>Description:</p> 
+                        <p>{this.props.subcategory_desc}</p>
+                    </div>
+                :
+                    null
+                }
                 {text_list.length>0?
                     <div className='trans-text'>
+                        <p>Text: </p>
                         {text_list} 
                     </div>
                 :
-                    <div className='trans-text'></div>
+                    null
                 }
                 
                 {said_list.length>0?
                     <div className='trans-said'>
-                        Said: {said_list}
+                        <p>Saids:</p> 
+                        {said_list}
                     </div>
                 :
-                    <div className='trans-said'></div>
+                    null
                 }
                 
-                <div className='trans-style'>
-                    {this.props.transcription_style !== ""?
-                        <p>Style: {this.props.transcription_style}</p>
-                    :
-                        <p></p>
-                    }
-                </div>
-                <div className='trans-type'>
-                    {this.props.transcription_type !== ""?
-                        <p>Type: {this.props.transcription_type}</p>
-                    :
-                        <p></p>
-                    }
-                </div>
-                <div className='trans-lang'>
-                    {this.props.transcription_lang !== ""?
-                        <p>Language: {this.props.transcription_lang}</p>
-                    :
-                        <p></p>
-                    }
-                </div>
-                {notes_list.length>0?
-                    <div className='notes'>
-                        Notes: {notes_list}
+                {this.props.transcription_style !== ""?
+                    <div className='trans-style'>
+                        <p>Style:</p> 
+                        <p>{this.props.transcription_style}</p>
                     </div>
                 :
-                    <div className='notes'></div>
+                    null
+                }
+
+                {this.props.transcription_type !== ""?
+                    <div className='trans-type'>
+                        <p>Type:</p> 
+                        <p>{this.props.transcription_type}</p>
+                    </div>
+                :
+                    null
+                }
+
+                {this.props.transcription_lang !== ""?
+                    <div className='trans-lang'>
+                        <p>Language:</p> 
+                        <p>{this.props.transcription_lang}</p>
+                    </div>
+                :
+                    null
+                }
+                {notes_list.length>0?
+                    <div className='notes'>
+                        <p>Notes:</p> 
+                        {notes_list}
+                    </div>
+                :
+                    null
                 }
             </div>
         );

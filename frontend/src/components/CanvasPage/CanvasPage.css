@@ -17,15 +17,6 @@
     padding-top: 3em;
 }
 
-.textbox {
-    display: flex; 
-    flex: 0 0 25vw;
-    font-family: Junicode;
-    border: solid grey 1px;
-    align-items: space-evenly;
-    
-}
-
 .canvas-with-buttons {
     display: flex;
     flex: 0 0 35vw;
