@@ -8,7 +8,6 @@ import TextBox from '../TextBox/TextBox.js'
 
 
 function CanvasPage(props) {
-    const [selected_item, setSelectedItem] = useState("");
     const [error, setError] = useState(null);
     const [description, setDescription] = useState(false);
     let navigate = useNavigate();
@@ -63,14 +62,12 @@ function CanvasPage(props) {
 
     function handleItemDeselected(last_item_obj){
         last_item_obj = null;
-        setSelectedItem("");
         return last_item_obj;
     }
 
     function handleItemSelected(item_obj, last_item_obj){
         if((last_item_obj === null) || (Object.keys(last_item_obj)[0] !== Object.keys(item_obj)[0])) {
            last_item_obj = item_obj;
-           setSelectedItem(Object.keys(item_obj)[0]);
         }
         return last_item_obj;
     }

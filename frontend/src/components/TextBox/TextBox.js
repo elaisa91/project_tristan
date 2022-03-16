@@ -19,16 +19,15 @@ class TextBox extends React.Component{
             text_list.push(<p>Reg: {this.props.transcription_text['reg']}</p>);
         }
 
-        for (var said in this.props.transcription_said){
+        for (var said of this.props.transcription_said){
             said_list.push(<div className='said'>
                                 <p>Who: {said['who']}</p>
-                                <p>To Whom: {said['towhom']}</p>
+                                <p>To Whom: {said['toWhom']}</p>
                             </div>
             );
         }
 
         for (var note of this.props.notes){
-            console.log(note)
             var note_s = [];
             if (note.length>0){
                 for (var el of note){
@@ -44,9 +43,16 @@ class TextBox extends React.Component{
 
         return (
             <div>
+                <div className='subcat-desc'>
+                    {this.props.subcategory_desc !== "" &&  this.props.subcategory_desc !== this.props.selected_item?
+                        <p>Description: {this.props.subcategory_desc}</p>
+                    :
+                        <p></p>
+                    }
+                </div>
                 {text_list.length>0?
                     <div className='trans-text'>
-                        Transcription: {text_list} 
+                        {text_list} 
                     </div>
                 :
                     <div className='trans-text'></div>
@@ -62,28 +68,21 @@ class TextBox extends React.Component{
                 
                 <div className='trans-style'>
                     {this.props.transcription_style !== ""?
-                        <p>Transcription style: {this.props.transcription_style}</p>
+                        <p>Style: {this.props.transcription_style}</p>
                     :
                         <p></p>
                     }
                 </div>
                 <div className='trans-type'>
                     {this.props.transcription_type !== ""?
-                        <p>Transcription Type: {this.props.transcription_type}</p>
+                        <p>Type: {this.props.transcription_type}</p>
                     :
                         <p></p>
                     }
                 </div>
                 <div className='trans-lang'>
                     {this.props.transcription_lang !== ""?
-                        <p>Langue: {this.props.transcription_lang}</p>
-                    :
-                        <p></p>
-                    }
-                </div>
-                <div className='subcat-desc'>
-                    {this.props.subcategory_desc !== ""?
-                        <p>Description: {this.props.subcategory_desc}</p>
+                        <p>Language: {this.props.transcription_lang}</p>
                     :
                         <p></p>
                     }
@@ -101,6 +100,7 @@ class TextBox extends React.Component{
 }
 
 const mapStateToProps = state => ({ 
+    selected_item: state.selected_item,
     transcription_text : state.transcription_text,
     transcription_said : state.transcription_said,
     transcription_style : state.transcription_style,

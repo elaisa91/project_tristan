@@ -17,7 +17,29 @@ function Canvas(props) {
     const [mouseMove, setMouseMove] = useState(false);
     const [image, setImage] = useState(new Image());
 
+    function setCursor(item_obj){
+        const current = myRef.current;
+        if (item_obj === null){
+            current.style["cursor"] = "default";
+            return;
+        }
+        current.style["cursor"] = "default";
+        if (Object.keys(item_obj['transcription']['text']) > 0 || item_obj['transcription']['said'].length > 0 || 
+        item_obj['transcription']['style'] !== "" || item_obj['transcription']['type'] !== "" || item_obj['transcription']['lang'] !== ""
+        || (item_obj['subcategory']['desc'] !== "" && item_obj['subcategory']['name'] !== "" &&
+         item_obj['subcategory']['name'] !== item_obj['subcategory']['desc'])
+        || item_obj['notes'].length > 0){
+            current.style["cursor"] = "pointer";
+        } else {
+            current.style["cursor"] = "default";
+        }
+    }
+
     function unsetMetadata(){
+        props.dispatch({
+            type: "SELECTED_ITEM",
+            payload: ""
+        });
         props.dispatch({
             type: "TRANSCRIPTION_TEXT",
             payload: []
@@ -49,37 +71,41 @@ function Canvas(props) {
 
     }
 
-    function setMetadata(item){
-        if (item === null){
+    function setMetadata(item_obj){
+        if (item_obj === null){
             return;
         }
         props.dispatch({
+            type: "SELECTED_ITEM",
+            payload: Object.keys(item_obj)[0]
+        });
+        props.dispatch({
             type: "TRANSCRIPTION_TEXT",
-            payload: item['transcription']['text']
+            payload: item_obj['transcription']['text']
         });
         props.dispatch({
             type: "TRANSCRIPTION_SAID",
-            payload: item['transcription']['said']
+            payload: item_obj['transcription']['said']
         });
         props.dispatch({
             type: "TRANSCRIPTION_STYLE",
-            payload: item['transcription']['style']
+            payload: item_obj['transcription']['style']
         });
         props.dispatch({
             type: "TRANSCRIPTION_TYPE",
-            payload: item['transcription']['type']
+            payload: item_obj['transcription']['type']
         });
         props.dispatch({
             type: "TRANSCRIPTION_LANG",
-            payload: item['transcription']['lang']
+            payload: item_obj['transcription']['lang']
         });
         props.dispatch({
             type: "SUBCATEGORY_DESC",
-            payload: item['subcategory']['desc']
+            payload: item_obj['subcategory']['desc']
         });
         props.dispatch({
             type: "NOTES",
-            payload: item['notes']
+            payload: item_obj['notes']
         });
     }
 
@@ -357,6 +383,7 @@ function Canvas(props) {
                 isPointInPoly(selectedImage, x, y);
                 drawCanvas(isIn, isOut);
                 drawTooltip(lastItemSelectedObj, x, y,'rgb(128,128,128)', "2", "rgba(0,0,0,0.6)", 'rgb(255,255,255)', 16);
+                setCursor(lastItemSelectedObj);
                 myRef.current.onclick = (e) => {
                     setMetadata(lastItemSelectedObj);
                 }
@@ -398,6 +425,7 @@ function Canvas(props) {
 
 const mapStateToProps = state => ({     
     image: state.image,
+    selected_item: state.selected_item,
     transcription_text : state.transcription_text,
     transcription_said : state.transcription_said,
     transcription_style : state.transcription_style,

@@ -27,6 +27,7 @@ const initialState = {
   licence_visible: false,
   introduction_visible: true,
   cgm51_visible: false,
+  selected_item: "ciao",
   transcription_text : [],
   transcription_said : [],
   transcription_style : "",
@@ -61,6 +62,7 @@ function reducer (state = initialState, action) {
         ...state,
         selected_catoption: action.payload
       };
+
     case "SELECTED_SUBCATOPTION":
       return {
         ...state,
@@ -72,76 +74,91 @@ function reducer (state = initialState, action) {
         ...state,
         result_images: action.payload
       };
-    case "CONTENT":
-      return {
-        ...state,
-       content: action.payload
-      };
+
     case "SEARCH_PAGE_VISIBLE":
       return {
         ...state,
         search_page_visible: action.payload
       };
+
     case "CRITERIA_VISIBLE":
       return {
         ...state,
         criteria_visible: action.payload
       };
+
     case "WORK_TEAM_VISIBLE":
       return {
         ...state,
         work_team_visible: action.payload
       };
+
     case "METHODS_VISIBLE":
       return {
         ...state,
         methods_visible: action.payload
       };
+
     case "LICENCE_VISIBLE":
       return {
         ...state,
         licence_visible: action.payload
       }; 
+
     case "INTRODUCTION_VISIBLE":
       return {
         ...state,
         introduction_visible: action.payload
       };
+
     case "CGM51_VISIBLE":
       return {
         ...state,
         cgm51_visible: action.payload
       }; 
+
+    case "SELECTED_ITEM":
+      return {
+        ...state,
+        selected_item: action.payload
+      };
+    
     case "TRANSCRIPTION_TEXT":
       return {
         ...state,
         transcription_text: action.payload
       };
+
     case "TRANSCRIPTION_STYLE":
       return {
         ...state,
         transcription_style: action.payload
       };
+
     case "TRANSCRIPTION_SAID":
       return {
         ...state,
         transcription_said: action.payload
       };
+
     case "TRANSCRIPTION_TYPE":
       return {
         ...state,
         transcription_type: action.payload
       };
+
     case "TRANSCRIPTION_LANG":
       return {
         ...state,
         transcription_lang: action.payload
-      }
+      };
+
     case "SUBCATEGORY_DESC":
       return {
         ...state,
         subcategory_desc: action.payload
       };
+
     case "NOTES":
       return {
         ...state,
