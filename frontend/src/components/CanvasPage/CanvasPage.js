@@ -2,8 +2,8 @@ import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from "react-router-dom"
 import './CanvasPage.css';
+import FacsDescriptionPage from '../FacsDescriptionPage/FacsDescriptionPage';
 import Canvas from '../Canvas/Canvas.js';
-import TextFive from '../Texts/TextFive.js';
 import TextBox from '../TextBox/TextBox.js'
 
 
@@ -107,7 +107,7 @@ function CanvasPage(props) {
                      
                 </div>
             :
-                <TextFive/>
+                <FacsDescriptionPage/>
             }
         </div>
     );
