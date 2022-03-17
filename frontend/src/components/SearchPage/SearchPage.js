@@ -155,8 +155,8 @@ class SearchPage extends React.Component {
                             name = 'categories' 
                             id = 'categories'
                             options = {this.props.cat_options}
-                            placeholder = "Seleziona una categoria"
-                            description = "PER CATEGORIA"
+                            placeholder = "Select a category"
+                            description = "BY CATEGORY"
                             selected_option = {this.props.selected_catoption}
                             onChange = {(e) => this.handleCategoryChange(e)}
                         />
@@ -167,8 +167,8 @@ class SearchPage extends React.Component {
                             name = 'subcategories' 
                             id = 'subcategories'
                             options = {this.props.subcat_options}
-                            placeholder = "Seleziona una sottocategoria"
-                            description = "PER SOTTOCATEGORIA"
+                            placeholder = "Select a subcategory"
+                            description = "BY SUBCATEGORY"
                             selected_option = {this.props.selected_subcatoption}
                             onChange = {(e) => this.handleSubCategoryChange(e)}
                         />

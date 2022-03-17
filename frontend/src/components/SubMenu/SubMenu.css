@@ -4,5 +4,6 @@
     justify-content: center;
     flex: 0 0 20vw;
     padding: 1em;
-    background: grey;
+    background: #fafafa;
+    border-left: solid #000000 0.1em;
 }

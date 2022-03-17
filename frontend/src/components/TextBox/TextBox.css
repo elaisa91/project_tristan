@@ -16,8 +16,9 @@
     flex:0 0 60;
     align-items: center;
     text-align: center;
-    border: solid grey 0.1em;
+    border: solid black 0.1em;
     border-radius: 15px;
+    background-color: #fafafa;
 }
 
 .textbox > div >:first-child{

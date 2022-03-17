@@ -5,16 +5,17 @@
     flex:1;
     justify-content: center;
     align-items: center;
-    background: rgb(3, 6, 53);
-}
-
-.footer .info, .copyright, .bibliothek p{
-    color: white;
+    background: #841818;
 }
 
 .footer img {
-    flex:1;
     max-width:10vw;
+}
+
+.ver-university .info, .copyright, .bibliothek p{
+    color: #000000;
+    font-weight: bold;
+    height: 3vh;
 }
 
 .ver-university{
@@ -25,4 +26,5 @@
 
 .bibliothek{
     flex: 0 0 30vw;
+    font-style: italic;
 }
