@@ -1,0 +1,10 @@
+FROM node:14.17.1-alpine3.12
+
+# set working directory
+WORKDIR /app
+
+# install app dependencies
+COPY ./backend/package.json ./
+COPY ./backend/package-lock.json ./
+RUN npm install -y
+COPY ./backend ./
