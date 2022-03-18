@@ -1,0 +1,15 @@
+.description-page {
+    display: flex;
+    flex: 1;
+  }
+
+.description-page > .content {
+    flex: 1;
+    padding: 1em;
+}
+
+.description-page > .aside{
+    display:flex;
+    flex: 0 0 20vw;
+    padding: 1em;
+}

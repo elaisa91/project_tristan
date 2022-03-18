@@ -1,0 +1,30 @@
+.footer > footer{
+    padding: 1em;
+    height: 20vh;
+    display: flex;
+    flex:1;
+    justify-content: center;
+    align-items: center;
+    background: #841818;
+}
+
+.footer img {
+    max-width:10vw;
+}
+
+.ver-university .info, .copyright, .bibliothek p{
+    color: #000000;
+    font-weight: bold;
+    height: 3vh;
+}
+
+.ver-university{
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 30vw;
+}
+
+.bibliothek{
+    flex: 0 0 30vw;
+    font-style: italic;
+}

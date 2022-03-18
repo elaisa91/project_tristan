@@ -4,18 +4,17 @@ import pymongo
 import xml.etree.ElementTree as ET
 import html
 import string
+import re
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["facsimile_db"]
-mycol = mydb["facsimile_img_1"]
+mycol = mydb["facsimile_img_3"]
 
-tree = ET.parse('15v_completo_TEST.xml')
+tree = ET.parse('7r7v10r10v.xml')
 root = tree.getroot()
 
 def generate_char(ref, root):
     ch = "" 
-    codepoint = ""
-    diplomatic = ""
     for char in root[0].find("{http://www.tei-c.org/ns/1.0}encodingDesc").iter("{http://www.tei-c.org/ns/1.0}char"):
         if (char.attrib["{http://www.w3.org/XML/1998/namespace}id"] == ref):
             for mapping in char.findall("{http://www.tei-c.org/ns/1.0}mapping"):
@@ -23,23 +22,104 @@ def generate_char(ref, root):
                     ch = mapping.text                                 
     return (ch)
 
+def generate_hand(ref, root):
+    hand = ""
+    for interpGrp in root[0].iter("{http://www.tei-c.org/ns/1.0}interpGrp"):
+        if (interpGrp.attrib["{http://www.w3.org/XML/1998/namespace}id"] == "hand"):
+            for interp in interpGrp.iter("{http://www.tei-c.org/ns/1.0}interp"):
+               if (interp.attrib["{http://www.w3.org/XML/1998/namespace}id"] == ref):
+                   hand = interp.text 
+    return (hand)
+
+def generate_notes(id, root):
+    notes = []
+    for note in root[2].iter("{http://www.tei-c.org/ns/1.0}note"):
+        if (note.attrib["facs"][1:] == id):
+            nt = []
+            if note.text:
+                nt.append([re.sub('\n\s*', " ", note.text).replace('/','-'), 'normal'])
+            for child in note:
+                if (child.tag == "{http://www.tei-c.org/ns/1.0}hi"):
+                        rend = child.attrib["rend"]
+                        nt.append([re.sub('\n\s*', " ", child.text).replace('/','-'), rend])
+                if (child.tail):
+                    nt.append([re.sub('\n\s*', " ", child.tail).replace('/','-'), 'normal'])
+            notes.append(nt)
+    return notes
 
 def generate_transcription(trans_ide, root):
-    transcription = ""
+    transcription = {}
+    transcription["text"] = {}
+    transcription["said"] = []
+    transcription["style"] = ""
+    transcription["type"] = ""
+    transcription["lang"] = ""
     for ab in root[2].iter("{http://www.tei-c.org/ns/1.0}ab"):
-        if (ab.attrib["{http://www.w3.org/XML/1998/namespace}id"] == trans_ide):
-            if ab.text:
-                transcription+= ab.text.replace("|", "\n")
-            for child in ab:
-                if (child.tag == "{http://www.tei-c.org/ns/1.0}g"):
-                    ref = child.attrib["ref"][1:]
-                    transcription+= generate_char(ref, root)
-                if (child.text):
-                    transcription+= child.text.replace("|", "\n")
-                if (child.tail):
-                    transcription+= child.tail.replace("|", "\n")
+        choice = ab.find("{http://www.tei-c.org/ns/1.0}choice")
+        if (ab.attrib["{http://www.w3.org/XML/1998/namespace}id"] == trans_ide and choice != None):
+            for option in choice:
+                text = "" 
+                if option.text:
+                    text+= option.text.replace("|", "\n").replace('/','-')
+                for child in option:
+                    if (child.tag == "{http://www.tei-c.org/ns/1.0}g"):
+                        ref = child.attrib["ref"][1:]
+                        text+= generate_char(ref, root)
+                    if (child.text):
+                        text+= child.text.replace("|", "\n").replace('/','-')
+                    if (child.tail):
+                        text+= child.tail.replace("|", "\n").replace('/','-')
+                if (option.tag == "{http://www.tei-c.org/ns/1.0}orig"):
+                    transcription['text']['orig'] = text
+                if (option.tag == "{http://www.tei-c.org/ns/1.0}reg"):
+                    transcription['text']['reg'] = text
+            if "style" in ab.attrib:
+                transcription["style"] = string.capwords(ab.attrib["style"].replace("_", " ")).replace('/','-')
+            if "type" in ab.attrib:
+                transcription["type"] = string.capwords(ab.attrib["type"].replace("_", " ")).replace('/','-')
+            if "{http://www.w3.org/XML/1998/namespace}lang" in ab.attrib:
+                transcription["lang"] = string.capwords(ab.attrib["{http://www.w3.org/XML/1998/namespace}lang"].replace("_", " ")).replace('/','-')
+            if ab.findall("{http://www.tei-c.org/ns/1.0}said"):
+                for said in ab.findall("{http://www.tei-c.org/ns/1.0}said"):
+                    said_obj = {}
+                    if "who" in said.attrib:
+                        said_obj["who"] = said.attrib["who"][1:].replace("_", " ").replace('/','-')
+                    if "toWhom" in said.attrib:
+                        said_obj["toWhom"] = said.attrib["toWhom"][1:].replace("_", " ").replace('/','-')
+                    transcription["said"].append(said_obj)
     return (transcription)
 
+def generate_category(cat_ide, root):
+    category = string.capwords(cat_ide.replace("_", " ")).replace('/','-')
+    for interpGrp in root[0].iter("{http://www.tei-c.org/ns/1.0}interpGrp"):
+        if (interpGrp.attrib["{http://www.w3.org/XML/1998/namespace}id"] == cat_ide):
+            for child in interpGrp:
+                if (child.tag == "{http://www.tei-c.org/ns/1.0}desc"):
+                    category = string.capwords(child.text).replace('/','-')
+    return (category)
+
+def generate_subcategory(subcat_ide, root):
+    subcategory = {}
+    subcategory["desc"] = ""
+    subcategory["name"] = ""
+    if (subcat_ide != ""):
+        subcategory["name"] = string.capwords(subcat_ide.replace("_", " ")).replace('/','-')
+    for interp in root[0].iter("{http://www.tei-c.org/ns/1.0}interp"):
+        if (interp.attrib["{http://www.w3.org/XML/1998/namespace}id"] == subcat_ide):
+            if "sameAs" in interp.attrib:
+                subcategory["desc"] = interp.attrib["sameAs"].replace('/','-')
+            else:
+                subcategory["desc"] = re.sub('\n\s*', " ", interp.text).replace('/','-')
+    """for person in root[0].iter("{http://www.tei-c.org/ns/1.0}person"):
+        if (person.attrib["{http://www.w3.org/XML/1998/namespace}id"] == subcat_ide):
+            subcategory["desc"] = {}
+            if (person.find("{http://www.tei-c.org/ns/1.0}persName") != None):
+                subcategory["desc"]["persName"] = string.capwords(person.find("{http://www.tei-c.org/ns/1.0}persName").text)
+            if (person.find("{http://www.tei-c.org/ns/1.0}occupation") != None):
+                subcategory["desc"]["occupation"] = string.capwords(person.find("{http://www.tei-c.org/ns/1.0}occupation").text)
+            if (person.find("{http://www.tei-c.org/ns/1.0}sex") != None):
+                subcategory["desc"]["sex"] = string.capwords(person.find("{http://www.tei-c.org/ns/1.0}sex").text)"""
+    return (subcategory)
 
 def generate_polygon(string):
     points = string.split(" ")
@@ -55,42 +135,88 @@ def generate_polygon(string):
     poly.append([xcoor_first,ycoor_first])
     return poly;  
   
+
+def generate_document(surface, n):
+    document = {}
+    name = ""
+    url = ""
+    doc_notes = []
+
+    # crea nome documento, url e note 
+    if "{http://www.w3.org/XML/1998/namespace}id" in surface.attrib:
+        name = surface.attrib["{http://www.w3.org/XML/1998/namespace}id"]
+        doc_notes = generate_notes(name, root)
+    if "url" in surface.find("{http://www.tei-c.org/ns/1.0}graphic").attrib: 
+        url = surface.find("{http://www.tei-c.org/ns/1.0}graphic").attrib["url"]
     
+    document["name"] = name
+    document["url"] = url
+    document['num'] = str(n)
+    document["notes"] = doc_notes
 
-document = {"url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb00088332_00034/full/full/0/default.jpg", "name": "fol15v"}
+    # per ogni 'zone'
+    for zone in surface.findall("{http://www.tei-c.org/ns/1.0}zone"):
+        ide = ""
+        points = ""
+        notes = []
+        category = ""
+        subcategory = {}
+        transcription = {}
+        cat_ide = ""
+        subcat_ide = ""
+        trans_ide = ""
 
-
-for child in root[1][0]:
-    if (child.tag == "{http://www.tei-c.org/ns/1.0}zone"):
-        zone = child
+        # crea id
         if "{http://www.w3.org/XML/1998/namespace}id" in zone.attrib:
             ide = string.capwords(zone.attrib["{http://www.w3.org/XML/1998/namespace}id"].replace("_", " "))
-        
+            # crea nota 
+            notes = generate_notes(zone.attrib["{http://www.w3.org/XML/1998/namespace}id"], root)
+
+        # crea poligono
         if "points" in zone.attrib:
             points = generate_polygon(zone.attrib["points"])
         elif all(coord in zone.attrib for coord in ["lrx", "lry", "ulx", "uly"]):
             points = generate_polygon(zone.attrib["ulx"]+ "," + zone.attrib["uly"]+ " " + zone.attrib["lrx"]+ "," + zone.attrib["uly"]+ " " + zone.attrib["lrx"]+ "," + zone.attrib["lry"]+ " " + zone.attrib["ulx"]+ "," + zone.attrib["lry"])
-            
-        if "type" in zone.attrib:
-            category = string.capwords(zone.attrib["type"].replace("_", " "))
-            subcategory = ""
-        elif "ana" in zone.attrib:
-            category = string.capwords(zone.attrib["ana"][1:].replace("_", " "))
-            subcategory = string.capwords(zone.attrib["corresp"][1:].replace("_", " "))
         
-        if ("sameAs" in zone.attrib):
-            trans_ide = zone.attrib["sameAs"][1:]
-            transcription = generate_transcription (trans_ide, root)
-        else:
-            transcription = ""
+        # crea categoria e sottocategoria 
+        if ("type" in zone.attrib):
+            if (zone.attrib["type"] == "scene"):
+                category = "Episode"
+            else:
+                category = string.capwords(zone.attrib["type"].replace("_", " ").replace('/','-'))
+            if ("sameAs" in zone.attrib):
+                subcat_ide = zone.attrib["sameAs"][1:]
+        elif ("ana" in zone.attrib) and ("corresp" in zone.attrib):
+            cat_ide = zone.attrib["ana"][1:]
+            category = generate_category(cat_ide, root)
+            subcat_ide = zone.attrib["corresp"][1:]
+
+            # crea trascrizione
+            if ("sameAs" in zone.attrib):
+                trans_ide = zone.attrib["sameAs"][1:]
+                
+        transcription = generate_transcription (trans_ide, root)
+        subcategory = generate_subcategory(subcat_ide, root) 
         
         if (not category in document):
             document[category] = []
+        
+        # inserisci 'zone' per ogni category
+        document[category].append({"id": ide, "points": points, "subcategory": subcategory, "transcription": transcription, "notes": notes})
+    return document
 
-           
-        document[category].append({"id": ide, "points": points, "subcategory": subcategory, "transcription": transcription})
 
-mycol.insert_one(document)
+def insert_documents(mycol): 
+    num = -1
+    for surface in root[1]:
+        num=num+1
+        document = generate_document(surface, num)
+        mycol.insert_one(document)
+    print ("Documents inserted")
+
+insert_documents(mycol)
+
+
 
 
 

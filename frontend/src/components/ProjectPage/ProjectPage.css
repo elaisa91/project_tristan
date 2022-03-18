@@ -1,0 +1,9 @@
+.project-page {
+    display: flex;
+    flex: 1;
+  }
+
+.project-page > .content {
+    flex: 1;
+    padding: 1em;
+}

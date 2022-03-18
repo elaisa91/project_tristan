@@ -1,0 +1,30 @@
+.textbox {
+    display: flex; 
+    flex-direction: column wrap;
+    gap: 0.3em;
+    flex: 0 0 25vw;
+    height: 700px;
+    font-family: Junicode;
+    font-size: 0.9em;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.textbox > div {
+    display: flex;
+    flex-direction: column;
+    flex:0 0 60;
+    align-items: center;
+    text-align: center;
+    border: solid black 0.1em;
+    border-radius: 15px;
+    background-color: #fafafa;
+}
+
+.textbox > div >:first-child{
+    font-weight: bold;
+}
+
+.textbox > div > p{
+    padding: 0.2em;
+}

@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "Junicode";
+  src: local("Junicode"),
+   url("./fonts/Junicode.ttf") format("truetype");
+}
+
+* {
+  box-sizing: border-box; 
+}
+
+body, body #root {
+  font-family: -apple-system, BlinkMacSystem, 'Source Sans Pro', 'Helvetica Neue', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  margin: 0;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+

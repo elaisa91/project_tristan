@@ -1,0 +1,9 @@
+.fac-img img {
+    max-width: 8vw;
+    padding: 1em;
+  }
+
+.fac-img > p {
+    text-align: center;
+    padding: 0;
+}

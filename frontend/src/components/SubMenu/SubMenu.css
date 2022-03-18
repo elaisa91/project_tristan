@@ -1,0 +1,9 @@
+.sub-menu{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 0 0 20vw;
+    padding: 1em;
+    background: #fafafa;
+    border-left: solid #000000 0.1em;
+}
