@@ -1,0 +1,45 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    image: project-tristan:dev
+    container_name: frontend
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    depends_on: 
+      - backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - type: bind
+        source: ./frontend
+        target: /app
+  
+  backend:
+    image: node:14-alpine
+    container_name: backend
+    command: node app.js
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - type: bind
+        source: ./backend
+        target: /app
+  mongodb:
+    image: mongo
+    container_name: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ~/apps/mongo:/data/db
+volumes:
+  frontend:
+  v1:
+  mongo:
