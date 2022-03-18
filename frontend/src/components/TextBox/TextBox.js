@@ -62,7 +62,7 @@ class TextBox extends React.Component{
                 
                 {said_list.length>0?
                     <div className='trans-said'>
-                        <p>Saids:</p> 
+                        <p>Speakers:</p> 
                         {said_list}
                     </div>
                 :
