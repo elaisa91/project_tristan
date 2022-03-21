@@ -410,6 +410,14 @@ function Canvas(props) {
                     propWidth =  Math.ceil(image.width /myRef.current.width);
                     isPointInPoly(selectedImage, -1, -1);
                     drawCanvas(isIn, isOut);
+                    props.dispatch({
+                        type: "IMAGE_WIDTH",
+                        payload: propWidth
+                    });
+                    props.dispatch({
+                        type: "IMAGE_HEIGHT",
+                        payload: propHeight
+                    });
                 } 
            }
         } else {
@@ -425,6 +433,9 @@ function Canvas(props) {
 
 const mapStateToProps = state => ({     
     image: state.image,
+    image_width: state.image_width,
+    image_height: state.image_height,
+    rotate_angle: state.rotate_angle,
     selected_item: state.selected_item,
     transcription_text : state.transcription_text,
     transcription_said : state.transcription_said,

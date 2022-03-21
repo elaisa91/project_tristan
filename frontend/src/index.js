@@ -15,6 +15,9 @@ import Navigator from './components/Navigator/Navigator.js';
 
 const initialState = {
   image: {},
+  image_width: 0,
+  image_height: 0,
+  rotate_angle: 0,
   cat_options: [],
   subcat_options: [],
   selected_catoption: "",
@@ -27,7 +30,7 @@ const initialState = {
   licence_visible: false,
   introduction_visible: true,
   cgm51_visible: false,
-  selected_item: "ciao",
+  selected_item: "",
   transcription_text : [],
   transcription_said : [],
   transcription_style : "",
@@ -44,7 +47,21 @@ function reducer (state = initialState, action) {
         ...state,
         image: action.payload
       };
-
+    case "IMAGE_WIDTH":
+      return {
+        ...state,
+        image_width: action.payload
+      };
+    case "IMAGE_HEIGHT":
+      return {
+        ...state,
+        image_height: action.payload
+      };
+    case "ROTATE_ANGLE":
+      return {
+        ...state,
+        rotate_angle: action.payload
+      };
     case "CAT_OPTIONS":
       return {
         ...state,

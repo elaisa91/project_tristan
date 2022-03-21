@@ -54,6 +54,18 @@ function CanvasPage(props) {
             case "get_description":
                 setDescription(true);
                 break;
+            case 'rotate_image_aclockwise':
+                props.dispatch({
+                    type: "ROTATE_ANGLE",
+                    payload: props.rotate_angle-90
+                });
+                break;
+            case 'rotate_image_clockwise':
+                props.dispatch({
+                    type: "ROTATE_ANGLE",
+                    payload: props.rotate_angle+90
+                });
+                break;
             default :
                 navigate('/facsimile');
             
@@ -89,6 +101,14 @@ function CanvasPage(props) {
             ?
                 <div className='canvas-data'>
                     <div className='canvas-with-buttons'>
+                    <div className='rotate-buttons'>
+                        <button className='button' onClick = {(e) => handleClick(e, "rotate_image_aclockwise")}>
+                            <i className="fa fa-undo"></i>
+                        </button>
+                        <button className='button' onClick = {(e) => handleClick(e, "rotate_image_clockwise")}>
+                            <i className="fa fa-repeat"></i>
+                        </button> 
+                    </div>
                     <button className='direction-button' onClick = {(e) => handleClick(e, "get_previous_page")}>
                         <i className="fa fa-arrow-circle-left"></i>
                     </button>
@@ -114,7 +134,8 @@ function CanvasPage(props) {
 }
 
 const mapStateToProps = state => ({ 
-    selected_image: state.image
+    selected_image: state.image,
+    rotate_angle: state.rotate_angle
 });
 
 export default connect(mapStateToProps)(CanvasPage);
