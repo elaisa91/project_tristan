@@ -13,6 +13,7 @@ function Canvas(props) {
     let isIn = null;
     let isOut = null;
     let selectedImage = props.image || {};
+    let rotateAngle = props.rotateAngle || 0;
 
     const [mouseMove, setMouseMove] = useState(false);
     const [image, setImage] = useState(new Image());
@@ -369,6 +370,10 @@ function Canvas(props) {
     }
 
     useEffect(() => {
+        if (rotateAngle != props.rotate_angle){
+            rotateAngle = props.rotateAngle;
+            console.log(props.rotate_angle)
+        }
         if(mouseMove === false) {
             myRef.current.height = props.height;
             myRef.current.width = props.width;
