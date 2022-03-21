@@ -12,10 +12,11 @@
     max-width:10vw;
 }
 
-.ver-university .info, .copyright, .bibliothek p{
+.ver-university .info p, .copyright p, .bibliothek p{
     color: #000000;
     font-weight: bold;
-    height: 3vh;
+    height: 0.5vh;
+    font-size: 0.8em;
 }
 
 .ver-university{

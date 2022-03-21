@@ -22,6 +22,9 @@ class Footer extends React.Component{
                             <p>In collaboration with:</p>
                             <img src={process.env.PUBLIC_URL + '/Bayerische_Staatsbibliothek_logo.png'} alt="Bayerische Staatsbibliothek" />
                         </div>
+                        <div className='info'>
+                            <p>Bayerischen Staatsbibliothek, München, Institut für Bestandserhaltung und Restaurierung</p>
+                        </div>
                     </div>
                 </footer>
             </div>
