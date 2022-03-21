@@ -10,14 +10,14 @@ class ProjectPage extends React.Component{
     constructor (props) { 
         super(props); 
         this.state = {
-            sub_menu_items: [{desc: "Work team", image: process.env.PUBLIC_URL + '/university_logo.png'},
-                            {desc: "Methods", image: process.env.PUBLIC_URL + '/university_logo.png'},
+            sub_menu_items: [{desc: "Team", image: process.env.PUBLIC_URL + '/university_logo.png'},
+                            {desc: "Methodology", image: process.env.PUBLIC_URL + '/university_logo.png'},
                             {desc: "Licence", image: process.env.PUBLIC_URL + '/university_logo.png'}]
         };
     }
     handleClick(i){
         switch (this.state.sub_menu_items[i].desc){
-            case "Work team":
+            case "Team":
                 this.props.dispatch({
                     type: 'WORK_TEAM_VISIBLE',
                     payload: true
@@ -31,7 +31,7 @@ class ProjectPage extends React.Component{
                     payload: false
                 });
                 break;
-            case "Methods":
+            case "Methodology":
                 this.props.dispatch({
                     type: 'WORK_TEAM_VISIBLE',
                     payload: false

@@ -8,7 +8,7 @@ class Footer extends React.Component{
                 <footer>
                     <div className='ver-university'>
                         <div className='img'>
-                            <img src={process.env.PUBLIC_URL + '/university_logo_footer.png'} alt="Università di Verona" />
+                            <img src={process.env.PUBLIC_URL + '/logodip.png'} alt="Università di Verona" />
                             <img id= "logo_ecc" src={process.env.PUBLIC_URL + 'logo dip ecc.png'} alt="Università di Verona" />
                         </div>
                         <div className='info'>
