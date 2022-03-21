@@ -5,8 +5,11 @@ import xml.etree.ElementTree as ET
 import html
 import string
 import re
+#if this file is running inside container the use host.docker.internal, if outside then just mongo.
+#if no containers are involved use localhost
+host = "host.docker.internal"
 
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+myclient = pymongo.MongoClient(f"mongodb://{host}:27017/")
 mydb = myclient["facsimile_db"]
 mycol = mydb["facsimile_img_3"]
 
