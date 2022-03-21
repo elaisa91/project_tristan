@@ -12,6 +12,10 @@
     max-width:10vw;
 }
 
+.footer #logo_ecc {
+    max-width: 3vw;
+}
+
 .ver-university .info p, .copyright p, .bibliothek p{
     color: #000000;
     font-weight: bold;
