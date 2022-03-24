@@ -21,11 +21,11 @@
     background-color: #fafafa;
 }
 
-.textbox > div >:first-child, .bold{
+.textbox > div > :first-child, .who > :first-child, .toWhom > :first-child {
     font-weight: bold;
 }
 
-.textbox > div > p{
+.textbox p{
     padding: 0.2em;
 }
 

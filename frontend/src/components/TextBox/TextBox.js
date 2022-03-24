@@ -19,7 +19,10 @@ class TextBox extends React.Component{
                 who = el['who']+"\n";
                 toWhom = el['toWhom'];   
             }
-            text_list.push(<div><p>{text}</p><p> <span className = 'bold'>Who:</span> {who} <span className = 'bold'>toWhom:</span> {toWhom}</p></div>
+            text_list.push(<div><p>{text}</p> 
+                            {who !== "" ? <div className='who'><p>Who:</p> <p>{who}</p></div> : null}
+                            {toWhom !== "" ? <div className = 'toWhom'><p>toWhom:</p> <p>{toWhom}</p></div> : null}
+                            </div>
             );
         }
 
