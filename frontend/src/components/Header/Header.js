@@ -6,9 +6,9 @@ class Header extends React.Component{
         return(
             <div className='header'>
                 <div className='info'>
-                    <p>Tristan</p>
-                    <p>Gottfried von Strassburg</p>
-                    <p>DIGITAL EDITION</p>
+                    <p>A Scholarly Digital Edition</p>
+                    <p>of Gottfried von Straßburg's Tristan</p>
+                    <p>in München, Bayerischen Staatsbibliothek, Cgm 51</p>
                 </div>
                 <div className='img'>
                     <img src={process.env.PUBLIC_URL + '/university_logo.png'} alt="Università di Verona" />
