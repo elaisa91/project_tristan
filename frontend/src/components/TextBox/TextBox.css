@@ -21,10 +21,11 @@
     background-color: #fafafa;
 }
 
-.textbox > div >:first-child{
+.textbox > div >:first-child, .bold{
     font-weight: bold;
 }
 
 .textbox > div > p{
     padding: 0.2em;
 }
+

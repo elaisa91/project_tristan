@@ -32,7 +32,6 @@ const initialState = {
   cgm51_visible: false,
   selected_item: "",
   transcription_text : [],
-  transcription_said : [],
   transcription_style : "",
   transcription_type : "",
   transcription_lang : "",
@@ -151,13 +150,6 @@ function reducer (state = initialState, action) {
         ...state,
         transcription_style: action.payload
       };
-
-    case "TRANSCRIPTION_SAID":
-      return {
-        ...state,
-        transcription_said: action.payload
-      };
-
     case "TRANSCRIPTION_TYPE":
       return {
         ...state,

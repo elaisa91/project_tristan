@@ -25,7 +25,7 @@ function Canvas(props) {
             return;
         }
         current.style["cursor"] = "default";
-        if (Object.keys(item_obj['transcription']['text']) > 0 || item_obj['transcription']['said'].length > 0 || 
+        if (item_obj['transcription']['text'].length > 0 || 
         item_obj['transcription']['style'] !== "" || item_obj['transcription']['type'] !== "" || item_obj['transcription']['lang'] !== ""
         || (item_obj['subcategory']['desc'] !== "" && item_obj['subcategory']['name'] !== "" &&
          item_obj['subcategory']['name'] !== item_obj['subcategory']['desc'])
@@ -43,10 +43,6 @@ function Canvas(props) {
         });
         props.dispatch({
             type: "TRANSCRIPTION_TEXT",
-            payload: []
-        });
-        props.dispatch({
-            type: "TRANSCRIPTION_SAID",
             payload: []
         });
         props.dispatch({
@@ -83,10 +79,6 @@ function Canvas(props) {
         props.dispatch({
             type: "TRANSCRIPTION_TEXT",
             payload: item_obj['transcription']['text']
-        });
-        props.dispatch({
-            type: "TRANSCRIPTION_SAID",
-            payload: item_obj['transcription']['said']
         });
         props.dispatch({
             type: "TRANSCRIPTION_STYLE",
@@ -310,11 +302,15 @@ function Canvas(props) {
             var id = el['id'];
             var subcategory = el['subcategory'];
             var transcription = el['transcription'];
+            var transcription_text = "";
             var notes = el['notes'];
-            if (subcategory['name'] !== "" && Object.keys(transcription['text']).length !== 0){
-                item = subcategory['name'] + ": \n " + transcription['text']['orig'];
-            } else if (Object.keys(transcription['text']).length !== 0){
-                item = transcription['text']['orig'];
+            for (var el of transcription["text"]){
+                transcription_text += el['text']+  " \n "
+            }
+            if (subcategory['name'] !== "" && transcription['text'].length > 0){
+                item = subcategory['name'] + ": \n " + transcription_text;
+            } else if (transcription['text'].length > 0){
+                item = transcription_text;
             } else if (subcategory['name'] !== ""){
                 item = subcategory['name'];   
             } else if (id !== ''){
@@ -443,7 +439,6 @@ const mapStateToProps = state => ({
     rotate_angle: state.rotate_angle,
     selected_item: state.selected_item,
     transcription_text : state.transcription_text,
-    transcription_said : state.transcription_said,
     transcription_style : state.transcription_style,
     transcription_type : state.transcription_type,
     transcription_lang : state.transcription_lang,

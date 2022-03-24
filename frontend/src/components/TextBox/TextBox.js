@@ -9,21 +9,17 @@ class TextBox extends React.Component{
 
     render(){
         const text_list = [];
-        const said_list = [];
         const notes_list = [];
 
-        if ('orig' in this.props.transcription_text){
-            text_list.push(<p>Orig: {this.props.transcription_text['orig']}</p>);
-        }
-        if ('reg' in this.props.transcription_text){
-            text_list.push(<p>Reg: {this.props.transcription_text['reg']}</p>);
-        }
-
-        for (var said of this.props.transcription_said){
-            said_list.push(<div className='said'>
-                                <p>Who: {said['who']}</p>
-                                <p>To Whom: {said['toWhom']}</p>
-                            </div>
+        for (var el of this.props.transcription_text){
+            var text = el['text'];
+            var who = "";
+            var toWhom = "";
+            if ("who" in el){
+                who = el['who']+"\n";
+                toWhom = el['toWhom'];   
+            }
+            text_list.push(<div><p>{text}</p><p> <span className = 'bold'>Who:</span> {who} <span className = 'bold'>toWhom:</span> {toWhom}</p></div>
             );
         }
 
@@ -40,7 +36,6 @@ class TextBox extends React.Component{
             }
             notes_list.push(<p>{note_s}</p>);
         }
-
         return (
             <div className='textbox'>
                 {this.props.subcategory_desc !== "" &&  this.props.subcategory_desc !== this.props.selected_item?
@@ -55,15 +50,6 @@ class TextBox extends React.Component{
                     <div className='trans-text'>
                         <p>Text: </p>
                         {text_list} 
-                    </div>
-                :
-                    null
-                }
-                
-                {said_list.length>0?
-                    <div className='trans-said'>
-                        <p>Speakers:</p> 
-                        {said_list}
                     </div>
                 :
                     null
@@ -95,7 +81,7 @@ class TextBox extends React.Component{
                 :
                     null
                 }
-                {notes_list.length>0?
+               {notes_list.length>0?
                     <div className='notes'>
                         <p>Notes:</p> 
                         {notes_list}
@@ -111,7 +97,6 @@ class TextBox extends React.Component{
 const mapStateToProps = state => ({ 
     selected_item: state.selected_item,
     transcription_text : state.transcription_text,
-    transcription_said : state.transcription_said,
     transcription_style : state.transcription_style,
     transcription_type : state.transcription_type,
     transcription_lang : state.transcription_lang,

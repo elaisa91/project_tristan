@@ -60,9 +60,9 @@ def generate_text(tag):
             ref = child.attrib["ref"][1:]
             text+= generate_char(ref, root)
         if (child.text):
-            text+= child.text.replace("|", "\n").replace('/','-')
+            text+= re.sub('\n\s*', "", child.text).replace("|", "\n").replace('/','-')
         if (child.tail):
-            text+= child.tail.replace("|", "\n").replace('/','-')
+            text+= re.sub('\n\s*', "", child.tail).replace("|", "\n").replace('/','-')
     return text
 
 def generate_said(tag):
