@@ -54,7 +54,7 @@ def generate_notes(id, root):
 def generate_text(tag):
     text = "" 
     if tag.text:
-        text+= tag.text.replace("|", "\n").replace('/','-')
+        text += re.sub('\n\s*', "", tag.text).replace("|", "\n").replace('/','-')
     for child in tag:
         if (child.tag == "{http://www.tei-c.org/ns/1.0}g"):
             ref = child.attrib["ref"][1:]

@@ -304,8 +304,13 @@ function Canvas(props) {
             var transcription = el['transcription'];
             var transcription_text = "";
             var notes = el['notes'];
-            for (var el of transcription["text"]){
-                transcription_text += el['text']+  " \n "
+            for (var i=0; i < transcription['text'].length; i++){
+                var el = transcription['text'][i];
+                if (i === transcription['text'].length-1){
+                    transcription_text += el['text'];
+                }else {
+                    transcription_text += el['text'] + ' \n ';
+                }
             }
             if (subcategory['name'] !== "" && transcription['text'].length > 0){
                 item = subcategory['name'] + ": \n " + transcription_text;
