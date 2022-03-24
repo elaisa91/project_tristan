@@ -54,6 +54,9 @@ function CanvasPage(props) {
             case "get_description":
                 setDescription(true);
                 break;
+            case "navigate_to_viscoll":
+                window.open("https://vceditor.library.upenn.edu/project/621ce27ff0080b00016b95a7/viewOnly");
+                break;
             case 'rotate_image_aclockwise':
                 props.dispatch({
                     type: "ROTATE_ANGLE",
@@ -87,6 +90,9 @@ function CanvasPage(props) {
     return (
         <div className="canvas-page">
             <div className='controls-buttons'>
+                <button className='button' onClick = {(e) => handleClick(e, "navigate_to_viscoll")}>
+                    <img src = {process.env.PUBLIC_URL + '/viscoll-logo.png'} alt = 'Navigate to VisColl'/>
+                </button>
                 <button className='button' onClick = {(e) => handleClick(e, "get_current_page")}>
                     <i className="fa fa-file-o"></i>
                 </button>

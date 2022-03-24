@@ -5,13 +5,26 @@
     padding: 1em;
 }
 
-.sub-menu-item a{
-    display: block;
-    padding: 1em;
-    text-decoration: none;
-    font-weight: bold;
-    color: #000000;
+.sub-menu-item button {
+    background-color: #000000;
+    border: solid #841818 0.20em;
+    border-radius: 15px;
+
 }
-.sub-menu-item img {
-    width: 5vw;  
+
+.sub-menu-item button:hover{
+    background-color: hsla(0, 0%, 0%, 0.8);
+    cursor: pointer;
+}
+
+.sub-menu-item p{
+    display: block;
+    padding: 0 1em 0 1em;
+    font-weight: normal;
+    font-family: 'Trocchi', serif;
+    letter-spacing: 0.2em;
+    line-height: 0.7em;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    color: #fafafa;
 }
