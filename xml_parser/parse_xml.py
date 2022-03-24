@@ -123,7 +123,7 @@ def generate_transcription(trans_ide, root):
             if "type" in ab.attrib:
                 transcription["type"] = string.capwords(ab.attrib["type"].replace("_", " ")).replace('/','-')
             if "{http://www.w3.org/XML/1998/namespace}lang" in ab.attrib:
-                transcription["lang"] = string.capwords(ab.attrib["{http://www.w3.org/XML/1998/namespace}lang"].replace("_", " ")).replace('/','-')
+                transcription["lang"] = ab.attrib["{http://www.w3.org/XML/1998/namespace}lang"].upper().replace("_", " ").replace('/','-')
             """if ab.findall("{http://www.tei-c.org/ns/1.0}said"):
                 for said in ab.findall("{http://www.tei-c.org/ns/1.0}said"):
                     said_obj = {}
