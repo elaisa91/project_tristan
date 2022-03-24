@@ -101,14 +101,14 @@ function CanvasPage(props) {
             ?
                 <div className='canvas-data'>
                     <div className='canvas-with-buttons'>
-                    <div className='rotate-buttons'>
-                        <button className='button' onClick = {(e) => handleClick(e, "rotate_image_aclockwise")}>
-                            <i className="fa fa-undo"></i>
-                        </button>
-                        <button className='button' onClick = {(e) => handleClick(e, "rotate_image_clockwise")}>
-                            <i className="fa fa-repeat"></i>
-                        </button> 
-                    </div>
+                    {/*<div className='rotate-buttons'>
+                            <button className='button' onClick = {(e) => handleClick(e, "rotate_image_aclockwise")}>
+                                <i className="fa fa-undo"></i>
+                            </button>
+                            <button className='button' onClick = {(e) => handleClick(e, "rotate_image_clockwise")}>
+                                <i className="fa fa-repeat"></i>
+                            </button> 
+                        </div>*/}
                     <button className='direction-button' onClick = {(e) => handleClick(e, "get_previous_page")}>
                         <i className="fa fa-arrow-circle-left"></i>
                     </button>

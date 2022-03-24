@@ -12,8 +12,9 @@ host = "host.docker.internal"
 myclient = pymongo.MongoClient(f"mongodb://{host}:27017/")
 mydb = myclient["facsimile_db"]
 mycol = mydb["facsimile_img_3"]
+mycol.drop()
 
-tree = ET.parse('7r7v10r10v.xml')
+tree = ET.parse('7r7v10r10v_v1.xml')
 root = tree.getroot()
 
 def generate_char(ref, root):
@@ -50,17 +51,58 @@ def generate_notes(id, root):
             notes.append(nt)
     return notes
 
+def generate_text(tag):
+    text = "" 
+    if tag.text:
+        text+= tag.text.replace("|", "\n").replace('/','-')
+    for child in tag:
+        if (child.tag == "{http://www.tei-c.org/ns/1.0}g"):
+            ref = child.attrib["ref"][1:]
+            text+= generate_char(ref, root)
+        if (child.text):
+            text+= child.text.replace("|", "\n").replace('/','-')
+        if (child.tail):
+            text+= child.tail.replace("|", "\n").replace('/','-')
+    return text
+
+def generate_said(tag):
+    said_obj = {}
+    if "who" in tag.attrib:
+        said_obj["who"] = tag.attrib["who"][1:].replace("_", " ").replace('/','-')
+    if "toWhom" in tag.attrib:
+        said_obj["toWhom"] = tag.attrib["toWhom"][1:].replace("_", " ").replace('/','-')
+    return said_obj
+
 def generate_transcription(trans_ide, root):
     transcription = {}
-    transcription["text"] = {}
-    transcription["said"] = []
+    transcription["text"] = [] #{} 
+    #transcription["said"] = []
     transcription["style"] = ""
     transcription["type"] = ""
     transcription["lang"] = ""
     for ab in root[2].iter("{http://www.tei-c.org/ns/1.0}ab"):
-        choice = ab.find("{http://www.tei-c.org/ns/1.0}choice")
-        if (ab.attrib["{http://www.w3.org/XML/1998/namespace}id"] == trans_ide and choice != None):
-            for option in choice:
+        #choice = ab.find("{http://www.tei-c.org/ns/1.0}choice")
+        if (ab.attrib["{http://www.w3.org/XML/1998/namespace}id"] == trans_ide):  #and choice != None):
+            if ab.findall("{http://www.tei-c.org/ns/1.0}seg"):
+                for seg in ab.findall("{http://www.tei-c.org/ns/1.0}seg"):
+                    if seg.findall("{http://www.tei-c.org/ns/1.0}said"):
+                        said = seg.find("{http://www.tei-c.org/ns/1.0}said")
+                        said_obj = generate_said(said)
+                        said_text =  generate_text(said)
+                        said_obj['text'] = said_text
+                        transcription['text'].append(said_obj)
+            elif (not ab.findall("{http://www.tei-c.org/ns/1.0}seg")) and (ab.findall("{http://www.tei-c.org/ns/1.0}said")):
+                    said = ab.find("{http://www.tei-c.org/ns/1.0}said")
+                    said_obj = generate_said(said)
+                    said_text =  generate_text(ab)
+                    said_obj['text'] = said_text
+                    transcription['text'].append(said_obj)
+            else:
+                text_obj = {}
+                text =  generate_text(ab)
+                text_obj['text'] = text
+                transcription['text'].append(text_obj)
+            """for option in choice:
                 text = "" 
                 if option.text:
                     text+= option.text.replace("|", "\n").replace('/','-')
@@ -75,21 +117,21 @@ def generate_transcription(trans_ide, root):
                 if (option.tag == "{http://www.tei-c.org/ns/1.0}orig"):
                     transcription['text']['orig'] = text
                 if (option.tag == "{http://www.tei-c.org/ns/1.0}reg"):
-                    transcription['text']['reg'] = text
+                    transcription['text']['reg'] = text"""
             if "style" in ab.attrib:
                 transcription["style"] = string.capwords(ab.attrib["style"].replace("_", " ")).replace('/','-')
             if "type" in ab.attrib:
                 transcription["type"] = string.capwords(ab.attrib["type"].replace("_", " ")).replace('/','-')
             if "{http://www.w3.org/XML/1998/namespace}lang" in ab.attrib:
                 transcription["lang"] = string.capwords(ab.attrib["{http://www.w3.org/XML/1998/namespace}lang"].replace("_", " ")).replace('/','-')
-            if ab.findall("{http://www.tei-c.org/ns/1.0}said"):
+            """if ab.findall("{http://www.tei-c.org/ns/1.0}said"):
                 for said in ab.findall("{http://www.tei-c.org/ns/1.0}said"):
                     said_obj = {}
                     if "who" in said.attrib:
                         said_obj["who"] = said.attrib["who"][1:].replace("_", " ").replace('/','-')
                     if "toWhom" in said.attrib:
                         said_obj["toWhom"] = said.attrib["toWhom"][1:].replace("_", " ").replace('/','-')
-                    transcription["said"].append(said_obj)
+                    transcription["said"].append(said_obj)"""
     return (transcription)
 
 def generate_category(cat_ide, root):
