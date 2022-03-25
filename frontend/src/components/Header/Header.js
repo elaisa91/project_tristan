@@ -6,9 +6,9 @@ class Header extends React.Component{
         return(
             <div className='header'>
                 <div className='info'>
-                    <p>A Scholarly Digital Edition</p>
-                    <p>of Gottfried von Strassburg's Tristan</p>
-                    <p>in München, Bayerischen Staatsbibliothek, Cgm 51</p>
+                    <p>A DIGITAL SCHOLARLY EDITION</p>
+                    <p>OF TRISTAN ROMANCE IN MÜNCHEN, BSB, CGM 51</p>
+                    <p>THE ILLUSTRATED FOLIOS</p>
                 </div>
                 {/*<div className='img'>
                     <img src={process.env.PUBLIC_URL + '/university_logo.png'} alt="Università di Verona" />
