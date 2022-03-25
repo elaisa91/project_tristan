@@ -13,7 +13,7 @@
 }
 
 .footer #logo_ecc {
-    max-width: 4vw;
+    max-height: 6vh;
 }
 
 .ver-university .info p, .copyright p, .bibliothek p{
@@ -27,6 +27,13 @@
     display: flex;
     flex-direction: column;
     flex: 0 0 30vw;
+}
+
+.ver-university .img {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3em;
 }
 
 .bibliothek{
