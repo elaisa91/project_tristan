@@ -401,7 +401,7 @@ function Canvas(props) {
                 setCursor(lastItemSelectedObj);
                 myRef.current.onclick = (e) => {
                     setMetadata(lastItemSelectedObj);
-                }
+                }   
             }
     
             myRef.current.onmouseout = () => {
@@ -415,6 +415,7 @@ function Canvas(props) {
             }
             setMouseMove(true);
         }
+
         if (Object.keys(selectedImage).length > 0) {
             if (selectedImage.src !== image.src) {
                 image.src = selectedImage.src;

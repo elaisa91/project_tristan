@@ -19,7 +19,7 @@ function CanvasPage(props) {
                 setDescription(false);
                 break;
             case "get_previous_page":
-                var previous_num = parseInt(props.selected_image.num)-1
+                var previous_num = parseInt(props.image.num)-1
                 /*mettere in funzione a parte*/
                 fetch("http://localhost:8080/v1/singleimage/"+previous_num.toString())
                 .then(res => res.json())
@@ -38,7 +38,7 @@ function CanvasPage(props) {
                 )   
                 break; 
             case "get_next_page":
-                var next_num = parseInt(props.selected_image.num)+1
+                var next_num = parseInt(props.image.num)+1
                 fetch("http://localhost:8080/v1/singleimage/"+next_num.toString())
                 .then(res => res.json())
                 .then(
@@ -144,7 +144,7 @@ function CanvasPage(props) {
 }
 
 const mapStateToProps = state => ({ 
-    selected_image: state.image,
+    image: state.image,
     rotate_angle: state.rotate_angle
 });
 
