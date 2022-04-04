@@ -13,10 +13,11 @@ function Canvas(props) {
     let isIn = null;
     let isOut = null;
     let selectedImage = props.image || {};
-    let rotateAngle = props.rotateAngle || 0;
+
 
     const [mouseMove, setMouseMove] = useState(false);
     const [image, setImage] = useState(new Image());
+    //const [rotateAngle, setRotateAngle] = useState(props.rotate_angle);
 
     function setCursor(item_obj){
         const current = myRef.current;
@@ -227,6 +228,18 @@ function Canvas(props) {
         var dy = (current.height-nheight)/2;
 
         ctx.clearRect(0,0, current.width, current.height);
+
+        /* Matrix transformation
+        if (rotateAngle != props.rotate_angle){
+            rotateAngle = props.rotateAngle;
+            if (rotateAngle != 0){
+                ctx.translate((current.width+dx)/2, (current.height+dy)/2);
+                ctx.rotate(props.rotate_angle * Math.PI);
+                ctx.translate(-(current.width+dx)/2, (current.height+dy)/2);
+                console.log ("ok")
+            }
+        }*/
+
         ctx.drawImage(image, dx, dy, nwidth, nheight);
 
         /*if (is_out_array.length > 0){
@@ -371,10 +384,6 @@ function Canvas(props) {
     }
 
     useEffect(() => {
-        if (rotateAngle != props.rotate_angle){
-            rotateAngle = props.rotateAngle;
-            console.log(props.rotate_angle)
-        }
         if(mouseMove === false) {
             myRef.current.height = props.height;
             myRef.current.width = props.width;
@@ -406,7 +415,7 @@ function Canvas(props) {
             }
             setMouseMove(true);
         }
-        if (Object.keys(selectedImage).length > 0) { 
+        if (Object.keys(selectedImage).length > 0) {
             if (selectedImage.src !== image.src) {
                 image.src = selectedImage.src;
                 image.id = selectedImage.id;
@@ -416,14 +425,14 @@ function Canvas(props) {
                     propWidth =  Math.ceil(image.width /myRef.current.width);
                     isPointInPoly(selectedImage, -1, -1);
                     drawCanvas(isIn, isOut);
-                    props.dispatch({
+                    /*props.dispatch({
                         type: "IMAGE_WIDTH",
                         payload: propWidth
                     });
                     props.dispatch({
                         type: "IMAGE_HEIGHT",
                         payload: propHeight
-                    });
+                    });*/
                 } 
            }
         } else {
@@ -439,8 +448,6 @@ function Canvas(props) {
 
 const mapStateToProps = state => ({     
     image: state.image,
-    image_width: state.image_width,
-    image_height: state.image_height,
     rotate_angle: state.rotate_angle,
     selected_item: state.selected_item,
     transcription_text : state.transcription_text,

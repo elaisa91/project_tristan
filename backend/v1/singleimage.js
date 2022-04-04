@@ -8,15 +8,16 @@ function singleimageGet(req, res){
     var num = 0;  
     makeQuery(function(err, result) {
         if (err) throw err;
-        if (req.params.selectedImageNum === 0){
+        if (req.params.selectedImageNum === 0 || req.params.selectedImageNum <= -1){
             num = '0';
         }
-        else if (req.params.selectedImageNum === result.length-1){
+        else if (req.params.selectedImageNum === result.length-1 || req.params.selectedImageNum >= result.length){
             num = (result.length-1).toString()
         }
         else {
             num = req.params.selectedImageNum.toString();
         }
+
         for (const facsimile of result){
             if (num === facsimile['num']){
                 result_image = {src: facsimile["url"], id: facsimile["name"], num: facsimile["num"], polygons: []};
