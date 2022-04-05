@@ -90,8 +90,7 @@ function CanvasPage(props) {
                     <i className="fa fa-close"></i>
                 </button>
             </div>
-            {description === false 
-            ?
+            {description === false &&
                 <div className='canvas-data'>
                     <div className='canvas-with-buttons'>
                     <div className='rotate-buttons'>
@@ -116,11 +115,9 @@ function CanvasPage(props) {
                     </div>
                    
                     <TextBox/>
-                     
                 </div>
-            :
-                <FacsDescriptionPage/>
             }
+            {description && <FacsDescriptionPage/>}
         </div>
     );
 }
