@@ -298,7 +298,7 @@ function Canvas(props) {
 
 
         if (isNothingSelected){
-            lastItemSelectedObj = props.onItemDeselected(lastItemSelectedObj);
+            lastItemSelectedObj = null;
         }
     }
     
@@ -441,10 +441,10 @@ function Canvas(props) {
         }
     });
     return(
-        <canvas className = "canvas" ref={myRef} >
+        <canvas style={{transform: `rotate(${props.rotate_angle}deg)`}} className = "canvas" ref={myRef} >
         </canvas>
     );
-    
+
 }
 
 const mapStateToProps = state => ({     

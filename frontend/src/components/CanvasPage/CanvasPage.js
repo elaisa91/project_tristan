@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from "react-router-dom"
 import './CanvasPage.css';
@@ -12,49 +12,37 @@ function CanvasPage(props) {
     const [description, setDescription] = useState(false);
     let navigate = useNavigate();
 
-
-    function handleClick(e, icon){
+    async function handleClick(e, icon){
         switch (icon){
             case "get_current_page":
                 setDescription(false);
                 break;
             case "get_previous_page":
-                var previous_num = parseInt(props.image.num)-1
+                var previous_num = parseInt(props.image.num)-1;
+                if (previous_num < 0) break;
                 /*mettere in funzione a parte*/
-                fetch("http://localhost:8080/v1/singleimage/"+previous_num.toString())
-                .then(res => res.json())
-                .then(
-                    (result) => {
-                        props.dispatch({
-                            type: "SELECTED_IMAGE",
-                            payload: result
-                        });
-                        navigate('/facsimile/:' + result.id);
-
-                    },
-                    (error) => {
-                        setError(error);
-                    }
-                )   
-                break; 
+                var response = await fetch("http://localhost:8080/v1/singleimage/"+previous_num.toString());
+                var result = await response.json();
+                if(!result) setError(error);
+                props.dispatch({
+                    type: "SELECTED_IMAGE",
+                    payload: result
+                });
+                navigate('/facsimile/:' + result.id);
+                break;
+            
             case "get_next_page":
                 var next_num = parseInt(props.image.num)+1
-                fetch("http://localhost:8080/v1/singleimage/"+next_num.toString())
-                .then(res => res.json())
-                .then(
-                    (result) => {
-                       props.dispatch({
-                            type: "SELECTED_IMAGE",
-                            payload: result
-                        }); 
-                        navigate('/facsimile/:' + result.id);
-
-                    },
-                    (error) => {
-                        setError(error);
-                    }
-                ) 
+                var response = await fetch("http://localhost:8080/v1/singleimage/"+next_num.toString());
+                var result = await response.json();
+                if(!result) setError(error);
+                props.dispatch({
+                    type: "SELECTED_IMAGE",
+                    payload: result
+                }); 
+                navigate('/facsimile/:' + result.id);
                 break;
+
             case "get_description":
                 setDescription(true);
                 break;
@@ -77,11 +65,6 @@ function CanvasPage(props) {
                 navigate('/facsimile');
             
         }
-    }
-
-    function handleItemDeselected(last_item_obj){
-        last_item_obj = null;
-        return last_item_obj;
     }
 
     function handleItemSelected(item_obj, last_item_obj){
@@ -126,7 +109,6 @@ function CanvasPage(props) {
                         height = {700}
                         width = {600}
                         onItemSelected = {(item, last_item) => handleItemSelected(item, last_item)}
-                        onItemDeselected = {(last_item) => handleItemDeselected(last_item)}
                     />
                     <button className='direction-button' onClick = {(e) => handleClick(e, "get_next_page")}>
                         <i className="fa fa-arrow-circle-right"></i>
