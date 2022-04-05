@@ -173,6 +173,7 @@ class SearchPage extends React.Component {
                             onChange = {(e) => this.handleCategoryChange(e)}
                         />
                     </div>
+                    {/* per qualsiasi cosa guarda qui --> https://mui.com/api/autocomplete/ */}
                     <Autocomplete  //Component Material UI, search bar. Modifica ciò che ti serve
                         disablePortal={false}
                         id="combo-box-demo"
