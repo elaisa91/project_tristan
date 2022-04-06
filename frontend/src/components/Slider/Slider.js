@@ -23,10 +23,10 @@ class Slider extends React.Component {
     render() {
         var selectedOptionString = "";
         if (this.props.selected_subcatoption === ""){
-            selectedOptionString = this.props.selected_catoption + " è presente nelle seguenti carte: "
+            selectedOptionString = this.props.selected_catoption + " can be found in the following folios: "
         }
         else {
-            selectedOptionString = this.props.selected_subcatoption + " è presente nelle seguenti carte: "
+            selectedOptionString = this.props.selected_subcatoption + " can be found in the following folios: "
         }
         
         const result_images = this.props.result_images;

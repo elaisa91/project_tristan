@@ -173,20 +173,7 @@ class SearchPage extends React.Component {
                             onChange = {(e) => this.handleCategoryChange(e)}
                         />
                     </div>
-                    {/* per qualsiasi cosa guarda qui --> https://mui.com/api/autocomplete/ */}
-                    <Autocomplete  //Component Material UI, search bar. Modifica ciò che ti serve
-                        disablePortal={false}
-                        id="combo-box-demo"
-                        options={top100Films} //l'oggetto da cui prendi la lista, puoi passare anche un array
-                        sx={{ width: 300 }} // puoi passare regole css qui dentro
-                        clearOnEscape={true}
-                        isOptionEqualToValue={(option, value) => option.filmName === value.filmName} //cambia solo la chiave, se usi un array, butta via questa proprietà.
-                        multiple={false} //se vuoi far selezionare più di un elemento
-                        noOptionsText="NON CE N'è COVIDDI" //Testo che mostra quando non ci sono risultati
-                        onChange={(_, value) => {if(value) this.setState({categoryFilter: value.filmName})}} //Metti il valore selezionato in uno stato che ti piace, anche redux se vuoi
-                        getOptionLabel={(option) => option.filmName} //la chiave dell'oggetto da cui prendi la lista, se passi un array sopra, puoi togliere questa proprietà 
-                        renderInput={(params) => <TextField {...params} label="Rofl?" />} //label: testo quando non c'è alcuna selezione. Al posto di TextField puoi mettere un'altro elemento se ti piace di più ma te lo sconsiglio.
-                    />
+                    
                     <div className="subcat-choice">
                         <Choice 
                             name = 'subcategories' 
@@ -199,12 +186,30 @@ class SearchPage extends React.Component {
                         />
                     </div>
                 </div>
-                
-                <Slider
-                    onClick = {(i) => this.handleClick(i)}
-                />
-                
-                
+
+                <div className='main-content'>
+                    {/* per qualsiasi cosa guarda qui --> https://mui.com/api/autocomplete/ */}
+                    <div className='autocomplete'>
+                        <Autocomplete  //Component Material UI, search bar. Modifica ciò che ti serve
+                            disablePortal={false}
+                            id="combo-box-demo"
+                            options={top100Films} //l'oggetto da cui prendi la lista, puoi passare anche un array
+                            sx={{ width: 300 }} // puoi passare regole css qui dentro
+                            clearOnEscape={true}
+                            isOptionEqualToValue={(option, value) => option.filmName === value.filmName} //cambia solo la chiave, se usi un array, butta via questa proprietà.
+                            multiple={false} //se vuoi far selezionare più di un elemento
+                            noOptionsText="NON CE N'è COVIDDI" //Testo che mostra quando non ci sono risultati
+                            onChange={(_, value) => {if(value) this.setState({categoryFilter: value.filmName})}} //Metti il valore selezionato in uno stato che ti piace, anche redux se vuoi
+                            getOptionLabel={(option) => option.filmName} //la chiave dell'oggetto da cui prendi la lista, se passi un array sopra, puoi togliere questa proprietà 
+                            renderInput={(params) => <TextField {...params} label="Rofl?" />} //label: testo quando non c'è alcuna selezione. Al posto di TextField puoi mettere un'altro elemento se ti piace di più ma te lo sconsiglio.
+                        />
+                    </div>
+                    
+                    <Slider
+                        onClick = {(i) => this.handleClick(i)}
+                    />
+                     
+                </div>   
             </div>
         );
     }

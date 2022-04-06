@@ -2,6 +2,12 @@
     display: flex;
 }
 
+.search-page > .main-content {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 65vw;
+}
+
 .search-page > .aside {
     display: flex;
     flex-direction: column;

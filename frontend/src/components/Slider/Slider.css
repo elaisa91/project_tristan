@@ -1,7 +1,7 @@
 .slider {
     display: flex;
     flex-direction: column;
-    flex: 0 0 65vw;
+    height: 50vh;
     border-left: solid grey 0.1em;
     padding: 5%;
 }
