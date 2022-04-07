@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import './SearchPage.css';
 import Choice from '../Choice/Choice.js';
 import Slider from '../Slider/Slider.js';
-import { filter_images, filter_subcategories, all_categories } from '../../helper';
+import { filter_images, filter_subcategories, all_categories, all_folios_name } from '../../helper';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
@@ -19,7 +19,8 @@ class SearchPage extends React.Component {
         
     async componentDidMount(){
         let all_subcategories = filter_subcategories(null);
-        console.log(all_subcategories);
+        let all_folios = all_folios_name();
+        console.log(all_folios)
         if(this.props.selected_catoption === ""){
                 this.props.dispatch({
                     type: "RESULT_IMAGES",
@@ -97,8 +98,6 @@ class SearchPage extends React.Component {
             { filmName: "Schindler's List", year: 1993 }]
         
         const all_categories = this.props.cat_options;
-        
-        //const all_folios_name = all_folios_name();
 
         return (
             this.props.visible &&

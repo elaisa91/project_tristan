@@ -15,3 +15,9 @@ export async function all_categories() {
     let cat_options = await response.json();
     return cat_options;
 }
+
+export async function all_folios_name() {
+    let response = await fetch("http://localhost:8080/v1/foliosName")
+    let cat_options = await response.json();
+    return cat_options;
+}
