@@ -2,12 +2,12 @@
     display: flex;
     flex-direction: column;
     height: 50vh;
-    border-left: solid grey 0.1em;
     padding: 5%;
 }
 
 .slider >p {
     font-weight: bold;
+    height: 5%;
 }
 
 .slider >.slider-images{
