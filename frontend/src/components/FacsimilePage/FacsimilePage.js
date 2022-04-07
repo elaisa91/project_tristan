@@ -4,7 +4,7 @@ import './FacsimilePage.css';
 import SubMenu from '../SubMenu/SubMenu.js';
 import TextEight from '../Texts/TextEight';
 import SearchPage from '../SearchPage/SearchPage';
-import { refreshResult } from '../../helper';
+import { filter_images } from '../../helper';
 
 class FacsimilePage extends React.Component{
     constructor (props) { 
@@ -50,7 +50,7 @@ class FacsimilePage extends React.Component{
                 });  
                 this.props.dispatch({
                     type: "RESULT_IMAGES",
-                    payload: await refreshResult()
+                    payload: await filter_images(null)
                 });
                 this.props.dispatch({
                     type: "SELECTED_IMAGE",

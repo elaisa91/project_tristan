@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import './SearchPage.css';
 import Choice from '../Choice/Choice.js';
 import Slider from '../Slider/Slider.js';
-import { refreshResult } from '../../helper';
+import { filter_images, filter_subcategories, all_categories } from '../../helper';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
@@ -18,48 +18,20 @@ class SearchPage extends React.Component {
 
         
     async componentDidMount(){
+        let all_subcategories = filter_subcategories(null);
+        console.log(all_subcategories);
         if(this.props.selected_catoption === ""){
-            /* mettere queste chiamate in funzioni a parte e usare axios*/
-            /*fetch("http://localhost:8080/v1/imgResults/null")
-            
-                .then(res => res.json())
-                .then(
-                    (result) => {
-                        this.props.dispatch({
-                            type: "RESULT_IMAGES",
-                            payload: result
-                        });
-                    },
-                    (error) => {
-                        this.setState({
-                            error
-                        });
-                    }
-                )*/
                 this.props.dispatch({
                     type: "RESULT_IMAGES",
-                    payload: await refreshResult()
+                    payload: await filter_images(null)
                 });
 
         }
-        /* mettere queste chiamate in funzioni a parte e usare axios*/
-        fetch("http://localhost:8080/v1/categories")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.props.dispatch({
-                        type: "CAT_OPTIONS",
-                        payload: result
-                    });  
-                },
-                (error) => {
-                    this.setState({
-                        error
-                    });
-                }
-            )
-
         
+        this.props.dispatch({
+            type: "CAT_OPTIONS",
+            payload: await all_categories()
+            });    
     }
 
     handleClick(i){
@@ -69,7 +41,7 @@ class SearchPage extends React.Component {
         });  
     }
     
-    handleCategoryChange(e){
+    async handleCategoryChange(e){
         this.props.dispatch({
             type: "SELECTED_CATOPTION",
             payload: e.target.value
@@ -87,41 +59,20 @@ class SearchPage extends React.Component {
             payload: []
         })
         
-         /* mettere queste chiamate in funzioni a parte e usare axios*/ 
-        fetch("http://localhost:8080/v1/subcategories/"+ e.target.value)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.props.dispatch({
-                        type: "SUBCAT_OPTIONS",
-                        payload: result
-                    }); 
-                },
-                (error) => {
-                    this.setState({
-                        error
-                    });
-                }
-            )
-        /* mettere queste chiamate in funzioni a parte e usare axios*/
-        fetch("http://localhost:8080/v1/imgResults/"+ e.target.value)
-        .then(res => res.json())
-        .then(
-            (result) => {
-                this.props.dispatch({
-                    type: "RESULT_IMAGES",
-                    payload: result
-                });
-            },
-            (error) => {
-                this.setState({
-                    error
-                });
-            }
-        )
+        
+        this.props.dispatch({
+        type: "SUBCAT_OPTIONS",
+        payload: await filter_subcategories(e.target.value)
+        }); 
+
+
+        this.props.dispatch({
+            type: "RESULT_IMAGES",
+            payload: await filter_images(e.target.value)
+        });
     }
 
-    handleSubCategoryChange(e){
+    async handleSubCategoryChange(e){
         this.props.dispatch({
             type: "SELECTED_SUBCATOPTION",
             payload: e.target.value
@@ -130,23 +81,10 @@ class SearchPage extends React.Component {
             type: "SELECTED_IMAGE",
             payload: {}
         });
-         /* mettere queste chiamate in funzioni a parte e usare axios*/
-        fetch("http://localhost:8080/v1/imgResults/"+ e.target.value)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.props.dispatch({
-                        type: "RESULT_IMAGES",
-                        payload: result
-                    }); 
-                },
-                (error) => {
-                    this.setState({
-                        error
-                    });
-                }
-            )
-        
+        this.props.dispatch({
+            type: "RESULT_IMAGES",
+            payload: await filter_images(e.target.value)
+        }); 
     }
 
     render() {
@@ -157,6 +95,10 @@ class SearchPage extends React.Component {
             { filmName: 'The Dark Knight', year: 2008 },
             { filmName: '12 Angry Men', year: 1957 },
             { filmName: "Schindler's List", year: 1993 }]
+        
+        const all_categories = this.props.cat_options;
+        
+        //const all_folios_name = all_folios_name();
 
         return (
             this.props.visible &&
@@ -192,7 +134,7 @@ class SearchPage extends React.Component {
                     <div className='autocomplete'>
                         <Autocomplete  //Component Material UI, search bar. Modifica ciò che ti serve
                             disablePortal={false}
-                            id="combo-box-demo"
+                            id="autocomplete-ui"
                             options={top100Films} //l'oggetto da cui prendi la lista, puoi passare anche un array
                             sx={{ width: 300 }} // puoi passare regole css qui dentro
                             clearOnEscape={true}
