@@ -18,9 +18,14 @@ class SearchPage extends React.Component {
 
         
     async componentDidMount(){
-        let all_subcategories = filter_subcategories(null);
-        let all_folios = all_folios_name();
-        console.log(all_folios)
+        this.props.dispatch({
+            type: "ALL_SUBCATEGORIES",
+            payload: await filter_subcategories(null)
+        });
+        this.props.dispatch({
+            type: "ALL_FOLIOS",
+            payload: await all_folios_name()
+        });
         if(this.props.selected_catoption === ""){
                 this.props.dispatch({
                     type: "RESULT_IMAGES",
@@ -89,15 +94,16 @@ class SearchPage extends React.Component {
     }
 
     render() {
-        const top100Films = [
+        /*const top100Films = [
             { filmName: 'The Shawshank Redemption', year: 1994 },
             { filmName: 'The Godfather', year: 1972 },
             { filmName: 'The Godfather: Part II', year: 1974 },
             { filmName: 'The Dark Knight', year: 2008 },
             { filmName: '12 Angry Men', year: 1957 },
             { filmName: "Schindler's List", year: 1993 }]
-        
-        const all_categories = this.props.cat_options;
+        */
+
+        const all_search_fields = this.props.cat_options.concat(this.props.all_subcategories, this.props.all_folios);
 
         return (
             this.props.visible &&
@@ -134,15 +140,15 @@ class SearchPage extends React.Component {
                         <Autocomplete  //Component Material UI, search bar. Modifica ciò che ti serve
                             disablePortal={false}
                             id="autocomplete-ui"
-                            options={top100Films} //l'oggetto da cui prendi la lista, puoi passare anche un array
+                            options={all_search_fields} //l'oggetto da cui prendi la lista, puoi passare anche un array
                             sx={{ width: 300 }} // puoi passare regole css qui dentro
                             clearOnEscape={true}
-                            isOptionEqualToValue={(option, value) => option.filmName === value.filmName} //cambia solo la chiave, se usi un array, butta via questa proprietà.
+                            //isOptionEqualToValue={(option, value) => option.filmName === value.filmName} //cambia solo la chiave, se usi un array, butta via questa proprietà.
                             multiple={false} //se vuoi far selezionare più di un elemento
-                            noOptionsText="NON CE N'è COVIDDI" //Testo che mostra quando non ci sono risultati
+                            noOptionsText="No results" //Testo che mostra quando non ci sono risultati
                             onChange={(_, value) => {if(value) this.setState({categoryFilter: value.filmName})}} //Metti il valore selezionato in uno stato che ti piace, anche redux se vuoi
-                            getOptionLabel={(option) => option.filmName} //la chiave dell'oggetto da cui prendi la lista, se passi un array sopra, puoi togliere questa proprietà 
-                            renderInput={(params) => <TextField {...params} label="Rofl?" />} //label: testo quando non c'è alcuna selezione. Al posto di TextField puoi mettere un'altro elemento se ti piace di più ma te lo sconsiglio.
+                            //getOptionLabel={(option) => option.filmName} //la chiave dell'oggetto da cui prendi la lista, se passi un array sopra, puoi togliere questa proprietà 
+                            renderInput={(params) => <TextField {...params} label="Search..." />} //label: testo quando non c'è alcuna selezione. Al posto di TextField puoi mettere un'altro elemento se ti piace di più ma te lo sconsiglio.
                         />
                     </div>
                     
@@ -158,6 +164,8 @@ class SearchPage extends React.Component {
 
 const mapStateToProps = state => ({ 
     cat_options: state.cat_options,
+    all_subcategories: state.all_subcategories,
+    all_folios: state.all_folios,
     subcat_options: state.subcat_options,
     selected_catoption: state.selected_catoption,
     selected_subcatoption: state.selected_subcatoption,

@@ -17,6 +17,8 @@ const initialState = {
   image: {},
   rotate_angle: 0,
   cat_options: [],
+  all_subcategories: [],
+  all_folios: [],
   subcat_options: [],
   selected_catoption: "",
   selected_subcatoption: "",
@@ -53,6 +55,18 @@ function reducer (state = initialState, action) {
       return {
         ...state,
         cat_options: action.payload
+      };
+
+    case "ALL_FOLIOS":
+      return {
+        ...state,
+        all_folios: action.payload
+      };
+
+    case "ALL_SUBCATEGORIES":
+      return {
+        ...state,
+        all_subcategories: action.payload
       };
 
     case "SUBCAT_OPTIONS":
