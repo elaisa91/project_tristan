@@ -22,11 +22,14 @@ class Slider extends React.Component {
 
     render() {
         var selectedOptionString = "";
-        if (this.props.selected_subcatoption === ""){
-            selectedOptionString = this.props.selected_catoption + " can be found in the following folios: "
+        if (this.props.selected_search_field != ""){
+            selectedOptionString = this.props.selected_search_field + " can be found in the following folios: "
         }
-        else {
+        else if (this.props.selected_subcatoption != ""){
             selectedOptionString = this.props.selected_subcatoption + " can be found in the following folios: "
+        }
+        else if (this.props.selected_catoption != "") {
+            selectedOptionString = this.props.selected_catoption + " can be found in the following folios: "
         }
         
         const result_images = this.props.result_images;
@@ -38,11 +41,7 @@ class Slider extends React.Component {
         return (
            
             <div className = 'slider'>
-                <p>{this.props.selected_catoption !== "" ?
-                        selectedOptionString
-                    : 
-                    null
-                }
+                <p>{selectedOptionString}
                 </p>
 
                 <div className='slider-images'>
@@ -56,6 +55,7 @@ class Slider extends React.Component {
 const mapStateToProps = state => ({ 
     selected_catoption: state.selected_catoption,
     selected_subcatoption: state.selected_subcatoption,
+    selected_search_field: state.selected_search_field,
     result_images: state.result_images
 });
 

@@ -13,6 +13,7 @@ class SearchPage extends React.Component {
         super(props); 
         this.state = {
             error: null,
+            autocomplete_default_value: ""
         };
     }
 
@@ -57,6 +58,10 @@ class SearchPage extends React.Component {
             payload: ""
         }); 
         this.props.dispatch({
+            type: "SELECTED_SEARCH_FIELD",
+            payload: ""
+        }); 
+        this.props.dispatch({
             type: "SELECTED_IMAGE",
             payload: {}
         });
@@ -64,14 +69,13 @@ class SearchPage extends React.Component {
             type: "SUBCAT_OPTIONS",
             payload: []
         })
-        
-        
+        this.setState({
+            autocomplete_default_value: ""
+        });
         this.props.dispatch({
-        type: "SUBCAT_OPTIONS",
-        payload: await filter_subcategories(e.target.value)
+            type: "SUBCAT_OPTIONS",
+            payload: await filter_subcategories(e.target.value)
         }); 
-
-
         this.props.dispatch({
             type: "RESULT_IMAGES",
             payload: await filter_images(e.target.value)
@@ -84,13 +88,33 @@ class SearchPage extends React.Component {
             payload: e.target.value
         }); 
         this.props.dispatch({
-            type: "SELECTED_IMAGE",
-            payload: {}
-        });
-        this.props.dispatch({
             type: "RESULT_IMAGES",
             payload: await filter_images(e.target.value)
-        }); 
+        });
+        this.props.dispatch({
+            type: "SELECTED_IMAGE",
+            payload: {}
+        });  
+        this.props.dispatch({
+            type: "SELECTED_SEARCH_FIELD",
+            payload: ""
+        });  
+        this.setState({
+            autocomplete_default_value: ""
+        });
+    }
+
+    async handleAutocompleteChange(_, value){
+        if(value) {
+            this.props.dispatch({
+                type: "SELECTED_SEARCH_FIELD", 
+                payload: value
+            });
+            this.props.dispatch({
+                type: "RESULT_IMAGES", 
+                payload: await filter_images(value)
+            });  
+        }
     }
 
     render() {
@@ -138,6 +162,7 @@ class SearchPage extends React.Component {
                     {/* per qualsiasi cosa guarda qui --> https://mui.com/api/autocomplete/ */}
                     <div className='autocomplete'>
                         <Autocomplete  //Component Material UI, search bar. Modifica ciò che ti serve
+                            value={this.state.autocomplete_default_value}
                             disablePortal={false}
                             id="autocomplete-ui"
                             options={all_search_fields} //l'oggetto da cui prendi la lista, puoi passare anche un array
@@ -146,9 +171,9 @@ class SearchPage extends React.Component {
                             //isOptionEqualToValue={(option, value) => option.filmName === value.filmName} //cambia solo la chiave, se usi un array, butta via questa proprietà.
                             multiple={false} //se vuoi far selezionare più di un elemento
                             noOptionsText="No results" //Testo che mostra quando non ci sono risultati
-                            onChange={(_, value) => {if(value) this.setState({categoryFilter: value.filmName})}} //Metti il valore selezionato in uno stato che ti piace, anche redux se vuoi
+                            onChange={(_,value) => this.handleAutocompleteChange(_,value)} //Metti il valore selezionato in uno stato che ti piace, anche redux se vuoi
                             //getOptionLabel={(option) => option.filmName} //la chiave dell'oggetto da cui prendi la lista, se passi un array sopra, puoi togliere questa proprietà 
-                            renderInput={(params) => <TextField {...params} label="Search..." />} //label: testo quando non c'è alcuna selezione. Al posto di TextField puoi mettere un'altro elemento se ti piace di più ma te lo sconsiglio.
+                            renderInput={(params) => <TextField {...params} label="Search here" />} //label: testo quando non c'è alcuna selezione. Al posto di TextField puoi mettere un'altro elemento se ti piace di più ma te lo sconsiglio.
                         />
                     </div>
                     
@@ -169,6 +194,7 @@ const mapStateToProps = state => ({
     subcat_options: state.subcat_options,
     selected_catoption: state.selected_catoption,
     selected_subcatoption: state.selected_subcatoption,
+    selected_search_field: state.selected_search_field,
     selected_image: state.image,
     result_images: state.result_images,
     to_reset: state.to_reset
