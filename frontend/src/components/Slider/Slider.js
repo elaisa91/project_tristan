@@ -24,6 +24,12 @@ class Slider extends React.Component {
         var selectedOptionString = "";
         if (this.props.selected_search_field != ""){
             selectedOptionString = this.props.selected_search_field + " can be found in the following folios: "
+            for (const image of this.props.result_images){
+                if(this.props.selected_search_field === image['id']){
+                    selectedOptionString = this.props.selected_search_field + " found: "
+                    break;
+                }
+            }
         }
         else if (this.props.selected_subcatoption != ""){
             selectedOptionString = this.props.selected_subcatoption + " can be found in the following folios: "
