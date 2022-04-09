@@ -15,6 +15,20 @@ class ProjectPage extends React.Component{
                             {desc: "Licence", image: process.env.PUBLIC_URL + '/university_logo.png'}]
         };
     }
+    componentDidMount(){
+        this.props.dispatch({
+            type: 'WORK_TEAM_VISIBLE',
+            payload: true
+        });
+        this.props.dispatch({
+            type: 'METHODS_VISIBLE',
+            payload: false
+        });
+        this.props.dispatch({
+            type: 'LICENCE_VISIBLE',
+            payload: false
+        });
+    }
     handleClick(i){
         switch (this.state.sub_menu_items[i].desc){
             case "Team":

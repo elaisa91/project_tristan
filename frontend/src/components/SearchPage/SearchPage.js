@@ -12,8 +12,7 @@ class SearchPage extends React.Component {
     constructor (props) { 
         super(props); 
         this.state = {
-            error: null,
-            autocomplete_default_value: ""
+            error: null
         };
     }
 
@@ -68,9 +67,6 @@ class SearchPage extends React.Component {
         this.props.dispatch({
             type: "SUBCAT_OPTIONS",
             payload: []
-        })
-        this.setState({
-            autocomplete_default_value: ""
         });
         this.props.dispatch({
             type: "SUBCAT_OPTIONS",
@@ -99,9 +95,6 @@ class SearchPage extends React.Component {
             type: "SELECTED_SEARCH_FIELD",
             payload: ""
         });  
-        this.setState({
-            autocomplete_default_value: ""
-        });
     }
 
     async handleAutocompleteChange(_, value){
@@ -162,7 +155,7 @@ class SearchPage extends React.Component {
                     {/* per qualsiasi cosa guarda qui --> https://mui.com/api/autocomplete/ */}
                     <div className='autocomplete'>
                         <Autocomplete  //Component Material UI, search bar. Modifica ciò che ti serve
-                            value={this.state.autocomplete_default_value}
+                            value={this.props.selected_search_field}
                             disablePortal={false}
                             id="autocomplete-ui"
                             options={all_search_fields} //l'oggetto da cui prendi la lista, puoi passare anche un array
