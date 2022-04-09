@@ -4,7 +4,7 @@
     flex: 1;
 }
 
-.controls-buttons > button, .direction-button{
+.controls-buttons > button, .direction-button, .rotate-buttons > button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,21 +14,20 @@
     background-color: #fafafa;
 }
 
-.controls-buttons > button:hover, .direction-button > i:hover{
+.controls-buttons > button:hover, .direction-button > i:hover, .rotate-buttons > button > i:hover{
     cursor: pointer;
-}
-
-.controls-buttons {
-    display: flex;
-    order: 2;
 }
 
 .direction-button {
     background: none;
     border: none;
-    width: 2.5vw;
-    height: 4.5vh;
     font-size: 1.5em;
+    padding: 2em;
+}
+
+.controls-buttons {
+    display: flex;
+    order: 2;
 }
 
 .controls-buttons img {
@@ -39,6 +38,19 @@
 .controls-buttons >:first-child{
     background-color: #fafafa;
     border: solid #e0bb20 0.2em;
+
+}
+
+.rotate-buttons {
+    padding-top: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: flex-start;
+}
+
+.rotate-buttons > button {
+    padding: 0;
 }
 
 .canvas-data {

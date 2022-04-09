@@ -93,26 +93,27 @@ function CanvasPage(props) {
             </div>
             {description === false &&
                 <div className='canvas-data'>
-                    <div className='canvas-with-buttons'>
                     <div className='rotate-buttons'>
-                            <button className='button' onClick = {(e) => handleClick(e, "rotate_image_aclockwise")}>
-                                <i className="fa fa-undo"></i>
-                            </button>
-                            <button className='button' onClick = {(e) => handleClick(e, "rotate_image_clockwise")}>
-                                <i className="fa fa-repeat"></i>
-                            </button> 
+                        <button className='button' onClick = {(e) => handleClick(e, "rotate_image_clockwise")}>
+                            <i className="fa fa-repeat"></i>
+                        </button>
+                        <button className='button' onClick = {(e) => handleClick(e, "rotate_image_aclockwise")}>
+                            <i className="fa fa-undo"></i>
+                        </button> 
                     </div>
-                    <button className='direction-button' onClick = {(e) => handleClick(e, "get_previous_page")}>
-                        <i className="fa fa-arrow-circle-left"></i>
-                    </button>
-                    <Canvas
-                        height = {700}
-                        width = {600}
-                        onItemSelected = {(item, last_item) => handleItemSelected(item, last_item)}
-                    />
-                    <button className='direction-button' onClick = {(e) => handleClick(e, "get_next_page")}>
-                        <i className="fa fa-arrow-circle-right"></i>
-                    </button>
+                    <div className='canvas-with-buttons'>
+                    
+                        <button className='direction-button' onClick = {(e) => handleClick(e, "get_previous_page")}>
+                            <i className="fa fa-arrow-circle-left"></i>
+                        </button>
+                        <Canvas
+                            height = {700}
+                            width = {600}
+                            onItemSelected = {(item, last_item) => handleItemSelected(item, last_item)}
+                        />
+                        <button className='direction-button' onClick = {(e) => handleClick(e, "get_next_page")}>
+                            <i className="fa fa-arrow-circle-right"></i>
+                        </button>
                     </div>
                    
                     <TextBox/>

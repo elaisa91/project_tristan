@@ -17,8 +17,7 @@ function imagesGet(req, res){
                         if (facsimile[key] === req.params.selectedOption){
                             found = true;
                             break;
-                        }
-                        
+                        }   
                     }
                     if(key !== '_id' && key !== 'name' && key !== 'url' && key!= 'notes' && key!= 'num'){
                         if (key === req.params.selectedOption){

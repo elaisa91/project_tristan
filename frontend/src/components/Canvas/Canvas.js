@@ -17,7 +17,6 @@ function Canvas(props) {
 
     const [mouseMove, setMouseMove] = useState(false);
     const [image, setImage] = useState(new Image());
-    //const [rotateAngle, setRotateAngle] = useState(props.rotate_angle);
 
     function setCursor(item_obj){
         const current = myRef.current;
@@ -229,17 +228,6 @@ function Canvas(props) {
 
         ctx.clearRect(0,0, current.width, current.height);
 
-        /* Matrix transformation
-        if (rotateAngle != props.rotate_angle){
-            rotateAngle = props.rotateAngle;
-            if (rotateAngle != 0){
-                ctx.translate((current.width+dx)/2, (current.height+dy)/2);
-                ctx.rotate(props.rotate_angle * Math.PI);
-                ctx.translate(-(current.width+dx)/2, (current.height+dy)/2);
-                console.log ("ok")
-            }
-        }*/
-
         ctx.drawImage(image, dx, dy, nwidth, nheight);
 
         /*if (is_out_array.length > 0){
@@ -426,14 +414,6 @@ function Canvas(props) {
                     propWidth =  Math.ceil(image.width /myRef.current.width);
                     isPointInPoly(selectedImage, -1, -1);
                     drawCanvas(isIn, isOut);
-                    /*props.dispatch({
-                        type: "IMAGE_WIDTH",
-                        payload: propWidth
-                    });
-                    props.dispatch({
-                        type: "IMAGE_HEIGHT",
-                        payload: propHeight
-                    });*/
                 } 
            }
         } else {
