@@ -2,6 +2,17 @@
     display: flex;
 }
 
+.search-page > .main-content {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 65vw;
+    border-left: solid grey 0.1em;
+}
+
+.main-content > .autocomplete {
+    align-self: center;
+}
+
 .search-page > .aside {
     display: flex;
     flex-direction: column;

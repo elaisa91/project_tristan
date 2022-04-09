@@ -384,38 +384,38 @@ function Canvas(props) {
     }
 
     useEffect(() => {
-        if(mouseMove === false) {
-            myRef.current.height = props.height;
-            myRef.current.width = props.width;
-    
-            myRef.current.onmousemove = (e) => { 
-                if (Object.keys(selectedImage).length === 0) { 
-                    return;
-                }
-                isNothingSelected = true;
-                var x = e.offsetX;
-                var y = e.offsetY;
-                isPointInPoly(selectedImage, x, y);
-                drawCanvas(isIn, isOut);
-                drawTooltip(lastItemSelectedObj, x, y,'rgb(128,128,128)', "2", "rgba(0,0,0,0.6)", 'rgb(255,255,255)', 16);
-                setCursor(lastItemSelectedObj);
-                myRef.current.onclick = (e) => {
-                    setMetadata(lastItemSelectedObj);
-                }   
-            }
-    
-            myRef.current.onmouseout = () => {
-                if (Object.keys(selectedImage).length === 0) { 
-                    return;
-                }
-                isNothingSelected = true;
-                isPointInPoly(selectedImage, -1, -1,);
-                drawCanvas(isIn, isOut);
-                unsetMetadata();
-            }
-            setMouseMove(true);
-        }
+            if(mouseMove === false) {
+                myRef.current.height = props.height;
+                myRef.current.width = props.width;
 
+                myRef.current.onmousemove = (e) => { 
+                    if (Object.keys(selectedImage).length === 0) { 
+                        return;
+                    }
+                    isNothingSelected = true;
+                    var x = e.offsetX;
+                    var y = e.offsetY;
+                    isPointInPoly(selectedImage, x, y);
+                    drawCanvas(isIn, isOut);
+                    drawTooltip(lastItemSelectedObj, x, y,'rgb(128,128,128)', "2", "rgba(0,0,0,0.6)", 'rgb(255,255,255)', 16);
+                    setCursor(lastItemSelectedObj);
+                    myRef.current.onclick = (e) => {
+                        setMetadata(lastItemSelectedObj);
+                    }   
+                }
+
+                myRef.current.onmouseout = () => {
+                    if (Object.keys(selectedImage).length === 0) { 
+                        return;
+                    }
+                    isNothingSelected = true;
+                    isPointInPoly(selectedImage, -1, -1,);
+                    drawCanvas(isIn, isOut);
+                    unsetMetadata();
+                }
+                setMouseMove(true);
+            }
+            
         if (Object.keys(selectedImage).length > 0) {
             if (selectedImage.src !== image.src) {
                 image.src = selectedImage.src;

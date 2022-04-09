@@ -7,13 +7,19 @@ function imagesGet(req, res){
     makeQuery(function(err, result) {
         if (err) throw err;
         var result_images = [];
-        var found = false;
         for (const facsimile of result){
-            
+            var found = false;
             if (req.params.selectedOption === "null"){
                 found = true;
             } else {
                 for (const key in facsimile){
+                    if(key === 'name'){
+                        if (facsimile[key] === req.params.selectedOption){
+                            found = true;
+                            break;
+                        }
+                        
+                    }
                     if(key !== '_id' && key !== 'name' && key !== 'url' && key!= 'notes' && key!= 'num'){
                         if (key === req.params.selectedOption){
                             found = true;

@@ -33,6 +33,7 @@ function CanvasPage(props) {
             
             case "get_next_page":
                 var next_num = parseInt(props.image.num)+1
+                if (next_num >= props.result_images.length) break;
                 var response = await fetch("http://localhost:8080/v1/singleimage/"+next_num.toString());
                 var result = await response.json();
                 if(!result) setError(error);
@@ -90,8 +91,7 @@ function CanvasPage(props) {
                     <i className="fa fa-close"></i>
                 </button>
             </div>
-            {description === false 
-            ?
+            {description === false &&
                 <div className='canvas-data'>
                     <div className='canvas-with-buttons'>
                     <div className='rotate-buttons'>
@@ -116,18 +116,17 @@ function CanvasPage(props) {
                     </div>
                    
                     <TextBox/>
-                     
                 </div>
-            :
-                <FacsDescriptionPage/>
             }
+            {description && <FacsDescriptionPage/>}
         </div>
     );
 }
 
 const mapStateToProps = state => ({ 
     image: state.image,
-    rotate_angle: state.rotate_angle
+    rotate_angle: state.rotate_angle,
+    result_images: state.result_images
 });
 
 export default connect(mapStateToProps)(CanvasPage);

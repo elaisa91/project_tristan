@@ -4,7 +4,7 @@ import './FacsimilePage.css';
 import SubMenu from '../SubMenu/SubMenu.js';
 import TextEight from '../Texts/TextEight';
 import SearchPage from '../SearchPage/SearchPage';
-import { refreshResult } from '../../helper';
+import { filter_images } from '../../helper';
 
 class FacsimilePage extends React.Component{
     constructor (props) { 
@@ -14,6 +14,7 @@ class FacsimilePage extends React.Component{
                             {desc: "Search in the database", image: process.env.PUBLIC_URL + '/university_logo.png'}]
         };
     }
+    
     async handleClick(i){
         switch (this.state.sub_menu_items[i].desc){
             case "Search criteria":
@@ -49,8 +50,12 @@ class FacsimilePage extends React.Component{
                     payload: ""
                 });  
                 this.props.dispatch({
+                    type: "SELECTED_SEARCH_FIELD",
+                    payload: ""
+                });
+                this.props.dispatch({
                     type: "RESULT_IMAGES",
-                    payload: await refreshResult()
+                    payload: await filter_images(null)
                 });
                 this.props.dispatch({
                     type: "SELECTED_IMAGE",
@@ -79,6 +84,7 @@ const mapStateToProps = state => ({
     subcat_options: state.subcat_options,
     selected_catoption: state.selected_catoption,
     selected_subcatoption: state.selected_subcatoption,
+    selected_search_field: state.selected_search_field,
     selected_image: state.image,
     result_images: state.result_images,
     search_page_visible: state.search_page_visible,

@@ -13,6 +13,17 @@ class HomePage extends React.Component{
                             {desc: "Tristan (CGM51)", image: process.env.PUBLIC_URL + '/university_logo.png'}]
         };
     }
+
+    componentDidMount(){
+        this.props.dispatch({
+            type: 'INTRODUCTION_VISIBLE',
+            payload: true
+        });
+        this.props.dispatch({
+            type: 'CGM51_VISIBLE',
+            payload: false
+        }); 
+    }
     handleClick(i){
         switch (this.state.sub_menu_items[i].desc){
             case "Short introduction":

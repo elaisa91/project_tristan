@@ -8,11 +8,8 @@ function singleimageGet(req, res){
     var num = 0;  
     makeQuery(function(err, result) {
         if (err) throw err;
-        if (req.params.selectedImageNum === 0 || req.params.selectedImageNum <= -1){
+        if (req.params.selectedImageNum === 0 ){
             num = '0';
-        }
-        else if (req.params.selectedImageNum === result.length-1 || req.params.selectedImageNum >= result.length){
-            num = (result.length-1).toString()
         }
         else {
             num = req.params.selectedImageNum.toString();

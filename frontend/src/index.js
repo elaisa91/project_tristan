@@ -17,9 +17,12 @@ const initialState = {
   image: {},
   rotate_angle: 0,
   cat_options: [],
+  all_subcategories: [],
+  all_folios: [],
   subcat_options: [],
   selected_catoption: "",
   selected_subcatoption: "",
+  selected_search_field: "",
   result_images: [],
   search_page_visible: false,
   criteria_visible: true,
@@ -55,6 +58,18 @@ function reducer (state = initialState, action) {
         cat_options: action.payload
       };
 
+    case "ALL_FOLIOS":
+      return {
+        ...state,
+        all_folios: action.payload
+      };
+
+    case "ALL_SUBCATEGORIES":
+      return {
+        ...state,
+        all_subcategories: action.payload
+      };
+
     case "SUBCAT_OPTIONS":
       return {
         ...state,
@@ -71,6 +86,12 @@ function reducer (state = initialState, action) {
       return {
         ...state,
         selected_subcatoption: action.payload
+      }
+
+    case "SELECTED_SEARCH_FIELD":
+      return {
+        ...state,
+        selected_search_field: action.payload
       }
 
     case "RESULT_IMAGES":
