@@ -6,6 +6,7 @@ import Slider from '../Slider/Slider.js';
 import { filter_images, filter_subcategories, all_categories, all_folios_name } from '../../helper';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import {createFilterOptions} from '@mui/material/Autocomplete';
 
 
 class SearchPage extends React.Component {
@@ -111,16 +112,9 @@ class SearchPage extends React.Component {
     }
 
     render() {
-        /*const top100Films = [
-            { filmName: 'The Shawshank Redemption', year: 1994 },
-            { filmName: 'The Godfather', year: 1972 },
-            { filmName: 'The Godfather: Part II', year: 1974 },
-            { filmName: 'The Dark Knight', year: 2008 },
-            { filmName: '12 Angry Men', year: 1957 },
-            { filmName: "Schindler's List", year: 1993 }]
-        */
-
+        
         const all_search_fields = this.props.cat_options.concat(this.props.all_subcategories, this.props.all_folios);
+        const filter_options = createFilterOptions({limit: 2});
 
         return (
             this.props.visible &&
@@ -159,7 +153,8 @@ class SearchPage extends React.Component {
                             disablePortal={false}
                             id="autocomplete-ui"
                             options={all_search_fields} //l'oggetto da cui prendi la lista, puoi passare anche un array
-                            sx={{ width: 300 }} // puoi passare regole css qui dentro
+                            filterOptions = {filter_options}
+                            sx={{ width: '25vw'}} // puoi passare regole css qui dentro
                             clearOnEscape={true}
                             //isOptionEqualToValue={(option, value) => option.filmName === value.filmName} //cambia solo la chiave, se usi un array, butta via questa proprietà.
                             multiple={false} //se vuoi far selezionare più di un elemento
