@@ -14,7 +14,7 @@ mydb = myclient["facsimile_db"]
 mycol = mydb["facsimile_img_3"]
 mycol.drop()
 
-tree = ET.parse('7r7v10r10v_v1.xml')
+tree = ET.parse('MASTERFILE.xml')
 root = tree.getroot()
 
 def generate_char(ref, root):
@@ -34,6 +34,17 @@ def generate_hand(ref, root):
                if (interp.attrib["{http://www.w3.org/XML/1998/namespace}id"] == ref):
                    hand = interp.text 
     return (hand)
+
+def generate_gesture(gest_ide, root):
+    gesture = {}
+    gesture["desc"] = ""
+    gesture["name"] = ""
+    if (gest_ide != ""):
+        gesture["name"] = string.capwords(gest_ide.replace("_", " ")).replace('/','-')
+    for interp in root[0].iter("{http://www.tei-c.org/ns/1.0}interp"):
+        if (interp.attrib["{http://www.w3.org/XML/1998/namespace}id"] == gest_ide):
+            gesture["desc"] = re.sub('\n\s*', " ", interp.text).replace('/','-')
+    return (gesture)
 
 def generate_notes(id, root):
     notes = []
@@ -207,9 +218,11 @@ def generate_document(surface, n):
         category = ""
         subcategory = {}
         transcription = {}
+        gesture = {}
         cat_ide = ""
         subcat_ide = ""
         trans_ide = ""
+        gest_ide = ""
 
         # crea id
         if "{http://www.w3.org/XML/1998/namespace}id" in zone.attrib:
@@ -236,18 +249,20 @@ def generate_document(surface, n):
             category = generate_category(cat_ide, root)
             subcat_ide = zone.attrib["corresp"][1:]
 
-            # crea trascrizione
+            # crea trascrizione o gesture
             if ("sameAs" in zone.attrib):
                 trans_ide = zone.attrib["sameAs"][1:]
+                gest_ide = zone.attrib["sameAs"][1:]
                 
         transcription = generate_transcription (trans_ide, root)
+        gesture = generate_gesture (gest_ide, root)
         subcategory = generate_subcategory(subcat_ide, root) 
         
         if (not category in document):
             document[category] = []
         
         # inserisci 'zone' per ogni category
-        document[category].append({"id": ide, "points": points, "subcategory": subcategory, "transcription": transcription, "notes": notes})
+        document[category].append({"id": ide, "points": points, "subcategory": subcategory, "transcription": transcription, "gesture": gesture, "notes": notes})
     return document
 
 
