@@ -29,7 +29,7 @@ function Canvas(props) {
         item_obj['transcription']['style'] !== "" || item_obj['transcription']['type'] !== "" || item_obj['transcription']['lang'] !== ""
         || (item_obj['subcategory']['desc'] !== "" && item_obj['subcategory']['name'] !== "" &&
          item_obj['subcategory']['name'] !== item_obj['subcategory']['desc'])
-        || item_obj['notes'].length > 0){
+        || item_obj['notes'].length > 0 || (item_obj['gesture']['desc'] !== "") || item_obj['gesture']['name'] !== ""){
             current.style["cursor"] = "pointer";
         } else {
             current.style["cursor"] = "default";
@@ -65,6 +65,10 @@ function Canvas(props) {
             type: "NOTES",
             payload: []
         });
+        props.dispatch({
+            type: "GESTURE",
+            payload: {}
+        });
 
     }
 
@@ -99,6 +103,10 @@ function Canvas(props) {
         props.dispatch({
             type: "NOTES",
             payload: item_obj['notes']
+        });
+        props.dispatch({
+            type: "GESTURE",
+            payload: item_obj['gesture']
         });
     }
 
@@ -305,6 +313,7 @@ function Canvas(props) {
             var transcription = el['transcription'];
             var transcription_text = "";
             var notes = el['notes'];
+            var gesture = el['gesture'];
             for (var i=0; i < transcription['text'].length; i++){
                 var el = transcription['text'][i];
                 if (i === transcription['text'].length-1){
@@ -329,6 +338,7 @@ function Canvas(props) {
             item_obj["subcategory"] = subcategory;
             item_obj["transcription"] = transcription;
             item_obj["notes"] = notes;
+            item_obj["gesture"] = gesture;
 
             if (is_point_in_poly(poly, [x, y]) === -1 || is_point_in_poly(poly, [x, y]) === 0) {
                 isIn.push (item_obj); 
@@ -436,7 +446,8 @@ const mapStateToProps = state => ({
     transcription_type : state.transcription_type,
     transcription_lang : state.transcription_lang,
     subcategory_desc : state.subcategory_desc,
-    notes : state.notes 
+    notes : state.notes,
+    gesture: state.gesture
 });
 
 export default connect(mapStateToProps)(Canvas);

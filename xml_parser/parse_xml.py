@@ -39,7 +39,7 @@ def generate_gesture(gest_ide, root):
     gesture = {}
     gesture["desc"] = ""
     gesture["name"] = ""
-    if (gest_ide != ""):
+    if (gest_ide != "" and (not re.match(r'f[0-9]+', gest_ide))):
         gesture["name"] = string.capwords(gest_ide.replace("_", " ")).replace('/','-')
     for interp in root[0].iter("{http://www.tei-c.org/ns/1.0}interp"):
         if (interp.attrib["{http://www.w3.org/XML/1998/namespace}id"] == gest_ide):

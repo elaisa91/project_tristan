@@ -37,7 +37,8 @@ const initialState = {
   transcription_type : "",
   transcription_lang : "",
   subcategory_desc : "",
-  notes : []
+  notes : [],
+  gesture: {}
 }
 
 function reducer (state = initialState, action) { 
@@ -181,6 +182,11 @@ function reducer (state = initialState, action) {
       return {
         ...state,
         notes: action.payload
+      }
+    case "GESTURE":
+      return {
+        ...state,
+        gesture: action.payload
       }
     default:
       return state;

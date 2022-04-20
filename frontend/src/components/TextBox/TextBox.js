@@ -49,6 +49,17 @@ class TextBox extends React.Component{
                 :
                     null
                 }
+
+                {("desc" in this.props.gesture && this.props.gesture['desc']!=="") || ("name" in this.props.gesture && this.props.gesture['desc']!=="")?
+                    <div className='gesture'>
+                        <p>Gesture:</p> 
+                        <p>{this.props.gesture["name"]}</p>
+                        <p>{this.props.gesture["desc"]}</p>
+                    </div>
+                :
+                    null
+                }
+
                 {text_list.length>0?
                     <div className='trans-text'>
                         <p>Text: </p>
@@ -104,7 +115,8 @@ const mapStateToProps = state => ({
     transcription_type : state.transcription_type,
     transcription_lang : state.transcription_lang,
     subcategory_desc : state.subcategory_desc,
-    notes : state.notes
+    notes : state.notes,
+    gesture: state.gesture
 });
 
 export default connect(mapStateToProps)(TextBox);
