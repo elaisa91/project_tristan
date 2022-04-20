@@ -1,7 +1,6 @@
 .slider {
     display: flex;
     flex-direction: column;
-    height: 50vh;
     padding: 5%;
 }
 
@@ -12,8 +11,7 @@
 
 .slider >.slider-images{
     display: flex;
-    flex-direction: row wrap;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: baseline;
 }
-
-
