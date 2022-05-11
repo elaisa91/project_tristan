@@ -17,9 +17,9 @@ function singleimageGet(req, res){
 
         for (const facsimile of result){
             if (num === facsimile['num']){
-                result_image = {src: facsimile["url"], id: facsimile["name"], num: facsimile["num"], polygons: []};
+                result_image = {src: facsimile["url"], multispec_src: facsimile["multispec_url"], id: facsimile["name"], num: facsimile["num"], polygons: []};
                 for (const key in facsimile){
-                    if(key!=='_id' && key!=='name' && key!=='url' && key!= 'notes' && key != 'num'){
+                    if(key!=='_id' && key!=='name' && key!=='url' && key !== 'multispec_url' && key!= 'notes' && key != 'num'){
                         result_image["polygons"] = result_image["polygons"].concat(facsimile[key]);
                     }
                 }

@@ -53,7 +53,7 @@ class TextBox extends React.Component{
                 {("desc" in this.props.gesture && this.props.gesture['desc']!=="") || ("name" in this.props.gesture && this.props.gesture['desc']!=="")?
                     <div className='gesture'>
                         <p>Gesture:</p> 
-                        <p>{this.props.gesture["name"]}</p>
+                        
                         <p>{this.props.gesture["desc"]}</p>
                     </div>
                 :

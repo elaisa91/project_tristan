@@ -22,7 +22,7 @@ function subcategoriesGet(req, res){
         var subcategories = [];
         for (const facsimile of result){
             for (const key in facsimile){
-                if(key !== '_id' && key !== 'name' && key !== 'url' && key!= 'notes' && key!= 'num'){
+                if(key !== '_id' && key !== 'name' && key !== 'url' && key !== 'multispec_url' && key!= 'notes' && key!= 'num'){
                     if (req.params.selectedCategory === "null"){
                         subcategories.concat(extract_subcategories(facsimile[key], subcategories));
                     } else if (key === req.params.selectedCategory) {

@@ -196,6 +196,7 @@ def generate_document(surface, n):
     document = {}
     name = ""
     url = ""
+    multispec_url = ""
     doc_notes = []
 
     # crea nome documento, url e note 
@@ -207,6 +208,7 @@ def generate_document(surface, n):
     
     document["name"] = name
     document["url"] = url
+    document["multispec_url"] = url
     document['num'] = str(n)
     document["notes"] = doc_notes
 

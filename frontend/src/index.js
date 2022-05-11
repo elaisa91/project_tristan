@@ -48,6 +48,13 @@ function reducer (state = initialState, action) {
         ...state,
         image: action.payload
       };
+    
+    case "MULTISPEC_IMAGE":
+      return {
+        ...state,
+        multispec_image: action.payload
+      };
+
     case "ROTATE_ANGLE":
       return {
         ...state,

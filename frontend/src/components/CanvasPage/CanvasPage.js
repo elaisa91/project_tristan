@@ -10,6 +10,8 @@ import TextBox from '../TextBox/TextBox.js'
 function CanvasPage(props) {
     const [error, setError] = useState(null);
     const [description, setDescription] = useState(false);
+    const [multispec, setMultispec] = useState(false);
+    const [showstr, setShowstr] = useState("Show");
     let navigate = useNavigate();
 
     async function handleClick(e, icon){
@@ -28,6 +30,12 @@ function CanvasPage(props) {
                     type: "SELECTED_IMAGE",
                     payload: result
                 });
+                props.dispatch({
+                    type: "MULTISPEC_IMAGE",
+                    payload: result["multispec_src"]
+                });
+                setMultispec(false);
+                setShowstr("Show");
                 navigate('/facsimile/:' + result.id);
                 break;
             
@@ -41,6 +49,12 @@ function CanvasPage(props) {
                     type: "SELECTED_IMAGE",
                     payload: result
                 }); 
+                props.dispatch({
+                    type: "MULTISPEC_IMAGE",
+                    payload: result["multispec_src"]
+                });
+                setMultispec(false);
+                setShowstr("Show");
                 navigate('/facsimile/:' + result.id);
                 break;
 
@@ -62,6 +76,15 @@ function CanvasPage(props) {
                     payload: props.rotate_angle+90
                 });
                 break;
+            case 'show_hidden_multispec_image':
+                if (multispec === false){
+                    setMultispec(true);
+                    setShowstr("Hide");
+                } else {
+                    setMultispec(false);
+                    setShowstr("Show");
+                }
+                break;
             default :
                 navigate('/facsimile');
             
@@ -77,7 +100,7 @@ function CanvasPage(props) {
 
     return (
         <div className="canvas-page">
-            <div className='controls-buttons'>
+            {<div className='controls-buttons'>
                 <button className='button' onClick = {(e) => handleClick(e, "navigate_to_viscoll")}>
                     <img src = {process.env.PUBLIC_URL + '/viscoll-logo.png'} alt = 'Navigate to VisColl'/>
                 </button>
@@ -90,33 +113,40 @@ function CanvasPage(props) {
                 <button className='button' onClick = {(e) => handleClick(e, "close_page")}>
                     <i className="fa fa-close"></i>
                 </button>
-            </div>
+            </div>}
             {description === false &&
-                <div className='canvas-data'>
-                    <div className='rotate-buttons'>
-                        <button className='button' onClick = {(e) => handleClick(e, "rotate_image_clockwise")}>
-                            <i className="fa fa-repeat"></i>
-                        </button>
-                        <button className='button' onClick = {(e) => handleClick(e, "rotate_image_aclockwise")}>
-                            <i className="fa fa-undo"></i>
-                        </button> 
-                    </div>
-                    <div className='canvas-with-buttons'>
-                    
-                        <button className='direction-button' onClick = {(e) => handleClick(e, "get_previous_page")}>
-                            <i className="fa fa-arrow-circle-left"></i>
-                        </button>
-                        <Canvas
-                            height = {700}
-                            width = {600}
-                            onItemSelected = {(item, last_item) => handleItemSelected(item, last_item)}
-                        />
-                        <button className='direction-button' onClick = {(e) => handleClick(e, "get_next_page")}>
-                            <i className="fa fa-arrow-circle-right"></i>
-                        </button>
-                    </div>
+                <div id='page-main-content'>
+                    <button className='show-button' onClick = {(e) => handleClick(e, "show_hidden_multispec_image")}>
+                        <p>{`${showstr} multispectral image`}</p>
+                    </button>
+                    <div className='canvas-data'>
+                        <div className='multispectral-image'>
+                        {multispec && <img src = {props.multispec_image} alt = "corresponding multispectral image" />}
+                        </div>
+                        <div className='canvas-with-buttons'>
+                            <button className='direction-button' onClick = {(e) => handleClick(e, "get_previous_page")}>
+                                <i className="fa fa-arrow-circle-left"></i>
+                            </button>
+                            <Canvas
+                                height = {600}
+                                width = {500}
+                                onItemSelected = {(item, last_item) => handleItemSelected(item, last_item)}
+                            />
+                            <button className='direction-button' onClick = {(e) => handleClick(e, "get_next_page")}>
+                                <i className="fa fa-arrow-circle-right"></i>
+                            </button>
+                        </div>
+                        <div className='rotate-buttons'>
+                            <button className='button' onClick = {(e) => handleClick(e, "rotate_image_clockwise")}>
+                                <i className="fa fa-repeat"></i>
+                            </button>
+                            <button className='button' onClick = {(e) => handleClick(e, "rotate_image_aclockwise")}>
+                                <i className="fa fa-undo"></i>
+                            </button> 
+                        </div>
                    
-                    <TextBox/>
+                        <TextBox/>
+                    </div>
                 </div>
             }
             {description && <FacsDescriptionPage/>}
@@ -127,7 +157,8 @@ function CanvasPage(props) {
 const mapStateToProps = state => ({ 
     image: state.image,
     rotate_angle: state.rotate_angle,
-    result_images: state.result_images
+    result_images: state.result_images,
+    multispec_image: state.multispec_image
 });
 
 export default connect(mapStateToProps)(CanvasPage);

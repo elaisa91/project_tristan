@@ -46,6 +46,11 @@ class SearchPage extends React.Component {
             type: "SELECTED_IMAGE",
             payload: this.props.result_images[i]
         });  
+        this.props.dispatch({
+            type: "MULTISPEC_IMAGE",
+            payload: this.props.result_images[i]["multispec_src"]
+        });  
+        
     }
     
     async handleCategoryChange(e){
@@ -184,6 +189,7 @@ const mapStateToProps = state => ({
     selected_subcatoption: state.selected_subcatoption,
     selected_search_field: state.selected_search_field,
     selected_image: state.image,
+    multispec_image: state.multispec_image,
     result_images: state.result_images,
     to_reset: state.to_reset
 });
