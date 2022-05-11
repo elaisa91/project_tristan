@@ -14,7 +14,17 @@
     background-color: #fafafa;
 }
 
-.controls-buttons > button:hover, .direction-button > i:hover, .rotate-buttons > button > i:hover{
+.show-button > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 12.5vw;
+    height: 5.5vh;
+    font-size: 0.9em;
+    background-color: #fafafa;
+}
+
+.controls-buttons > button:hover, .direction-button > i:hover, .rotate-buttons > button > i:hover, .show-button > i:hover{
     cursor: pointer;
 }
 
@@ -28,6 +38,11 @@
 .controls-buttons {
     display: flex;
     order: 2;
+}
+
+.show-button {
+    display: flex;
+    order: 0;
 }
 
 .controls-buttons img {
@@ -60,10 +75,18 @@
     padding-top: 3em;
 }
 
-.canvas-with-buttons {
+.multispectral-image {
+    align-items: baseline;
+    position: relative;
+    right: 12%;
+}
+
+.canvas-with-buttons, .multispectral-image{
     display: flex;
-    flex: 0 0 35vw;
+    flex: 0 0 10vw;
     justify-content: center;
     align-items: center;
+    position: relative;
+    right: 3%;
 }
 

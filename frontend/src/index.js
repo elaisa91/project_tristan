@@ -15,6 +15,7 @@ import Navigator from './components/Navigator/Navigator.js';
 
 const initialState = {
   image: {},
+  multispec_image: "",
   rotate_angle: 0,
   cat_options: [],
   all_subcategories: [],
@@ -38,7 +39,9 @@ const initialState = {
   transcription_lang : "",
   subcategory_desc : "",
   notes : [],
-  gesture: {}
+  gesture: {},
+  n_height : 0,
+  n_width: 0
 }
 
 function reducer (state = initialState, action) { 
@@ -194,6 +197,16 @@ function reducer (state = initialState, action) {
       return {
         ...state,
         gesture: action.payload
+      }
+    case "N_HEIGHT":
+      return {
+        ...state,
+        n_height: action.payload
+      }
+    case "N_WIDTH":
+      return {
+        ...state,
+        n_width: action.payload
       }
     default:
       return state;

@@ -100,6 +100,11 @@ function CanvasPage(props) {
 
     return (
         <div className="canvas-page">
+            <div className='show-button'>
+                <button className = "button" onClick = {(e) => handleClick(e, "show_hidden_multispec_image")}>
+                    <p>{`${showstr} multispectral image`}</p>
+                </button>
+            </div>
             {<div className='controls-buttons'>
                 <button className='button' onClick = {(e) => handleClick(e, "navigate_to_viscoll")}>
                     <img src = {process.env.PUBLIC_URL + '/viscoll-logo.png'} alt = 'Navigate to VisColl'/>
@@ -115,38 +120,34 @@ function CanvasPage(props) {
                 </button>
             </div>}
             {description === false &&
-                <div id='page-main-content'>
-                    <button className='show-button' onClick = {(e) => handleClick(e, "show_hidden_multispec_image")}>
-                        <p>{`${showstr} multispectral image`}</p>
-                    </button>
-                    <div className='canvas-data'>
-                        <div className='multispectral-image'>
-                        {multispec && <img src = {props.multispec_image} alt = "corresponding multispectral image" />}
-                        </div>
-                        <div className='canvas-with-buttons'>
-                            <button className='direction-button' onClick = {(e) => handleClick(e, "get_previous_page")}>
-                                <i className="fa fa-arrow-circle-left"></i>
-                            </button>
-                            <Canvas
-                                height = {600}
-                                width = {500}
-                                onItemSelected = {(item, last_item) => handleItemSelected(item, last_item)}
-                            />
-                            <button className='direction-button' onClick = {(e) => handleClick(e, "get_next_page")}>
-                                <i className="fa fa-arrow-circle-right"></i>
-                            </button>
-                        </div>
-                        <div className='rotate-buttons'>
-                            <button className='button' onClick = {(e) => handleClick(e, "rotate_image_clockwise")}>
-                                <i className="fa fa-repeat"></i>
-                            </button>
-                            <button className='button' onClick = {(e) => handleClick(e, "rotate_image_aclockwise")}>
-                                <i className="fa fa-undo"></i>
-                            </button> 
-                        </div>
-                   
-                        <TextBox/>
+                <div className='canvas-data'>
+                    <div className='multispectral-image' height={props.n_height} width={props.n_width}>
+                    {multispec && <img src = {props.multispec_image} alt = "corresponding multispectral image" 
+                    height={props.n_height} width={props.n_width} />}
                     </div>
+                    <div className='canvas-with-buttons'>
+                        <button className='direction-button' onClick = {(e) => handleClick(e, "get_previous_page")}>
+                            <i className="fa fa-arrow-circle-left"></i>
+                        </button>
+                        <Canvas
+                            height = {600}
+                            width = {500}
+                            onItemSelected = {(item, last_item) => handleItemSelected(item, last_item)}
+                        />
+                        <button className='direction-button' onClick = {(e) => handleClick(e, "get_next_page")}>
+                            <i className="fa fa-arrow-circle-right"></i>
+                        </button>
+                    </div>
+                    <div className='rotate-buttons'>
+                        <button className='button' onClick = {(e) => handleClick(e, "rotate_image_clockwise")}>
+                            <i className="fa fa-repeat"></i>
+                        </button>
+                        <button className='button' onClick = {(e) => handleClick(e, "rotate_image_aclockwise")}>
+                            <i className="fa fa-undo"></i>
+                        </button> 
+                    </div>
+                
+                    <TextBox/>
                 </div>
             }
             {description && <FacsDescriptionPage/>}
@@ -158,7 +159,9 @@ const mapStateToProps = state => ({
     image: state.image,
     rotate_angle: state.rotate_angle,
     result_images: state.result_images,
-    multispec_image: state.multispec_image
+    multispec_image: state.multispec_image,
+    n_height : state.n_height,
+    n_width : state.n_width
 });
 
 export default connect(mapStateToProps)(CanvasPage);

@@ -193,6 +193,7 @@ function Canvas(props) {
 
         var nheight = Math.ceil(image.height / propHeight);
         var nwidth = Math.ceil(image.width / propWidth);
+        
         var dx = (current.width-nwidth)/2;
         var dy = (current.height-nheight)/2;
 
@@ -231,6 +232,14 @@ function Canvas(props) {
 
         var nheight = Math.ceil(image.height / propHeight);
         var nwidth = Math.ceil(image.width / propWidth);
+        props.dispatch({
+            type: "N_HEIGHT",
+            payload: nheight
+        });
+        props.dispatch({
+            type: "N_WIDTH",
+            payload: nwidth
+        });
         var dx = (current.width-nwidth)/2;
         var dy = (current.height-nheight)/2;
 
@@ -447,7 +456,9 @@ const mapStateToProps = state => ({
     transcription_lang : state.transcription_lang,
     subcategory_desc : state.subcategory_desc,
     notes : state.notes,
-    gesture: state.gesture
+    gesture: state.gesture,
+    n_height : state.n_height,
+    n_width : state.n_width
 });
 
 export default connect(mapStateToProps)(Canvas);
