@@ -50,6 +50,39 @@ class SearchPage extends React.Component {
             type: "MULTISPEC_IMAGE",
             payload: this.props.result_images[i]["multispec_src"]
         });  
+        // usare se unsetmetadat in canvas.js è commentato 
+        /*this.props.dispatch({
+            type: "SELECTED_ITEM",
+            payload: ""
+        });
+        this.props.dispatch({
+            type: "TRANSCRIPTION_TEXT",
+            payload: []
+        });
+        this.props.dispatch({
+            type: "TRANSCRIPTION_STYLE",
+            payload: ""
+        });
+        this.props.dispatch({
+            type: "TRANSCRIPTION_TYPE",
+            payload: ""
+        });
+        this.props.dispatch({
+            type: "TRANSCRIPTION_LANG",
+            payload: ""
+        });
+        this.props.dispatch({
+            type: "SUBCATEGORY_DESC",
+            payload: ""
+        });
+        this.props.dispatch({
+            type: "NOTES",
+            payload: []
+        });
+        this.props.dispatch({
+            type: "GESTURE",
+            payload: {}
+        });*/
         
     }
     

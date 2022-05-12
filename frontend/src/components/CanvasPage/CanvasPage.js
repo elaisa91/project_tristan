@@ -130,8 +130,8 @@ function CanvasPage(props) {
                             <i className="fa fa-arrow-circle-left"></i>
                         </button>
                         <Canvas
-                            height = {600}
-                            width = {500}
+                            height = {700}
+                            width = {600}
                             onItemSelected = {(item, last_item) => handleItemSelected(item, last_item)}
                         />
                         <button className='direction-button' onClick = {(e) => handleClick(e, "get_next_page")}>
